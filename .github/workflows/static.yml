@@ -5,11 +5,11 @@ on:
   # Run every time and only after the static site build runs
   push:
     paths:
-      - 'docs/**'
+      - "website/**"
   # workflow_run:
   #   workflows: ["Convert the project notebook into a github-pages site"]
   #   branches: [main]
-  #   types: 
+  #   types:
   #     - completed
 
   # Allows you to run this workflow manually from the Actions tab
@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           # Upload entire repository
-          path: 'docs/'
+          path: "website/"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
