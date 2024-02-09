@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Machine Learning and Amazon Retail Data</title>
+<title>Machine Learning on Amazon Retail Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -29,8 +29,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../conclusions.html" rel="next">
-<link href="../data.html" rel="prev">
+<link href="../models/dtrees.html" rel="next">
+<link href="../models/bayes.html" rel="prev">
+<link href="../images/cover.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -79,13 +80,33 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../images/cover.png" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Machine Learning and Amazon Retail Data</span>
+    <span class="navbar-title">Machine Learning on Amazon Retail Data</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/CUBoulder-DS/CSCI-5622"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="http://chocbanana.github.io/"> <i class="bi bi-person-circle" role="img">
+</i> 
+<span class="menu-text">By Bhavana</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
 </div>
-          <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
@@ -93,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../models/clustering.html">Models and Methods</a></li><li class="breadcrumb-item"><a href="../models/clustering.html">Clustering</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../models/arm.html">Models and Methods</a></li><li class="breadcrumb-item"><a href="../models/clustering.html">Clustering</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -134,8 +155,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../models/arm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ARM (Association Rule Mining)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../models/bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Naive Bayes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../models/clustering.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../models/dtrees.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decision Trees</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../models/nn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Neural Networks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../models/regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../models/svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SVM (Support Vector Machine)</span></a>
   </div>
 </li>
       </ul>
@@ -160,7 +217,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="clustering" class="level1">
 <h1>Clustering</h1>
-<p>TBA TODO</p>
+<p>Placeholder</p>
 
 
 </section>
@@ -555,13 +612,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
-      <a href="../data.html" class="pagination-link  aria-label=" data="" prep="" eda"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data Prep / EDA</span>
+      <a href="../models/bayes.html" class="pagination-link  aria-label=" naive="" bayes"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Naive Bayes</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../conclusions.html" class="pagination-link" aria-label="Conclusions">
-        <span class="nav-page-text">Conclusions</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../models/dtrees.html" class="pagination-link" aria-label="Decision Trees">
+        <span class="nav-page-text">Decision Trees</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

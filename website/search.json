@@ -4,8 +4,9 @@
     "href": "data.html",
     "title": "Data Prep / EDA",
     "section": "",
-    "text": "Where the data source, processing, and visualization (EDA) is presented.\nLOri ipsum\n\n\nData is gathered from an API and a website; the sources are well referenced.\n\n\n\nData is well cleaned, and the steps are explained, with snapshots of raw and cleaned data\n\n\n\nData prep tab meets the minimum requirement of 10 visualizations and summarizes portions of the data",
+    "text": "Where the data source, processing, and visualization (EDA) is presented.\nLOri ipsum\n\n\nData is gathered from an API and a website; the sources are well referenced.\nhttps://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/\nhttps://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset/data\nhttps://www.kaggle.com/datasets/asaniczka/amazon-products-dataset-2023-1-4m-products/data\n\n\n\nData is well cleaned, and the steps are explained, with snapshots of raw and cleaned data\n\n\n\nData prep tab meets the minimum requirement of 10 visualizations and summarizes portions of the data",
     "crumbs": [
+      "Code",
       "Data Prep / EDA"
     ]
   },
@@ -14,8 +15,9 @@
     "href": "data.html#data-collection",
     "title": "Data Prep / EDA",
     "section": "",
-    "text": "Data is gathered from an API and a website; the sources are well referenced.",
+    "text": "Data is gathered from an API and a website; the sources are well referenced.\nhttps://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/\nhttps://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset/data\nhttps://www.kaggle.com/datasets/asaniczka/amazon-products-dataset-2023-1-4m-products/data",
     "crumbs": [
+      "Code",
       "Data Prep / EDA"
     ]
   },
@@ -26,6 +28,7 @@
     "section": "",
     "text": "Data is well cleaned, and the steps are explained, with snapshots of raw and cleaned data",
     "crumbs": [
+      "Code",
       "Data Prep / EDA"
     ]
   },
@@ -36,6 +39,7 @@
     "section": "",
     "text": "Data prep tab meets the minimum requirement of 10 visualizations and summarizes portions of the data",
     "crumbs": [
+      "Code",
       "Data Prep / EDA"
     ]
   },
@@ -44,9 +48,46 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "Home\n\n\n\n\n\n\nBy Bhavana Jonnalagadda\n\n\n\nBy Bhavana Jonnalagadda\n\n\nWelcome! You can see all pages listed below, or use the navbar to navigate the pages.\n\n\n\n\n\n\n\n\nClustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConclusions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nData Prep / EDA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
+    "text": "Home\n\n\n\n\n\n\nCSCI 5622\n\n\n\nBy Bhavana Jonnalagadda\n\n\n\n\nWelcome to the homepage for machine learning on Amazon retail product data! You can see all pages listed below, or use the navbar to navigate the pages.\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nClustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNaive Bayes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nARM (Association Rule Mining)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSVM (Support Vector Machine)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNeural Networks\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRegression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDecision Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConclusions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nData Prep / EDA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
+      "Code",
       "Home"
+    ]
+  },
+  {
+    "objectID": "models/regression.html",
+    "href": "models/regression.html",
+    "title": "Regression",
+    "section": "",
+    "text": "Regression\nPlaceholder",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "Regression"
+    ]
+  },
+  {
+    "objectID": "models/svm.html",
+    "href": "models/svm.html",
+    "title": "SVM (Support Vector Machine)",
+    "section": "",
+    "text": "SVM (Support Vector Machine)\nPlaceholder",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "SVM (Support Vector Machine)"
+    ]
+  },
+  {
+    "objectID": "models/bayes.html",
+    "href": "models/bayes.html",
+    "title": "Naive Bayes",
+    "section": "",
+    "text": "Naive Bayes\nPlaceholder",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "Naive Bayes"
     ]
   },
   {
@@ -54,8 +95,20 @@
     "href": "intro.html",
     "title": "Introduction",
     "section": "",
-    "text": "Introduction\nPlaceholder",
+    "text": "In today’s digital landscape dominated by e-commerce giants such as Amazon, the analysis of retail product data assumes paramount importance as a means to unravel the intricacies of consumer behavior, and unveil the complex relationships that exist between various products. The topic of this project poses a fundamental assertion: that mining the vast repository of Amazon’s retail product data holds the key to unlocking invaluable insights that can revolutionize marketing strategies, inform product development, and optimize overall business operations. This assertion underscores the critical role of data analytics in shaping the success trajectory of businesses operating in the contemporary marketplace. By delving into the granular details of consumer interactions with products on Amazon’s platform, stakeholders gain not only a deeper understanding of consumer preferences but also a nuanced perspective on the dynamics of the digital marketplace itself. The implications of this analysis extend far beyond mere academic curiosity; they are deeply intertwined with the strategic imperatives of businesses seeking to thrive amidst fierce competition and rapid technological advancements. The significance of analyzing Amazon retail product data transcends individual businesses, permeating into the realms of consumer behavior, marketing efficacy, policymaking, and academic research.\n\n\n\n\n\n\nAn example of navigating Amazon\n\n\n\n\nAt its core, this endeavor resonates with a diverse array of stakeholders, each with a vested interest in deciphering the underlying patterns shaping modern consumption patterns and economic dynamics. Consumers, for instance, stand to benefit from the insights gleaned through data analysis, which can translate into more personalized shopping experiences, enhanced product recommendations, and greater transparency within the marketplace. Much work has been done, for example, to improve search engine results and product classification for recommendation purposes (Medini et al. 2019; Smith and Linden 2017). Marketers, on the other hand, find in this data a treasure trove of actionable intelligence, enabling them to fine-tune advertising strategies, optimize pricing models, and anticipate shifts in consumer preferences with a heightened degree of accuracy (Chen, Mislove, and Wilson 2016; Chevalier and Goolsbee 2003). Furthermore, researchers across various disciplines are drawn to the rich dataset offered by Amazon, utilizing sophisticated analytical techniques ranging from machine learning algorithms to traditional statistical methods to unravel the complexities of consumer behavior and product relationships (Shaikh, Rathi, and Janrao 2017; Bell and Bala 2015). Despite the considerable strides made in this field, there remains an abundance of untapped potential, beckoning further exploration and innovation to fully harness the transformative power of Amazon’s retail product data.\n\n\n\nIs there noticable trends in prices over time, over all products?\nAre there price trends over time within a specific product category?\nIs there any meaningful similarities in the images between products with similar descriptions?\nAre there price/rating similarities between the products with similar images?\nDo ratings have any correlation with the price of products?\nDo ratings have any correlation with the product category?\nCan the price of a product be predicted based on all other factors?\nCan the rating of a product be predicted based on all other factors?\nCan the category of a product be predicted based on the description?\nIs the description of a product similar to the generated description based on the product image (or the generated bag of words, tags, etc)?",
     "crumbs": [
+      "Code",
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "intro.html#questions-to-answer",
+    "href": "intro.html#questions-to-answer",
+    "title": "Introduction",
+    "section": "",
+    "text": "Is there noticable trends in prices over time, over all products?\nAre there price trends over time within a specific product category?\nIs there any meaningful similarities in the images between products with similar descriptions?\nAre there price/rating similarities between the products with similar images?\nDo ratings have any correlation with the price of products?\nDo ratings have any correlation with the product category?\nCan the price of a product be predicted based on all other factors?\nCan the rating of a product be predicted based on all other factors?\nCan the category of a product be predicted based on the description?\nIs the description of a product similar to the generated description based on the product image (or the generated bag of words, tags, etc)?",
+    "crumbs": [
+      "Code",
       "Introduction"
     ]
   },
@@ -64,10 +117,47 @@
     "href": "models/clustering.html",
     "title": "Clustering",
     "section": "",
-    "text": "Clustering\nTBA TODO",
+    "text": "Clustering\nPlaceholder",
     "crumbs": [
+      "Code",
       "Models and Methods",
       "Clustering"
+    ]
+  },
+  {
+    "objectID": "models/arm.html",
+    "href": "models/arm.html",
+    "title": "ARM (Association Rule Mining)",
+    "section": "",
+    "text": "ARM (Association Rule Mining)\nPlaceholder",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "ARM (Association Rule Mining)"
+    ]
+  },
+  {
+    "objectID": "models/nn.html",
+    "href": "models/nn.html",
+    "title": "Neural Networks",
+    "section": "",
+    "text": "Neural Networks\nPlaceholder",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "Neural Networks"
+    ]
+  },
+  {
+    "objectID": "models/dtrees.html",
+    "href": "models/dtrees.html",
+    "title": "Decision Trees",
+    "section": "",
+    "text": "Decision Trees\nPlaceholder",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "Decision Trees"
     ]
   },
   {
@@ -75,8 +165,9 @@
     "href": "conclusions.html",
     "title": "Conclusions",
     "section": "",
-    "text": "Conclusions\nPlaceholder\n\n\nReferences",
+    "text": "Conclusions\nPlaceholder\n\n\nReferences\n\n\nBell, Sean, and Kavita Bala. 2015. “Learning Visual Similarity for Product Design with Convolutional Neural Networks.” ACM Trans. Graph. 34 (4). https://doi.org/10.1145/2766959.\n\n\nChen, Le, Alan Mislove, and Christo Wilson. 2016. “An Empirical Analysis of Algorithmic Pricing on Amazon Marketplace.” In Proceedings of the 25th International Conference on World Wide Web, 1339–49. WWW ’16. Republic; Canton of Geneva, CHE: International World Wide Web Conferences Steering Committee. https://doi.org/10.1145/2872427.2883089.\n\n\nChevalier, Judith, and Austan Goolsbee. 2003. “Measuring Prices and Price Competition Online: Amazon.com and BarnesandNoble.com.” Quantitative Marketing and Economics 1 (2): 203–22. https://doi.org/10.1023/A:1024634613982.\n\n\nMedini, Tharun, Qixuan Huang, Yiqiu Wang, Vijai Mohan, and Anshumali Shrivastava. 2019. “Extreme Classification in Log Memory Using Count-Min Sketch: A Case Study of Amazon Search with 50M Products.” CoRR abs/1910.13830. http://arxiv.org/abs/1910.13830.\n\n\nShaikh, Shakila, Sheetal Rathi, and Prachi Janrao. 2017. “Recommendation System in e-Commerce Websites: A Graph Based Approached.” In 2017 IEEE 7th International Advance Computing Conference (IACC), 931–34. https://doi.org/10.1109/IACC.2017.0189.\n\n\nSmith, Brent, and Greg Linden. 2017. “Two Decades of Recommender Systems at Amazon.com.” IEEE Internet Computing 21 (3): 12–18. https://doi.org/10.1109/MIC.2017.72.",
     "crumbs": [
+      "Code",
       "Conclusions"
     ]
   }

@@ -2,18 +2,29 @@
 listing:
   type: grid
   id: listings
+  sort: "date"
 ---
 
 # Home {.unnumbered}
 
 ::: callout-note
-## By Bhavana Jonnalagadda
+## CSCI 5622
 
 By Bhavana Jonnalagadda
 :::
 
+::: {.columns}
+::: {.column width="60%"}
+Welcome to the homepage for machine learning on Amazon retail product data! You can see all pages listed below, or use the navbar to navigate the pages.
+:::
 
-Welcome! You can see all pages listed below, or use the navbar to navigate the pages.
+::: {.column width="30%"}
+![](images/cover.png)
+:::
+:::
+
+
+
 
 ::: {#listings}
 :::

@@ -1,0 +1,4 @@
+*.ipynb_checkpoints
+
+data/kaggle_lokeshparab/Amazon-Products.csv
+data/kaggle_asaniczka/amazon_products.csv

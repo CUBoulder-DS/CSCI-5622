@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Machine Learning and Amazon Retail Data</title>
+<title>Machine Learning on Amazon Retail Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,6 +24,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -48,7 +49,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./models/clustering.html" rel="prev">
+<link href="./models/svm.html" rel="prev">
+<link href="./images/cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -97,13 +99,33 @@ div.csl-indent {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/cover.png" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Machine Learning and Amazon Retail Data</span>
+    <span class="navbar-title">Machine Learning on Amazon Retail Data</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/CUBoulder-DS/CSCI-5622"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="http://chocbanana.github.io/"> <i class="bi bi-person-circle" role="img">
+</i> 
+<span class="menu-text">By Bhavana</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
 </div>
-          <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
@@ -152,8 +174,44 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./models/arm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ARM (Association Rule Mining)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./models/bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Naive Bayes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./models/clustering.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./models/dtrees.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decision Trees</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./models/nn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Neural Networks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./models/regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./models/svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SVM (Support Vector Machine)</span></a>
   </div>
 </li>
       </ul>
@@ -182,8 +240,25 @@ div.csl-indent {
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
-<div id="refs" role="list">
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-BellVis" class="csl-entry" role="listitem">
+Bell, Sean, and Kavita Bala. 2015. <span>“Learning Visual Similarity for Product Design with Convolutional Neural Networks.”</span> <em>ACM Trans. Graph.</em> 34 (4). <a href="https://doi.org/10.1145/2766959">https://doi.org/10.1145/2766959</a>.
+</div>
+<div id="ref-ChenPricing" class="csl-entry" role="listitem">
+Chen, Le, Alan Mislove, and Christo Wilson. 2016. <span>“An Empirical Analysis of Algorithmic Pricing on Amazon Marketplace.”</span> In <em>Proceedings of the 25th International Conference on World Wide Web</em>, 1339–49. WWW ’16. Republic; Canton of Geneva, CHE: International World Wide Web Conferences Steering Committee. <a href="https://doi.org/10.1145/2872427.2883089">https://doi.org/10.1145/2872427.2883089</a>.
+</div>
+<div id="ref-ChevalierPrice" class="csl-entry" role="listitem">
+Chevalier, Judith, and Austan Goolsbee. 2003. <span>“<span class="nocase">Measuring Prices and Price Competition Online: Amazon.com and BarnesandNoble.com</span>.”</span> <em>Quantitative Marketing and Economics</em> 1 (2): 203–22. <a href="https://doi.org/10.1023/A:1024634613982">https://doi.org/10.1023/A:1024634613982</a>.
+</div>
+<div id="ref-MediniAmazon" class="csl-entry" role="listitem">
+Medini, Tharun, Qixuan Huang, Yiqiu Wang, Vijai Mohan, and Anshumali Shrivastava. 2019. <span>“Extreme Classification in Log Memory Using Count-Min Sketch: <span>A</span> Case Study of Amazon Search with 50M Products.”</span> <em>CoRR</em> abs/1910.13830. <a href="http://arxiv.org/abs/1910.13830">http://arxiv.org/abs/1910.13830</a>.
+</div>
+<div id="ref-ShakilaRecommender" class="csl-entry" role="listitem">
+Shaikh, Shakila, Sheetal Rathi, and Prachi Janrao. 2017. <span>“Recommendation System in e-Commerce Websites: A Graph Based Approached.”</span> In <em>2017 IEEE 7th International Advance Computing Conference (IACC)</em>, 931–34. <a href="https://doi.org/10.1109/IACC.2017.0189">https://doi.org/10.1109/IACC.2017.0189</a>.
+</div>
+<div id="ref-BrentRecommender" class="csl-entry" role="listitem">
+Smith, Brent, and Greg Linden. 2017. <span>“Two Decades of Recommender Systems at Amazon.com.”</span> <em>IEEE Internet Computing</em> 21 (3): 12–18. <a href="https://doi.org/10.1109/MIC.2017.72">https://doi.org/10.1109/MIC.2017.72</a>.
+</div>
 </div>
 
 
@@ -579,8 +654,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
-      <a href="./models/clustering.html" class="pagination-link  aria-label=" clustering"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Clustering</span>
+      <a href="./models/svm.html" class="pagination-link  aria-label=" svm="" (support="" vector="" machine)"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">SVM (Support Vector Machine)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
