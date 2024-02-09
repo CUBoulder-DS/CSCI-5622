@@ -1,0 +1,15 @@
+# Data Prep / EDA
+
+Where the data source, processing, and visualization (EDA) is presented.
+
+
+LOri ipsum
+
+## Data Collection
+Data is gathered from an API and a website; the sources are well referenced.
+
+## Data Cleaning
+Data is well cleaned, and the steps are explained, with snapshots of raw and cleaned data
+
+## Data Preprocessing/Visualization
+Data prep tab meets the minimum requirement of 10 visualizations and summarizes portions of the data

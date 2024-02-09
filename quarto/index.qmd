@@ -1,0 +1,21 @@
+---
+listing:
+  type: grid
+  id: listings
+---
+
+# Home {.unnumbered}
+
+::: callout-note
+## By Bhavana Jonnalagadda
+
+By Bhavana Jonnalagadda
+:::
+
+
+Welcome! You can see all pages listed below, or use the navbar to navigate the pages.
+
+::: {#listings}
+:::
+
+

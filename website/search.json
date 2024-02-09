@@ -1,0 +1,83 @@
+[
+  {
+    "objectID": "data.html",
+    "href": "data.html",
+    "title": "Data Prep / EDA",
+    "section": "",
+    "text": "Where the data source, processing, and visualization (EDA) is presented.\nLOri ipsum\n\n\nData is gathered from an API and a website; the sources are well referenced.\n\n\n\nData is well cleaned, and the steps are explained, with snapshots of raw and cleaned data\n\n\n\nData prep tab meets the minimum requirement of 10 visualizations and summarizes portions of the data",
+    "crumbs": [
+      "Data Prep / EDA"
+    ]
+  },
+  {
+    "objectID": "data.html#data-collection",
+    "href": "data.html#data-collection",
+    "title": "Data Prep / EDA",
+    "section": "",
+    "text": "Data is gathered from an API and a website; the sources are well referenced.",
+    "crumbs": [
+      "Data Prep / EDA"
+    ]
+  },
+  {
+    "objectID": "data.html#data-cleaning",
+    "href": "data.html#data-cleaning",
+    "title": "Data Prep / EDA",
+    "section": "",
+    "text": "Data is well cleaned, and the steps are explained, with snapshots of raw and cleaned data",
+    "crumbs": [
+      "Data Prep / EDA"
+    ]
+  },
+  {
+    "objectID": "data.html#data-preprocessingvisualization",
+    "href": "data.html#data-preprocessingvisualization",
+    "title": "Data Prep / EDA",
+    "section": "",
+    "text": "Data prep tab meets the minimum requirement of 10 visualizations and summarizes portions of the data",
+    "crumbs": [
+      "Data Prep / EDA"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "Home\n\n\n\n\n\n\nBy Bhavana Jonnalagadda\n\n\n\nBy Bhavana Jonnalagadda\n\n\nWelcome! You can see all pages listed below, or use the navbar to navigate the pages.\n\n\n\n\n\n\n\n\nClustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConclusions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nData Prep / EDA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Introduction\nPlaceholder",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "models/clustering.html",
+    "href": "models/clustering.html",
+    "title": "Clustering",
+    "section": "",
+    "text": "Clustering\nTBA TODO",
+    "crumbs": [
+      "Models and Methods",
+      "Clustering"
+    ]
+  },
+  {
+    "objectID": "conclusions.html",
+    "href": "conclusions.html",
+    "title": "Conclusions",
+    "section": "",
+    "text": "Conclusions\nPlaceholder\n\n\nReferences",
+    "crumbs": [
+      "Conclusions"
+    ]
+  }
+]
