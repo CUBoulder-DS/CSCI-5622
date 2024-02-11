@@ -20,10 +20,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -69,6 +103,9 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -208,34 +245,495 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-collection" id="toc-data-collection" class="nav-link active" data-scroll-target="#data-collection">Data Collection</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a></li>
+  <li><a href="#data-preprocessingvisualization" id="toc-data-preprocessingvisualization" class="nav-link" data-scroll-target="#data-preprocessingvisualization">Data Preprocessing/Visualization</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page-right" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data Prep / EDA</h1>
+</div>
 
 
 
+<div class="quarto-title-meta column-body">
 
-<section id="data-prep-eda" class="level1">
-<h1>Data Prep / EDA</h1>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <p>Where the data source, processing, and visualization (EDA) is presented.</p>
-<p>LOri ipsum</p>
 <section id="data-collection" class="level2">
 <h2 class="anchored" data-anchor-id="data-collection">Data Collection</h2>
-<p>Data is gathered from an API and a website; the sources are well referenced.</p>
-<p>https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/</p>
-<p>https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset/data</p>
-<p>https://www.kaggle.com/datasets/asaniczka/amazon-products-dataset-2023-1-4m-products/data</p>
+<p>Amazon product information was scraped from the website using the API service <a href="https://www.scraperapi.com">ScraperAPI</a>; this is because, as Amazon is a hugely popular website, they have many anti-scraping measures in place such as rate-limiting, IP blocking, dymamic loading, and such. Using the external API service, these limitations were able to be avoided. The search queries chosen to search for items were based on top 100 Amazon searches, found on <a href="https://www.semrush.com/blog/most-searched-items-amazon/">this site</a> and <a href="https://ahrefs.com/blog/top-amazon-searches/">this site</a>. An example of using the API, along with its core endpoint, is below.</p>
+<div id="6100a700" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>payload <span class="op">=</span> {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">'api_key'</span>: <span class="st">'API_KEY'</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   <span class="st">'query'</span>: <span class="st">'iphone 15 charger'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   <span class="st">'s'</span>: <span class="st">'price-asc-rank'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(<span class="st">'https://api.scraperapi.com/structured/amazon/search'</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                        params<span class="op">=</span>payload).json()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The jupyter notebook code for the web scraping can be found <a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/amazon%20scraping.ipynb">here</a>.</p>
+<p>Additionally, more data was used to supplement the existing data. Since the scraped data was only about 26K rows, a <a href="https://www.kaggle.com/datasets/asaniczka/amazon-products-dataset-2023-1-4m-products/data">Kaggle dataset</a> was used that contains more than one million rows, had around the same fields as the scraped data, and was also from the USA (many Amazon Kaggle datasets were from the non-US).</p>
+<p>The raw data from both sources can be seen below in <a href="#tbl-rawdata" class="quarto-xref">Table&nbsp;1</a>:</p>
+<div class="cell" data-execution_count="3">
+<div id="tbl-rawdata" class="cell quarto-float anchored" data-execution_count="3">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rawdata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: The raw data from both datasets.
+</figcaption>
+<div aria-describedby="tbl-rawdata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<div id="tbl-rawdata-1" class="dataframe do-not-create-environment quarto-float anchored" data-border="1" data-quarto-postprocess="true">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-rawdata-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) The raw data scraped from Amazon using ScraperAPI
+</figcaption>
+<div aria-describedby="tbl-rawdata-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-rawdata-1" class="dataframe do-not-create-environment table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">type</th>
+<th data-quarto-table-cell-role="th">position</th>
+<th data-quarto-table-cell-role="th">asin</th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">image</th>
+<th data-quarto-table-cell-role="th">has_prime</th>
+<th data-quarto-table-cell-role="th">is_best_seller</th>
+<th data-quarto-table-cell-role="th">is_amazon_choice</th>
+<th data-quarto-table-cell-role="th">is_limited_deal</th>
+<th data-quarto-table-cell-role="th">stars</th>
+<th data-quarto-table-cell-role="th">total_reviews</th>
+<th data-quarto-table-cell-role="th">url</th>
+<th data-quarto-table-cell-role="th">availability_quantity</th>
+<th data-quarto-table-cell-role="th">spec</th>
+<th data-quarto-table-cell-role="th">price_string</th>
+<th data-quarto-table-cell-role="th">price_symbol</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">original_price</th>
+<th data-quarto-table-cell-role="th">section_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>search_product</td>
+<td>15</td>
+<td>B06XG67PDD</td>
+<td>AmScope3.5X-180X Trinocular Stereo Zoom Micros...</td>
+<td>https://m.media-amazon.com/images/I/61cMzreAer...</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>https://www.amazon.com/AmScope-3-5X-180X-Trino...</td>
+<td>NaN</td>
+<td>{}</td>
+<td>$1,355.99</td>
+<td>$</td>
+<td>1355.99</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>search_product</td>
+<td>26</td>
+<td>B08R6BV4GV</td>
+<td>Moda West96/180 Pack Wholesale Bulk Case of Me...</td>
+<td>https://m.media-amazon.com/images/I/71qU5avfuM...</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>4.6</td>
+<td>162.0</td>
+<td>https://www.amazon.com/180-Pairs-Ankle-Athleti...</td>
+<td>NaN</td>
+<td>{}</td>
+<td>$188.99</td>
+<td>$</td>
+<td>188.99</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>search_product</td>
+<td>20</td>
+<td>B0B2RMCCJS</td>
+<td>Eurzom10 Pairs Smiling Face Socks Elastic Ankl...</td>
+<td>https://m.media-amazon.com/images/I/81yDS7H0VF...</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>4.6</td>
+<td>298.0</td>
+<td>https://www.amazon.com/Smiling-Elastic-Aesthet...</td>
+<td>NaN</td>
+<td>{}</td>
+<td>$16.99</td>
+<td>$</td>
+<td>16.99</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>search_product</td>
+<td>18</td>
+<td>B0741DT22M</td>
+<td>Charmin Ultra Strong Toilet Paper, 18 Super Me...</td>
+<td>https://m.media-amazon.com/images/I/61nbq5MZB-...</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>4.8</td>
+<td>4766.0</td>
+<td>https://www.amazon.com/Charmin-Super-Strong-To...</td>
+<td>NaN</td>
+<td>{}</td>
+<td>$29.77</td>
+<td>$</td>
+<td>29.77</td>
+<td>{'price_string': '$32.99', 'price_symbol': '$'...</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>search_product</td>
+<td>18</td>
+<td>B08T6NF8GR</td>
+<td>Pokémon Electronic &amp; Interactive My Partner Ch...</td>
+<td>https://m.media-amazon.com/images/I/71mlLo2fSN...</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>4.6</td>
+<td>13410.0</td>
+<td>https://www.amazon.com/Electronic-Interactive-...</td>
+<td>NaN</td>
+<td>{}</td>
+<td>$22.99</td>
+<td>$</td>
+<td>22.99</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<div id="tbl-rawdata-2" class="dataframe do-not-create-environment quarto-float anchored" data-border="1" data-quarto-postprocess="true">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-rawdata-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) The raw data gotten from Kaggle
+</figcaption>
+<div aria-describedby="tbl-rawdata-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-rawdata-2" class="dataframe do-not-create-environment table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">asin</th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">imgUrl</th>
+<th data-quarto-table-cell-role="th">productURL</th>
+<th data-quarto-table-cell-role="th">stars</th>
+<th data-quarto-table-cell-role="th">reviews</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">listPrice</th>
+<th data-quarto-table-cell-role="th">category_id</th>
+<th data-quarto-table-cell-role="th">isBestSeller</th>
+<th data-quarto-table-cell-role="th">boughtInLastMonth</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>B09T6K1GX2</td>
+<td>Large Stuffed Animal Net or Hammock with LED L...</td>
+<td>https://m.media-amazon.com/images/I/711rC9E5yu...</td>
+<td>https://www.amazon.com/dp/B09T6K1GX2</td>
+<td>4.4</td>
+<td>0</td>
+<td>20.99</td>
+<td>0.00</td>
+<td>41</td>
+<td>False</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>B08Q73DYYN</td>
+<td>Girls' Bermuda Jean Shorts, Stretch Denim, Mid...</td>
+<td>https://m.media-amazon.com/images/I/91SyiIT1yR...</td>
+<td>https://www.amazon.com/dp/B08Q73DYYN</td>
+<td>4.1</td>
+<td>0</td>
+<td>21.91</td>
+<td>27.99</td>
+<td>91</td>
+<td>False</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>B09X9G9ZLJ</td>
+<td>Quest 2 Elite Strap with Battery 6000mAh Vrbor...</td>
+<td>https://m.media-amazon.com/images/I/51XjaChbqa...</td>
+<td>https://www.amazon.com/dp/B09X9G9ZLJ</td>
+<td>4.4</td>
+<td>0</td>
+<td>39.99</td>
+<td>45.99</td>
+<td>263</td>
+<td>False</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>B07C75PKMV</td>
+<td>Pearl Earrings Freshwater Pearl White Button S...</td>
+<td>https://m.media-amazon.com/images/I/51m8nl3Gxq...</td>
+<td>https://www.amazon.com/dp/B07C75PKMV</td>
+<td>4.5</td>
+<td>0</td>
+<td>19.99</td>
+<td>0.00</td>
+<td>123</td>
+<td>False</td>
+<td>50</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>B08BNH4KX3</td>
+<td>Womens Party Dress Sequins Tulle Sexy V-Neck L...</td>
+<td>https://m.media-amazon.com/images/I/61gE2aMZZS...</td>
+<td>https://www.amazon.com/dp/B08BNH4KX3</td>
+<td>4.0</td>
+<td>0</td>
+<td>78.99</td>
+<td>129.99</td>
+<td>116</td>
+<td>False</td>
+<td>50</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 <section id="data-cleaning" class="level2">
 <h2 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h2>
-<p>Data is well cleaned, and the steps are explained, with snapshots of raw and cleaned data</p>
+<p>The datasets were cleaned seperately, then concatenated, then some final steps were taken to clean it.</p>
+<p>The steps to clean the web-scaped data were:</p>
+<ul>
+<li>Add <code>date_scraped</code> column</li>
+<li>Remove unecessary columns: <code>type</code>, <code>position</code>, <code>has_prime</code>, <code>is_amazon_choice</code>, <code>is_limited_deal</code>, <code>availability_quantity</code>, <code>spec</code>, <code>price_string</code>, <code>price_symbol</code>, <code>section_name</code></li>
+<li>Expand and fix <code>original_price</code></li>
+<li>Rename columns to match standard snake case for merging both datasets</li>
+<li>Drop rows with no asin or name or price</li>
+<li>Fill NaN <code>reviews</code> column with 0</li>
+</ul>
+<p>The steps to clean the Kaggle data were:</p>
+<ul>
+<li>Add <code>date_scraped</code> column</li>
+<li>Remove unecessary columns <code>boughtInLastMonth</code></li>
+<li>Drop rows with any NaNs</li>
+<li>Fix <code>list_price</code> 0 to be instead equal to <code>price</code></li>
+<li>Change <code>category_id</code> to actual category by using <code>category</code> table</li>
+<li>Rename columns to match standard snake case for merging both datasets</li>
+</ul>
+<p>And then, after they were concatenated, the steps to clean were:</p>
+<ul>
+<li>Remove duplicates (by asin + date scraped)</li>
+<li>Rename columns</li>
+</ul>
+<p>The final cleaned (and concatenated) dataset can be seen in <a href="#tbl-finaldata" class="quarto-xref">Table&nbsp;2</a> (with the original raw data in <a href="#tbl-rawdata" class="quarto-xref">Table&nbsp;1</a>):</p>
+<div class="cell" data-execution_count="4">
+<div id="tbl-finaldata" class="cell quarto-float anchored" data-execution_count="4">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-finaldata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: The final unioned, cleaned, and processed data.
+</figcaption>
+<div aria-describedby="tbl-finaldata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Asin</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Image Url</th>
+<th data-quarto-table-cell-role="th">Is Best Seller</th>
+<th data-quarto-table-cell-role="th">Stars</th>
+<th data-quarto-table-cell-role="th">Reviews</th>
+<th data-quarto-table-cell-role="th">Url</th>
+<th data-quarto-table-cell-role="th">Price</th>
+<th data-quarto-table-cell-role="th">Date Scraped</th>
+<th data-quarto-table-cell-role="th">List Price</th>
+<th data-quarto-table-cell-role="th">Category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>B004A5Y06Q</td>
+<td>Bilstein (24-186674) 46mm Monotube Shock Absorber</td>
+<td>https://m.media-amazon.com/images/I/51ab7OHGjI...</td>
+<td>False</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>https://www.amazon.com/dp/B004A5Y06Q</td>
+<td>93.95</td>
+<td>2023-11-01</td>
+<td>93.95</td>
+<td>Automotive Performance Parts &amp; Accessories</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>B09B7P68N6</td>
+<td>Rb4364m Scuderia Ferrari Collection Aviator Su...</td>
+<td>https://m.media-amazon.com/images/I/51J4y4GNyO...</td>
+<td>False</td>
+<td>3.8</td>
+<td>0.0</td>
+<td>https://www.amazon.com/dp/B09B7P68N6</td>
+<td>240.00</td>
+<td>2023-11-01</td>
+<td>240.00</td>
+<td>Men's Accessories</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>B09CH5BQVY</td>
+<td>Hotop 8 Pieces Glass Crystal Knobs Brass Drawe...</td>
+<td>https://m.media-amazon.com/images/I/7162GE8ZM0...</td>
+<td>False</td>
+<td>4.7</td>
+<td>246.0</td>
+<td>https://www.amazon.com/dp/B09CH5BQVY</td>
+<td>18.99</td>
+<td>2023-11-01</td>
+<td>18.99</td>
+<td>Hardware</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>B0B5ZL6RGX</td>
+<td>Cat Memorial Gifts Wind Chimes,Cat Loss Sympat...</td>
+<td>https://m.media-amazon.com/images/I/71GhVMR2Ga...</td>
+<td>False</td>
+<td>4.9</td>
+<td>98.0</td>
+<td>https://www.amazon.com/dp/B0B5ZL6RGX</td>
+<td>19.99</td>
+<td>2023-11-01</td>
+<td>21.99</td>
+<td>Cat Supplies</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>B07DBTFKD9</td>
+<td>Workman SWR Meter for CB Radio Antennas SWR2T</td>
+<td>https://m.media-amazon.com/images/I/81S+RIJWDU...</td>
+<td>False</td>
+<td>4.5</td>
+<td>0.0</td>
+<td>https://www.amazon.com/dp/B07DBTFKD9</td>
+<td>20.84</td>
+<td>2023-11-01</td>
+<td>20.84</td>
+<td>Vehicle Electronics</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 <section id="data-preprocessingvisualization" class="level2">
 <h2 class="anchored" data-anchor-id="data-preprocessingvisualization">Data Preprocessing/Visualization</h2>
-<p>Data prep tab meets the minimum requirement of 10 visualizations and summarizes portions of the data</p>
+<p>Various types of EDA were performed in order to examine the data.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -626,7 +1124,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation column-page-right">
+<nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
       <a href="./intro.html" class="pagination-link  aria-label=" introduction"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>

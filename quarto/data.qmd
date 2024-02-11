@@ -2,23 +2,111 @@
 
 Where the data source, processing, and visualization (EDA) is presented.
 
+```{python}
+#| include: false
+#| label: setup
 
-LOri ipsum
+%matplotlib inline
+
+import pandas as pd
+from datetime import datetime
+import numpy as np
+
+from IPython.display import display, Latex, Markdown
+
+import plotly.express as px
+import plotly.io as pio
+# Settings for plot rendering, makes work with HTML output + jupyer lab + static output
+# pio.renderers.default = "notebook+plotly_mimetype+png"
+pio.renderers.default = "plotly_mimetype+notebook_connected+png"
+```
 
 
 ## Data Collection
-Data is gathered from an API and a website; the sources are well referenced.
 
-https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/
+Amazon product information was scraped from the website using the API service [ScraperAPI](https://www.scraperapi.com); this is because, as Amazon is a hugely popular website, they have many anti-scraping measures in place such as rate-limiting, IP blocking, dymamic loading, and such. Using the external API service, these limitations were able to be avoided. The search queries chosen to search for items were based on top 100 Amazon searches, found on [this site](https://www.semrush.com/blog/most-searched-items-amazon/) and [this site](https://ahrefs.com/blog/top-amazon-searches/). An example of using the API, along with its core endpoint, is below.
 
-https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset/data
+```{python}
+#| echo: true
+#| eval: false
 
-https://www.kaggle.com/datasets/asaniczka/amazon-products-dataset-2023-1-4m-products/data
+import requests
 
+payload = {
+   'api_key': 'API_KEY',
+   'query': 'iphone 15 charger',
+   's': 'price-asc-rank'
+}
+
+response = requests.get('https://api.scraperapi.com/structured/amazon/search',
+                        params=payload).json()
+```
+
+The jupyter notebook code for the web scraping can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/amazon%20scraping.ipynb).
+
+Additionally, more data was used to supplement the existing data. Since the scraped data was only about 26K rows, a [Kaggle dataset](
+https://www.kaggle.com/datasets/asaniczka/amazon-products-dataset-2023-1-4m-products/data) was used that contains more than one million rows, had around the same fields as the scraped data, and was also from the USA (many Amazon Kaggle datasets were from the non-US).
+
+The raw data from both sources can be seen below in @tbl-rawdata:
+
+```{python}
+#| label: tbl-rawdata
+#| tbl-cap: The raw data from both datasets.
+#| tbl-subcap:
+#|   - The raw data scraped from Amazon using ScraperAPI
+#|   - The raw data gotten from Kaggle
+
+
+df_scraped = pd.read_csv("../data/scraped/scraped1_raw.csv", index_col=0)
+display(df_scraped.sample(frac=1).reset_index(drop=True).head())
+
+df_kaggle = pd.read_csv("../data/kaggle_asaniczka/amazon_products.csv")
+display(df_kaggle.sample(frac=1).reset_index(drop=True).head())
+```
 
 
 ## Data Cleaning
-Data is well cleaned, and the steps are explained, with snapshots of raw and cleaned data
+
+The datasets were cleaned seperately, then concatenated, then some final steps were taken to clean it.
+
+The steps to clean the web-scaped data were:
+
+* Add `date_scraped` column
+* Remove unecessary columns: `type`, `position`, `has_prime`, `is_amazon_choice`, `is_limited_deal`, `availability_quantity`, `spec`, `price_string`, `price_symbol`, `section_name`
+* Expand and fix `original_price`
+* Rename columns to match standard snake case for merging both datasets
+* Drop rows with no asin or name or price
+* Fill NaN `reviews` column with 0
+
+The steps to clean the Kaggle data were:
+
+* Add `date_scraped` column
+* Remove unecessary columns `boughtInLastMonth`
+* Drop rows with any NaNs
+* Fix `list_price` 0 to be instead equal to `price`
+* Change `category_id` to actual category by using `category` table
+* Rename columns to match standard snake case for merging both datasets
+
+And then, after they were concatenated, the steps to clean were:
+
+* Remove duplicates (by asin + date scraped)
+* Rename columns
+
+The final cleaned (and concatenated) dataset can be seen in @tbl-finaldata (with the original raw data in @tbl-rawdata):
+
+```{python}
+#| label: tbl-finaldata
+#| tbl-cap: The final unioned, cleaned, and processed data.
+
+df_az = pd.read_csv("../data/products_cleaned.csv")
+
+display(df_az.sample(frac=1).reset_index(drop=True).head())
+```
+
+
 
 ## Data Preprocessing/Visualization
-Data prep tab meets the minimum requirement of 10 visualizations and summarizes portions of the data
+
+Various types of EDA were performed in order to examine the data.
+
+

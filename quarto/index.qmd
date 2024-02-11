@@ -2,7 +2,7 @@
 listing:
   type: grid
   id: listings
-  sort: "date"
+  sort: "file-modified desc"
 ---
 
 # Home {.unnumbered}
