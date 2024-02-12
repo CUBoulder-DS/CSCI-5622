@@ -82,7 +82,6 @@ The steps to clean the web-scaped data were:
 The steps to clean the Kaggle data were:
 
 * Add `date_scraped` column
-* Remove unecessary columns `boughtInLastMonth`
 * Drop rows with any NaNs
 * Fix `list_price` of $0 to be instead equal to `price`
 * Change `category_id` to actual category by using `category` table
@@ -135,6 +134,30 @@ layout(fig)
 fig.show()
 ```
 
+@fig-histstars
+
+```{python}
+#| label: fig-histstars
+#| fig-cap: Histogram of the number of stars recieved for all products.
+
+fig = px.histogram(df_az, x="Stars")
+layout(fig)
+fig.show()
+```
+
+@fig-violins
+
+::: {#fig-violins layout-ncol=2}
+
+![Violin plot of the number of a product bought in a month](images/violin_bim.png)
+
+![Violin plot of price of a product](images/violin_price.png)
+
+![Violin plot of the number of reviews](images/violin_reviews.png)
+
+Violin plots (with overlayed box plot and outliers) of 3 of the main numerical columns.
+:::
+
 
 @fig-starreview
 
@@ -159,6 +182,18 @@ fig.show(renderer="png")
 
 Wordclouds (where more frequent appearing words are bigger) of the categories of products and the names of products.
 :::
+
+@fig-prstars
+
+```{python}
+#| label: fig-prstars
+#| fig-cap: The number of stars a product recieved, vs the price in log scale, colored by whether the product was a best seller.
+
+fig = px.scatter(df_az, x="Stars", y="Price", color="Is Best Seller", opacity=0.3, log_y=True,
+                    title="Number of Stars vs Price")
+layout(fig)
+fig.show(renderer="png")
+```
 
 ### Investigation of products in both sets of data
 
