@@ -76,6 +76,7 @@ The steps to clean the web-scaped data were:
 * Expand and fix `original_price`
 * Rename columns to match standard snake case for merging both datasets
 * Drop rows with no asin or name or price
+* Drop rows with price of 0.0, since that doesn't make sense
 * Fill NaN `reviews` column with 0
 
 The steps to clean the Kaggle data were:
@@ -83,8 +84,9 @@ The steps to clean the Kaggle data were:
 * Add `date_scraped` column
 * Remove unecessary columns `boughtInLastMonth`
 * Drop rows with any NaNs
-* Fix `list_price` 0 to be instead equal to `price`
+* Fix `list_price` of $0 to be instead equal to `price`
 * Change `category_id` to actual category by using `category` table
+* Drop rows with price of $0, since that doesn't make sense
 * Rename columns to match standard snake case for merging both datasets
 
 And then, after they were concatenated, the steps to clean were:
@@ -112,6 +114,12 @@ The code for the data cleaning can be found [here](https://github.com/CUBoulder-
 ## Data Preprocessing / Visualization
 
 Various types of EDA were performed in order to examine the data; as a note, most visuals are interactive (zoomable, pannable, etc). The code for all visualizations can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/data%20cleaning%20EDA.ipynb).
+
+::: callout-tip
+## Important
+
+If the interactive figures don't load, dont worry: just turn off all ad-blockers/privacy browsing, make sure you are using Chrome/Firefox, and refresh the page until all figures load.
+:::
 
 @fig-cathist
 
