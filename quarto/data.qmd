@@ -160,6 +160,10 @@ fig.show(renderer="png")
 Wordclouds (where more frequent appearing words are bigger) of the categories of products and the names of products.
 :::
 
+### Investigation of products in both sets of data
+
+The following plots focused on products that had the same Asin (identifying ID), that were in both the data personally scraped in 2024 and the Kaggle data from 2023. Investigating this subset of data could reveal a lot about how product prices, reviews, and other factors changed over time, as the only way to get time difference data was to use products that actually had more than one timepoint.
+
 
 @fig-dupescatter
 
@@ -194,6 +198,7 @@ diffs = df_dupes[["Asin", "Date Scraped", "Price", "List Price"]].set_index("Asi
 df_dupes["Price Diff"] = diffs["Price"]
 df_dupes["List Price Diff"] = diffs["List Price"]
 df_dupes["Increased"] = df_dupes["Price Diff"] > 0
+df_dupes["Category"] = df_dupes["Category"].ffill()
 
 df_diffs = df_dupes[~df_dupes["Price Diff"].isna()][df_dupes["Price"] < 800]
 
@@ -211,6 +216,23 @@ fig.show()
 
 fig = px.scatter(df_diffs, x="Price", y="Price Diff", color="Increased", hover_data=["Name", "Asin"], opacity=0.4,
                 title="Price vs Price Difference")
+layout(fig)
+fig.show()
+```
+
+
+Only categories with more than 20 products were included, to reduce noise and to focus on meaningful categories. @fig-dupecats
+
+```{python}
+#| label: fig-dupecats
+#| fig-cap: For the included categories, a bar chat showing the ratio of products that had their price increase over time vs decrease.
+
+df_diffcats = df_diffs[df_diffs["Category"].isin(df_diffs["Category"].value_counts()[df_diffs["Category"].value_counts() > 20].index)]
+df_catcounts = (df_diffcats.groupby(["Category", "Increased"])["index"].sum() / df_diffcats.groupby("Category")["index"].sum()).reset_index()
+df_catcounts = df_catcounts.dropna()
+
+fig = px.bar(df_catcounts, y="Category", x="index", color="Increased")
+fig.update_layout(height=800, xaxis_title="Ratio")
 layout(fig)
 fig.show()
 ```
