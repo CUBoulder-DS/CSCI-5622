@@ -47,7 +47,7 @@ The jupyter notebook code for the web scraping can be found [here](https://githu
 Additionally, more data was used to supplement the existing data. Since the scraped data was only about 26K rows, a [Kaggle dataset](
 https://www.kaggle.com/datasets/asaniczka/amazon-products-dataset-2023-1-4m-products/data) was used that contains more than one million rows, had around the same fields as the scraped data, and was also from the USA (many Amazon Kaggle datasets were from the non-US).
 
-The raw data from both sources can be seen below in @tbl-rawdata:
+The raw data from both sources can be seen below in @tbl-rawdata; the scraped raw data CSV can also be viewed [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/scraped/scraped1_raw.csv).
 
 ```{python}
 #| label: tbl-rawdata
@@ -100,13 +100,109 @@ The final cleaned (and concatenated) dataset can be seen in @tbl-finaldata (with
 
 df_az = pd.read_csv("../data/products_cleaned.csv")
 
+df_az["Category"] = df_az["Category"].astype("category")
+df_az["Date Scraped"] = df_az["Date Scraped"].astype("datetime64[ns]")
+
 display(df_az.sample(frac=1).reset_index(drop=True).head())
 ```
 
+The code for the data cleaning can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/data%20cleaning%20EDA.ipynb).
 
 
-## Data Preprocessing/Visualization
+## Data Preprocessing / Visualization
 
-Various types of EDA were performed in order to examine the data.
+Various types of EDA were performed in order to examine the data; as a note, most visuals are interactive (zoomable, pannable, etc). The code for all visualizations can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/data%20cleaning%20EDA.ipynb).
+
+@fig-cathist
+
+```{python}
+#| label: fig-cathist
+#| fig-cap: A histogram of all categories of all Amazon products. Note scraped data did not have categories, but the Kaggle data did.
+
+def layout(fig):
+    fig.update_layout(paper_bgcolor="rgba(0, 0, 0, 0)", font_color="lightgreen")
+
+fig = px.histogram(df_az, x="Category", title="Histogram of Product Categories")
+layout(fig)
+fig.show()
+```
 
 
+@fig-starreview
+
+```{python}
+#| label: fig-starreview
+#| fig-cap: Stars vs number of reviews recieved by an amazon product, colored by whether the product was a best-seller.
+
+fig = px.scatter(df_az, x="Reviews", y="Stars", color="Is Best Seller", opacity=0.3,
+                 title="Stars vs Number of Reviews")
+layout(fig)
+fig.show(renderer="png")
+```
+
+
+@fig-wordclouds
+
+::: {#fig-wordclouds layout-ncol=2}
+
+![Wordcloud for categories of products](images/wordcloud_cats.png)
+
+![Wordcloud for the names of products](images/wordcloud_names.png)
+
+Wordclouds (where more frequent appearing words are bigger) of the categories of products and the names of products.
+:::
+
+
+@fig-dupescatter
+
+
+```{python}
+#| label: fig-dupescatter
+#| fig-cap: Price vs list price of items with the same ASIN across dates scraped, with a trendline.
+
+df_dupes = df_az[df_az["Asin"].duplicated(keep=False)].sort_values(["Asin", "Date Scraped"]).reset_index()
+
+fig = px.scatter(df_dupes,
+                 x='Price',
+                 y='List Price',
+                 color="Date Scraped",
+                 trendline="ols",
+                 title="Price vs List Price of Items with Dupe Asin Across Dates Scraped",
+                )
+fig.update_layout(height=500)
+layout(fig)
+fig.show()
+```
+
+Given that we can see outliers in price affecting the plot of the graph, it was decided for analysis to only consider those prices most populous, aka prices less than $800.
+
+@fig-dupehist
+
+```{python}
+#| label: fig-dupehist
+#| fig-cap: Histogram of prices, colored by whether the change in price increased or decreased over time, for those items that were in both sets of data.
+
+diffs = df_dupes[["Asin", "Date Scraped", "Price", "List Price"]].set_index("Asin").groupby(level=0).diff().reset_index()
+df_dupes["Price Diff"] = diffs["Price"]
+df_dupes["List Price Diff"] = diffs["List Price"]
+df_dupes["Increased"] = df_dupes["Price Diff"] > 0
+
+df_diffs = df_dupes[~df_dupes["Price Diff"].isna()][df_dupes["Price"] < 800]
+
+fig = px.histogram(df_diffs, x="Price", color="Increased", marginal="violin",
+                    title="Histogram of Prices")
+layout(fig)
+fig.show()
+```
+
+@fig-dupediff
+
+```{python}
+#| label: fig-dupediff
+#| fig-cap: Price vs the difference in price, over the two sets of data, colored by whether the price diff increased or decreased.
+
+fig = px.scatter(df_diffs, x="Price", y="Price Diff", color="Increased", hover_data=["Name", "Asin"], opacity=0.4,
+                title="Price vs Price Difference")
+layout(fig)
+fig.show()
+```
