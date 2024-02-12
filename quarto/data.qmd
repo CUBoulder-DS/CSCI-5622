@@ -117,10 +117,10 @@ Various types of EDA were performed in order to examine the data; as a note, mos
 ::: callout-tip
 ## Important
 
-If the interactive figures don't load, dont worry: just turn off all ad-blockers/privacy browsing, make sure you are using Chrome/Firefox, and refresh the page until all figures load.
+If the interactive figures don't load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website) until all figures load.
 :::
 
-@fig-cathist
+First, a histogram of all categories of all Amazon products is shown in  @fig-cathist. Note scraped data did not have categories, but the Kaggle data did. It can be seen that from the figure, girl's and boy's clothing are the most populous categories, with toys & games the next most populous.
 
 ```{python}
 #| label: fig-cathist
@@ -134,7 +134,7 @@ layout(fig)
 fig.show()
 ```
 
-@fig-histstars
+@fig-histstars shows a histogram of the stars recieved for a product. It can be seen that the number of stars increases generally exponentially until 4.6 stars, with peaks at 0 and 5 stars as well. This data generally agrees with what can be seen on Amazon when browsing personally, and the peaks at 0 and 5 agree with having low number of reviews.
 
 ```{python}
 #| label: fig-histstars
@@ -145,7 +145,12 @@ layout(fig)
 fig.show()
 ```
 
-@fig-violins
+@fig-violins shows violin plots of the numerical factors: volume of product bought in the month, the price of a product, and the number of reviews. A violin plot was chosen because a histogram would be visually uninformative, due to the amount of outliers. Some insights that can be drawn from these violin plots are:
+
+* These factors have a good number of outliers that are extremely large in value compared to the general distribution of values. This does not seem to be from incorrect values, but from sellers attempting to "game the system".
+* "Bought in Month" has outliers that are regularly spaced, indicating either a form of gaming the system by sellers that tend to follow specific formats, or Amazon only reports volume of bought products at low granularity for high-volume products.
+* Price tends to have outliers that continue regularly up the price scale, except for a couple at the $60-70k range. It is unclear whether to drop those rows containing those prices as they seem valid; it is entirely possible that sellers just list the product at a completely unreasonable price as a placeholder, and don't expect anyone to purchase at that price.
+* The number of reviews for a product have been shown to be easily gameable with fake reviews, and is likely what is happening here.
 
 ::: {#fig-violins layout-ncol=2}
 
@@ -159,7 +164,7 @@ Violin plots (with overlayed box plot and outliers) of 3 of the main numerical c
 :::
 
 
-@fig-starreview
+The amount of stars, vs the number of reviews for a product can be seen in @fig-starreview, colored with the `Is Best Seller` flag. It can be seen that the distribution of `Is Best Seller` items tends to follow the overall distribution; additionally, the number of reviews tends to increase as the number of stars increases, with the products with the outlier number of reviews (over 200k) all above 4 stars.
 
 ```{python}
 #| label: fig-starreview
@@ -172,7 +177,7 @@ fig.show(renderer="png")
 ```
 
 
-@fig-wordclouds
+In order to visualize the content of the text factors, namely the `Category` and `Name` of a product, a wordcloud format was used; wordclouds visualize the words that tend to appear in the text with the more frequent words appearing in larger text. In @fig-wordclouds, it can be seen that in the categories, "Care", "Products", "Boy's Clothing", "Consoles", "Accessories", and "Games" appear most. In the names of procucts, the words "Stainles Steel", "Compatible", "Heavy Duty", "Boy", "Girl", and "Birthday" appear the most.
 
 ::: {#fig-wordclouds layout-ncol=2}
 
@@ -183,7 +188,7 @@ fig.show(renderer="png")
 Wordclouds (where more frequent appearing words are bigger) of the categories of products and the names of products.
 :::
 
-@fig-prstars
+The number of stars vs price, with price being on a log scale (to hangle outliers) is shown in @fig-prstars, along with being colored by if it's a best seller. As was seen in @fig-starreview, the distribution of `Is Best Seller` items tends to follow the overall distribution; additionally, it can be seen that there are products with a price up to $10k across all number of stars.
 
 ```{python}
 #| label: fig-prstars
@@ -200,7 +205,7 @@ fig.show(renderer="png")
 The following plots focused on products that had the same Asin (identifying ID), that were in both the data personally scraped in 2024 and the Kaggle data from 2023. Investigating this subset of data could reveal a lot about how product prices, reviews, and other factors changed over time, as the only way to get time difference data was to use products that actually had more than one timepoint.
 
 
-@fig-dupescatter
+@fig-dupescatter shows the price vs list price of items, colored by what date they were scraped on, with a trendline plotted. It can be seen that on the whole, list price and actual price match and that prices seem to have increased since 2023 to 2024; however, below $50 price (when zooming in) the trendlines cross, implying that lower-priced products actually decreased in price.
 
 
 ```{python}
@@ -221,9 +226,7 @@ layout(fig)
 fig.show()
 ```
 
-Given that we can see outliers in price affecting the plot of the graph, it was decided for analysis to only consider those prices most populous, aka prices less than $800.
-
-@fig-dupehist
+Given that outliers can be seen in price affecting the plot of the graph, it was decided for analysis to only consider those prices most populous, aka prices less than $800. Given that, the prices of each Asin were plotted, along with being colored by if the price increased from 2023 to 2024, or decreased. It can be seen that in @fig-dupehist that indeed for lower priced products (less than $50) the prices mostly did not increase, and instead decreased or stayed the same. The histogram shows the frequency of higher-priced procucts generally exponentially decreasing, and the likelihood of the price increasing going up.
 
 ```{python}
 #| label: fig-dupehist
@@ -243,7 +246,7 @@ layout(fig)
 fig.show()
 ```
 
-@fig-dupediff
+@fig-dupediff shows a more granular form of the previous plot by plotting price vs the actual price difference amount from 2023 to 2024, with the ability to investigate which products are having such a dramatic increase or decrease in price over time. It can be seen that tech and suitcases were the outliers in price increase, and tech also being the outliers in price decrease.
 
 ```{python}
 #| label: fig-dupediff
@@ -256,7 +259,7 @@ fig.show()
 ```
 
 
-Only categories with more than 20 products were included, to reduce noise and to focus on meaningful categories. @fig-dupecats
+Finally, it was investigated as to which product categories exactly had a price increase or decrease, and the ratio of number of increases to decreases. Only categories with more than 20 products were included, to reduce noise and to focus on meaningful categories. In @fig-dupecats, it can be seen that "Sports and Outdoors", "Makeup", "Electrical Equipment", and "Building Toys" all had more price increases than decreases; every other product category had more price decreases than increases, with "Smart Homes" and "Gift Cards" having the most price decreases.
 
 ```{python}
 #| label: fig-dupecats
@@ -267,7 +270,7 @@ df_catcounts = (df_diffcats.groupby(["Category", "Increased"])["index"].sum() / 
 df_catcounts = df_catcounts.dropna()
 
 fig = px.bar(df_catcounts, y="Category", x="index", color="Increased")
-fig.update_layout(height=800, xaxis_title="Ratio")
+fig.update_layout(height=800, xaxis_title="Ratio", xaxis_range=[0, 1])
 layout(fig)
 fig.show()
 ```

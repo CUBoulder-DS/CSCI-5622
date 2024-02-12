@@ -45,8 +45,9 @@ format:
     number-sections: false
     citations-hover: true
     quarto-required: ">= 1.4.0" # To fix crossrefs
-    linkcolor: lightblue
+    linkcolor: lightgreen
     toc: true
+    toc-expand: 4
     grid:
       body-width: 1200px
     # code-block-background: true

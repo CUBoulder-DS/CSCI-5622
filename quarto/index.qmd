@@ -3,6 +3,7 @@ listing:
   type: grid
   id: listings
   sort: "file-modified desc"
+toc: false
 ---
 
 # Home {.unnumbered}
