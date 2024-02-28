@@ -8,15 +8,10 @@ toc: false
 
 # Home {.unnumbered}
 
-::: callout-note
-## CSCI 5622
-
-By Bhavana Jonnalagadda
-:::
 
 ::: {.columns}
 ::: {.column width="60%"}
-Welcome to the homepage for machine learning on Amazon retail product data! You can see all pages listed below, or use the navbar to navigate the pages.
+Welcome to the homepage for machine learning on Amazon retail product data, made by Bhavana Jonnalagadda! You can see all pages listed below, or use the navbar to navigate the pages.
 :::
 
 ::: {.column width="30%"}

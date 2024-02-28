@@ -2,16 +2,16 @@
   {
     "listing": "/index.html",
     "items": [
-      "/data.html",
-      "/intro.html",
-      "/conclusions.html",
+      "/models/pca.html",
       "/models/clustering.html",
+      "/intro.html",
+      "/data.html",
+      "/conclusions.html",
       "/models/nn.html",
       "/models/regression.html",
       "/models/svm.html",
       "/models/dtrees.html",
-      "/models/bayes.html",
-      "/models/arm.html"
+      "/models/bayes.html"
     ]
   }
 ]

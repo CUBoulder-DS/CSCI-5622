@@ -1,0 +1,168 @@
+# PCA and SVD
+
+Where Principal Component Analysis and Singular Value Decomposition are used, for dimensionality reduction and EDA.
+
+```{python}
+#| include: false
+#| label: setup
+
+import pandas as pd
+import numpy as np
+import os
+
+from IPython.display import display
+
+import plotly
+import plotly.express as px
+import plotly.io as pio
+import plotly.graph_objects as go
+# Settings for plot rendering, makes work with HTML output + jupyer lab + static output
+pio.renderers.default = "plotly_mimetype+notebook_connected+png"
+```
+
+## Overview
+
+::: {.columns}
+::: {.column}
+Principal Component Analysis (PCA) is a dimensionality reduction technique commonly used in data analysis and ML. At its core, PCA aims to transform high-dimensional data into a lower-dimensional space while preserving the most important information. This is achieved by identifying the directions of maximum variance in the original data, known as principal components. These principal components are the eigenvectors of the covariance matrix of the data, with their corresponding eigenvalues equaling the amount of variance explained by each principal component (PC). By retaining the PCs that capture the majority of the variance, PCA enables dimensionality reduction without significant loss of information.
+
+Reducing the dimensionality of data is crucial for simplifying analysis and visualization, as it alleviates the curse of dimensionality and reduces computational complexity. High-dimensional data presents challenges such as increased computational cost, sparsity, and overfitting, which can get in the way of analysis and interpretation. Dimensionality reduction techniques like PCA help address these challenges by capturing the essential structure of the data in a lower-dimensional space, making it easier to visualize, interpret, and analyze complex datasets. Also, reducing dimensionality can improve the performance of machine learning algorithms by reducing noise, mitigating overfitting, enhancing model generalization, and potentially increasing the speed of training/evaluation of the models with the reduced amount of data.
+:::
+
+::: {.column width=5%}
+<!-- Spacing column -->
+:::
+
+::: {.column width=30% }
+![An example 3-dimensional data set. The red, blue, green arrows are the direction of the first, second, and third principal components generated from it, respectively.](../images/pca_ex1.jpeg)
+
+![Scatterplot after PCA reduced from 3-dimensions to 2-dimensions.](../images/pca_ex2.jpeg)
+:::
+:::
+
+In this specific project, PCA is used to reduce the amount of numerical/boolean factors to just 2 factors, which then enables the examination of those 2 components visually. The relationship between the reduced-dimension factors and the original factors in the dataset is explored, showing the effect and importance of the various factors. And especially since there are more than 1 million rows in the dataset, every amount of data reduction is helpful for subsequent machine learning model training.
+
+
+
+
+## Data Preperation
+
+```{python}
+#| include: false
+
+data_path = os.path.normpath("../../data/products_cleaned.csv")
+
+# For standardizing the plots to match what's on website
+def layout(fig):
+    fig.update_layout(paper_bgcolor="rgba(0, 0, 0, 0)", font_color="lightgreen")
+
+df_az = pd.read_csv(data_path, dtype={"Category": "category"}, parse_dates=["Date Scraped"])
+```
+
+@tbl-pcadata
+
+```{python}
+#| label: tbl-pcadata
+#| layout-ncol: 2
+#| tbl-cap: A random sample of the data used with PCA.
+#| tbl-subcap:
+#|   - Unscaled data
+#|   - Scaled (by min/max) data
+
+df_pca = df_az.select_dtypes(include=[bool, np.number])
+df_pca["Is Best Seller"] = df_pca["Is Best Seller"].astype(int)
+df_pca = df_pca.fillna(0)
+
+display(df_pca.sample(frac=1).reset_index(drop=True).head())
+
+df_pca_scaled = (df_pca-df_pca.min())/(df_pca.max()-df_pca.min())
+
+display(df_pca_scaled.sample(frac=1).reset_index(drop=True).head())
+```
+
+
+## Code
+
+::: {.columns}
+::: {.column}
+The jupyter notebook code for running the PCA can be found [here](), or click on the link card to the right.
+:::
+
+::: {.column width=10%}
+<!-- Spacing column -->
+:::
+
+::: {.column width=30%}
+[![](https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png)](https://github.com/CUBoulder-DS/CSCI-5622)
+:::
+:::
+
+
+## Results
+
+::: callout-tip
+## Important
+
+If the interactive figures don't load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website tab) until all figures load.
+:::
+
+```{python}
+#| label: fig-evbar
+#| fig-cap: A bar chart of the explained variance ratios of each principal component, and the cummulative percentage of the ratios
+
+ev_ratios = [9.26318388e-01, 5.54266166e-02, 1.82461238e-02, 8.72660644e-06]
+
+fig = px.bar(x=["PC1", "PC2", "PC3", "PC4"], y=ev_ratios)
+fig.add_scatter(x=["PC1", "PC2", "PC3", "PC4"],
+                y=np.cumsum(ev_ratios),
+                mode="lines+markers+text",
+                text=["92.6%", "98.2%", "99.9%", "99.9%"],
+                textposition="top center",
+                textfont=dict(color="darkgreen", size=13),
+                line_color="green")
+layout(fig)
+fig.update_layout(showlegend=False, height=600, width=500, xaxis_title="Principal Component", yaxis_title="Explained Variance Ratio")
+fig.show()
+```
+
+
+@fig-pcs
+
+::: {#fig-pcs layout-ncol=2 fig-cap-location=top}
+
+![TODO](../images/pca_f1.png)
+
+![TODO](../images/pca_f4.png)
+
+![TODO](../images/pca_f2.png)
+
+![TODO](../images/pca_f5.png)
+
+![TODO](../images/pca_f3.png)
+
+![TODO](../images/pca_f6.png)
+
+![TODO](../images/pca_cat_pcs.png)
+
+The found principal components, colored by a feature in the dataset where the feature has visible stratification in the PCs.
+:::
+
+### Relationship of Variables and PCs
+
+::: {.columns}
+::: {.column width=30%}
+![An example of the projection of the original data points onto the reduced-dimension line of an eigenvector. The angle/direction of the line is computationally chosen to maximize the sum of all the variance, aka the dotted lines.](../images/pca_ex3.jpeg)
+:::
+
+::: {.column width=5%}
+<!-- Spacing column -->
+:::
+
+::: {.column}
+:::
+:::
+
+
+
+## Conclusions
+
