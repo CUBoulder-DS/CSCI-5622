@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.521">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -248,12 +248,8 @@ div.csl-indent {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>In today’s digital landscape dominated by e-commerce giants such as Amazon, the analysis of retail product data assumes paramount importance as a means to unravel the intricacies of consumer behavior, and unveil the complex relationships that exist between various products. The topic of this project poses a fundamental assertion: that mining the vast repository of Amazon’s retail product data holds the key to unlocking invaluable insights that can revolutionize marketing strategies, inform product development, and optimize overall business operations. This assertion underscores the critical role of data analytics in shaping the success trajectory of businesses operating in the contemporary marketplace. By delving into the granular details of consumer interactions with products on Amazon’s platform, stakeholders gain not only a deeper understanding of consumer preferences but also a nuanced perspective on the dynamics of the digital marketplace itself. The implications of this analysis extend far beyond mere academic curiosity; they are deeply intertwined with the strategic imperatives of businesses seeking to thrive amidst fierce competition and rapid technological advancements. The significance of analyzing Amazon retail product data transcends individual businesses, permeating into the realms of consumer behavior, marketing efficacy, policymaking, and academic research.</p>
-</div><div class="column" style="width:5%;">
-<!-- empty column to create gap -->
-</div><div class="column" style="width:35%;">
+<div style="width:100%;">
+<div style="float:right; width:50%; padding:3%">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/amazon_screenshot.png" class="img-fluid figure-img"></p>
@@ -262,21 +258,19 @@ div.csl-indent {
 </div>
 </div>
 </div>
+<p>In today’s digital landscape dominated by e-commerce giants such as Amazon, the analysis of retail product data assumes paramount importance as a means to unravel the intricacies of consumer behavior, and unveil the complex relationships that exist between various products. The topic of this project poses a fundamental assertion: that mining the vast repository of Amazon’s retail product data holds the key to unlocking invaluable insights that can revolutionize marketing strategies, inform product development, and optimize overall business operations. This assertion underscores the critical role of data analytics in shaping the success trajectory of businesses operating in the contemporary marketplace. By delving into the granular details of consumer interactions with products on Amazon’s platform, stakeholders gain not only a deeper understanding of consumer preferences but also a nuanced perspective on the dynamics of the digital marketplace itself. The implications of this analysis extend far beyond mere academic curiosity; they are deeply intertwined with the strategic imperatives of businesses seeking to thrive amidst fierce competition and rapid technological advancements. The significance of analyzing Amazon retail product data transcends individual businesses, permeating into the realms of consumer behavior, marketing efficacy, policymaking, and academic research.</p>
 <p>At its core, this endeavor resonates with a diverse array of stakeholders, each with a vested interest in deciphering the underlying patterns shaping modern consumption patterns and economic dynamics. Consumers, for instance, stand to benefit from the insights gleaned through data analysis, which can translate into more personalized shopping experiences, enhanced product recommendations, and greater transparency within the marketplace. Much work has been done, for example, to improve search engine results and product classification for recommendation purposes <span class="citation" data-cites="MediniAmazon BrentRecommender">(<a href="#ref-MediniAmazon" role="doc-biblioref">Medini et al. 2019</a>; <a href="#ref-BrentRecommender" role="doc-biblioref">Smith and Linden 2017</a>)</span>. Marketers, on the other hand, find in this data a treasure trove of actionable intelligence, enabling them to fine-tune advertising strategies, optimize pricing models, and anticipate shifts in consumer preferences with a heightened degree of accuracy <span class="citation" data-cites="ChenPricing ChevalierPrice">(<a href="#ref-ChenPricing" role="doc-biblioref">Chen, Mislove, and Wilson 2016</a>; <a href="#ref-ChevalierPrice" role="doc-biblioref">Chevalier and Goolsbee 2003</a>)</span>. Furthermore, researchers across various disciplines are drawn to the rich dataset offered by Amazon, utilizing sophisticated analytical techniques ranging from machine learning algorithms to traditional statistical methods to unravel the complexities of consumer behavior and product relationships <span class="citation" data-cites="ShakilaRecommender BellVis">(<a href="#ref-ShakilaRecommender" role="doc-biblioref">Shaikh, Rathi, and Janrao 2017</a>; <a href="#ref-BellVis" role="doc-biblioref">Bell and Bala 2015</a>)</span>. Despite the considerable strides made in this field, there remains an abundance of untapped potential, beckoning further exploration and innovation to fully harness the transformative power of Amazon’s retail product data.</p>
-<div class="columns">
-<div class="column" style="width:35%;">
+<div style="width:100%;">
+<div style="float:left; width:60%; padding:2%">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/ml_retail.jpg" class="img-fluid figure-img"></p>
 <figcaption>ML in retail</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:5%;">
-<!-- empty column to create gap -->
-</div><div class="column" style="width:60%;">
-<p>Lori Ipsum</p>
 </div>
 </div>
+<p>In this project, machine learning methods play a pivotal role in extracting meaningful insights from the vast sea of Amazon’s retail product data. Techniques such as Principal Component Analysis (PCA) enable dimensionality reduction, allowing for the identification of key features influencing consumer behavior. Clustering algorithms group similar products or consumers together, facilitating targeted marketing strategies and personalized recommendations. Neural networks, with their ability to learn intricate patterns, offer valuable predictive capabilities, aiding in demand forecasting and inventory management. Regression analysis uncovers relationships between variables, potentially helping businesses understand the impact of pricing, promotions, and other factors on sales. Support Vector Machines (SVM), Naive Bayes, and decision trees provide additional tools for classification and prediction tasks, enriching the analytical toolkit available to researchers and practitioners alike. Through the application of these advanced methodologies, one can navigate the complexities of the digital marketplace, leveraging data-driven insights to drive innovation and strategic decision-making.</p>
 <section id="questions-to-answer" class="level2">
 <h2 class="anchored" data-anchor-id="questions-to-answer">Questions to Answer</h2>
 <ol type="1">
@@ -445,6 +439,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
     if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
@@ -459,14 +474,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             break;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
+        typesetMath(container);
         return container.innerHTML
       } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
+        typesetMath(note);
         return note.innerHTML;
       }
     } else {
@@ -475,15 +486,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (anchorLink) {
         anchorLink.remove();
       }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      typesetMath(note);
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

@@ -1,34 +1,22 @@
 # Introduction
 
-::: {.columns}
-::: {.column width="60%"}
-In today's digital landscape dominated by e-commerce giants such as Amazon, the analysis of retail product data assumes paramount importance as a means to unravel the intricacies of consumer behavior, and unveil the complex relationships that exist between various products. The topic of this project poses a fundamental assertion: that mining the vast repository of Amazon's retail product data holds the key to unlocking invaluable insights that can revolutionize marketing strategies, inform product development, and optimize overall business operations. This assertion underscores the critical role of data analytics in shaping the success trajectory of businesses operating in the contemporary marketplace. By delving into the granular details of consumer interactions with products on Amazon's platform, stakeholders gain not only a deeper understanding of consumer preferences but also a nuanced perspective on the dynamics of the digital marketplace itself. The implications of this analysis extend far beyond mere academic curiosity; they are deeply intertwined with the strategic imperatives of businesses seeking to thrive amidst fierce competition and rapid technological advancements. The significance of analyzing Amazon retail product data transcends individual businesses, permeating into the realms of consumer behavior, marketing efficacy, policymaking, and academic research.
-:::
-
-::: {.column width="5%"}
-<!-- empty column to create gap -->
-:::
-
-::: {.column width="35%"}
+::: {style="width:100%;"}
+::: {style="float:right; width:50%; padding:3%"}
 ![An example of navigating Amazon](images/amazon_screenshot.png)
 :::
 :::
 
+In today's digital landscape dominated by e-commerce giants such as Amazon, the analysis of retail product data assumes paramount importance as a means to unravel the intricacies of consumer behavior, and unveil the complex relationships that exist between various products. The topic of this project poses a fundamental assertion: that mining the vast repository of Amazon's retail product data holds the key to unlocking invaluable insights that can revolutionize marketing strategies, inform product development, and optimize overall business operations. This assertion underscores the critical role of data analytics in shaping the success trajectory of businesses operating in the contemporary marketplace. By delving into the granular details of consumer interactions with products on Amazon's platform, stakeholders gain not only a deeper understanding of consumer preferences but also a nuanced perspective on the dynamics of the digital marketplace itself. The implications of this analysis extend far beyond mere academic curiosity; they are deeply intertwined with the strategic imperatives of businesses seeking to thrive amidst fierce competition and rapid technological advancements. The significance of analyzing Amazon retail product data transcends individual businesses, permeating into the realms of consumer behavior, marketing efficacy, policymaking, and academic research.
+
 At its core, this endeavor resonates with a diverse array of stakeholders, each with a vested interest in deciphering the underlying patterns shaping modern consumption patterns and economic dynamics. Consumers, for instance, stand to benefit from the insights gleaned through data analysis, which can translate into more personalized shopping experiences, enhanced product recommendations, and greater transparency within the marketplace. Much work has been done, for example, to improve search engine results and product classification for recommendation purposes [@MediniAmazon; @BrentRecommender]. Marketers, on the other hand, find in this data a treasure trove of actionable intelligence, enabling them to fine-tune advertising strategies, optimize pricing models, and anticipate shifts in consumer preferences with a heightened degree of accuracy [@ChenPricing; @ChevalierPrice]. Furthermore, researchers across various disciplines are drawn to the rich dataset offered by Amazon, utilizing sophisticated analytical techniques ranging from machine learning algorithms to traditional statistical methods to unravel the complexities of consumer behavior and product relationships [@ShakilaRecommender; @BellVis]. Despite the considerable strides made in this field, there remains an abundance of untapped potential, beckoning further exploration and innovation to fully harness the transformative power of Amazon's retail product data.
 
-::: {.columns}
-::: {.column width="35%"}
+::: {style="width:100%;"}
+::: {style="float:left; width:60%; padding:2%"}
 ![ML in retail](images/ml_retail.jpg)
 :::
-
-::: {.column width="5%"}
-<!-- empty column to create gap -->
 :::
 
-::: {.column width="60%"}
-Lori Ipsum
-:::
-:::
+In this project, machine learning methods play a pivotal role in extracting meaningful insights from the vast sea of Amazon's retail product data. Techniques such as Principal Component Analysis (PCA) enable dimensionality reduction, allowing for the identification of key features influencing consumer behavior. Clustering algorithms group similar products or consumers together, facilitating targeted marketing strategies and personalized recommendations. Neural networks, with their ability to learn intricate patterns, offer valuable predictive capabilities, aiding in demand forecasting and inventory management. Regression analysis uncovers relationships between variables, potentially helping businesses understand the impact of pricing, promotions, and other factors on sales. Support Vector Machines (SVM), Naive Bayes, and decision trees provide additional tools for classification and prediction tasks, enriching the analytical toolkit available to researchers and practitioners alike. Through the application of these advanced methodologies, one can navigate the complexities of the digital marketplace, leveraging data-driven insights to drive innovation and strategic decision-making.
 
 ## Questions to Answer
 

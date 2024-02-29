@@ -11,14 +11,22 @@ Where the data source, processing, and visualization (EDA) is presented.
 import pandas as pd
 from datetime import datetime
 import numpy as np
+import os
 
 from IPython.display import display, Latex, Markdown
 
+import plotly
 import plotly.express as px
 import plotly.io as pio
-# Settings for plot rendering, makes work with HTML output + jupyer lab + static output
-# pio.renderers.default = "notebook+plotly_mimetype+png"
-pio.renderers.default = "plotly_mimetype+notebook_connected+png"
+import plotly.graph_objects as go
+
+import sys
+module_path = os.path.abspath("models")
+if module_path not in sys.path:
+    sys.path.append(module_path)
+
+# Must be at end to override
+from common_funcs import *
 ```
 
 
@@ -57,10 +65,10 @@ The raw data from both sources can be seen below in @tbl-rawdata; the scraped ra
 #|   - The raw data gotten from Kaggle
 
 
-df_scraped = pd.read_csv("../data/scraped/scraped1_raw.csv", index_col=0)
+df_scraped = pd.read_csv(os.path.normpath("../data/scraped/scraped1_raw.csv"), index_col=0)
 display(df_scraped.sample(frac=1).reset_index(drop=True).head())
 
-df_kaggle = pd.read_csv("../data/kaggle_asaniczka/amazon_products.csv")
+df_kaggle = pd.read_csv(os.path.normpath("../data/kaggle_asaniczka/amazon_products.csv"))
 display(df_kaggle.sample(frac=1).reset_index(drop=True).head())
 ```
 
@@ -99,7 +107,7 @@ The final cleaned (and concatenated) dataset can be seen in @tbl-finaldata (with
 #| label: tbl-finaldata
 #| tbl-cap: The final unioned, cleaned, and processed data.
 
-df_az = pd.read_csv("../data/products_cleaned.csv")
+df_az = pd.read_csv(os.path.normpath("../data/products_cleaned.csv"))
 
 df_az["Category"] = df_az["Category"].astype("category")
 df_az["Date Scraped"] = df_az["Date Scraped"].astype("datetime64[ns]")

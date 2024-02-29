@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.521">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,7 +82,7 @@ if (typeof require !== 'undefined') {
 require.undef("plotly");
 requirejs.config({
     paths: {
-        'plotly': ['https://cdn.plot.ly/plotly-2.25.2.min']
+        'plotly': ['https://cdn.plot.ly/plotly-2.27.0.min']
     }
 });
 require(['plotly'], function(Plotly) {
@@ -268,20 +271,19 @@ require(['plotly'], function(Plotly) {
 <p>Where Principal Component Analysis and Singular Value Decomposition are used, for dimensionality reduction and EDA.</p>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<div class="columns">
-<div class="column">
-<p>Principal Component Analysis (PCA) is a dimensionality reduction technique commonly used in data analysis and ML. At its core, PCA aims to transform high-dimensional data into a lower-dimensional space while preserving the most important information. This is achieved by identifying the directions of maximum variance in the original data, known as principal components. These principal components are the eigenvectors of the covariance matrix of the data, with their corresponding eigenvalues equaling the amount of variance explained by each principal component (PC). By retaining the PCs that capture the majority of the variance, PCA enables dimensionality reduction without significant loss of information.</p>
-<p>Reducing the dimensionality of data is crucial for simplifying analysis and visualization, as it alleviates the curse of dimensionality and reduces computational complexity. High-dimensional data presents challenges such as increased computational cost, sparsity, and overfitting, which can get in the way of analysis and interpretation. Dimensionality reduction techniques like PCA help address these challenges by capturing the essential structure of the data in a lower-dimensional space, making it easier to visualize, interpret, and analyze complex datasets. Also, reducing dimensionality can improve the performance of machine learning algorithms by reducing noise, mitigating overfitting, enhancing model generalization, and potentially increasing the speed of training/evaluation of the models with the reduced amount of data.</p>
-</div><div class="column" style="width:5%;">
-<!-- Spacing column -->
-</div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-center">
+<div style="width:100%;">
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2" style="float:right; width:65%; padding:2%">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
 <p><img src="../images/pca_ex1.jpeg" class="img-fluid figure-img"></p>
 <figcaption>An example 3-dimensional data set. The red, blue, green arrows are the direction of the first, second, and third principal components generated from it, respectively.</figcaption>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
 <p><img src="../images/pca_ex2.jpeg" class="img-fluid figure-img"></p>
 <figcaption>Scatterplot after PCA reduced from 3-dimensions to 2-dimensions.</figcaption>
@@ -289,6 +291,9 @@ require(['plotly'], function(Plotly) {
 </div>
 </div>
 </div>
+</div>
+<p>Principal Component Analysis (PCA) is a dimensionality reduction technique commonly used in data analysis and ML. At its core, PCA aims to transform high-dimensional data into a lower-dimensional space while preserving the most important information. This is achieved by identifying the directions of maximum variance in the original data, known as principal components. These principal components are the eigenvectors of the covariance matrix of the data, with their corresponding eigenvalues equaling the amount of variance explained by each principal component (PC). By retaining the PCs that capture the majority of the variance, PCA enables dimensionality reduction without significant loss of information.</p>
+<p>Reducing the dimensionality of data is crucial for simplifying analysis and visualization, as it alleviates the curse of dimensionality and reduces computational complexity. High-dimensional data presents challenges such as increased computational cost, sparsity, and overfitting, which can get in the way of analysis and interpretation. Dimensionality reduction techniques like PCA help address these challenges by capturing the essential structure of the data in a lower-dimensional space, making it easier to visualize, interpret, and analyze complex datasets. Also, reducing dimensionality can improve the performance of machine learning algorithms by reducing noise, mitigating overfitting, enhancing model generalization, and potentially increasing the speed of training/evaluation of the models with the reduced amount of data.</p>
 <p>In this specific project, PCA is used to reduce the amount of numerical/boolean factors to just 2 factors, which then enables the examination of those 2 components visually. The relationship between the reduced-dimension factors and the original factors in the dataset is explored, showing the effect and importance of the various factors. And especially since there are more than 1 million rows in the dataset, every amount of data reduction is helpful for subsequent machine learning model training.</p>
 </section>
 <section id="data-preperation" class="level2">
@@ -300,181 +305,141 @@ require(['plotly'], function(Plotly) {
 Table&nbsp;1: A random sample of the data used with PCA.
 </figcaption>
 <div aria-describedby="tbl-pcadata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
+<div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-pcadata" style="flex-basis: 50.0%;justify-content: center;">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+<style type="text/css">
 </style>
 
-<div id="tbl-pcadata-1" class="dataframe do-not-create-environment quarto-float anchored" data-quarto-postprocess="true" data-border="1">
+<div id="tbl-pcadata-1" data-quarto-postprocess="true" class="anchored">
 <figure class="quarto-float quarto-subfloat-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-pcadata-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Unscaled data
 </figcaption>
 <div aria-describedby="tbl-pcadata-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table id="tbl-pcadata-1" class="dataframe do-not-create-environment table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table id="tbl-pcadata-1" data-quarto-postprocess="true" class="table">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Is Best Seller</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Stars</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Reviews</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Price</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">List Price</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Bought In Month</th>
+<th id="T_a68ca_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Is Best Seller</th>
+<th id="T_a68ca_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Stars</th>
+<th id="T_a68ca_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">Reviews</th>
+<th id="T_a68ca_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">Price</th>
+<th id="T_a68ca_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">List Price</th>
+<th id="T_a68ca_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">Bought In Month</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th">0</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">4.8</td>
-<td style="text-align: left;">0.0</td>
-<td style="text-align: left;">216.00</td>
-<td style="text-align: left;">379.00</td>
-<td style="text-align: left;">0.0</td>
+<td id="T_a68ca_row0_col0" class="data row0 col0" style="text-align: left;">0</td>
+<td id="T_a68ca_row0_col1" class="data row0 col1" style="text-align: left;">3.9</td>
+<td id="T_a68ca_row0_col2" class="data row0 col2" style="text-align: left;">1.62e+03</td>
+<td id="T_a68ca_row0_col3" class="data row0 col3" style="text-align: left;">6.99</td>
+<td id="T_a68ca_row0_col4" class="data row0 col4" style="text-align: left;">6.99</td>
+<td id="T_a68ca_row0_col5" class="data row0 col5" style="text-align: left;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;" data-quarto-table-cell-role="th">1</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">4.6</td>
-<td style="text-align: left;">0.0</td>
-<td style="text-align: left;">8.99</td>
-<td style="text-align: left;">8.99</td>
-<td style="text-align: left;">600.0</td>
+<td id="T_a68ca_row1_col0" class="data row1 col0" style="text-align: left;">0</td>
+<td id="T_a68ca_row1_col1" class="data row1 col1" style="text-align: left;">4.3</td>
+<td id="T_a68ca_row1_col2" class="data row1 col2" style="text-align: left;">0</td>
+<td id="T_a68ca_row1_col3" class="data row1 col3" style="text-align: left;">6.99</td>
+<td id="T_a68ca_row1_col4" class="data row1 col4" style="text-align: left;">6.99</td>
+<td id="T_a68ca_row1_col5" class="data row1 col5" style="text-align: left;">100</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th">2</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">4.6</td>
-<td style="text-align: left;">0.0</td>
-<td style="text-align: left;">59.99</td>
-<td style="text-align: left;">59.99</td>
-<td style="text-align: left;">50.0</td>
+<td id="T_a68ca_row2_col0" class="data row2 col0" style="text-align: left;">0</td>
+<td id="T_a68ca_row2_col1" class="data row2 col1" style="text-align: left;">4.8</td>
+<td id="T_a68ca_row2_col2" class="data row2 col2" style="text-align: left;">0</td>
+<td id="T_a68ca_row2_col3" class="data row2 col3" style="text-align: left;">11</td>
+<td id="T_a68ca_row2_col4" class="data row2 col4" style="text-align: left;">11</td>
+<td id="T_a68ca_row2_col5" class="data row2 col5" style="text-align: left;">50</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;" data-quarto-table-cell-role="th">3</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">4.5</td>
-<td style="text-align: left;">832.0</td>
-<td style="text-align: left;">29.99</td>
-<td style="text-align: left;">29.99</td>
-<td style="text-align: left;">300.0</td>
+<td id="T_a68ca_row3_col0" class="data row3 col0" style="text-align: left;">0</td>
+<td id="T_a68ca_row3_col1" class="data row3 col1" style="text-align: left;">4.6</td>
+<td id="T_a68ca_row3_col2" class="data row3 col2" style="text-align: left;">0</td>
+<td id="T_a68ca_row3_col3" class="data row3 col3" style="text-align: left;">31</td>
+<td id="T_a68ca_row3_col4" class="data row3 col4" style="text-align: left;">31</td>
+<td id="T_a68ca_row3_col5" class="data row3 col5" style="text-align: left;">300</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th">4</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">4.2</td>
-<td style="text-align: left;">0.0</td>
-<td style="text-align: left;">20.72</td>
-<td style="text-align: left;">24.59</td>
-<td style="text-align: left;">0.0</td>
+<td id="T_a68ca_row4_col0" class="data row4 col0" style="text-align: left;">0</td>
+<td id="T_a68ca_row4_col1" class="data row4 col1" style="text-align: left;">4.5</td>
+<td id="T_a68ca_row4_col2" class="data row4 col2" style="text-align: left;">0</td>
+<td id="T_a68ca_row4_col3" class="data row4 col3" style="text-align: left;">10.4</td>
+<td id="T_a68ca_row4_col4" class="data row4 col4" style="text-align: left;">11</td>
+<td id="T_a68ca_row4_col5" class="data row4 col5" style="text-align: left;">400</td>
 </tr>
 </tbody>
 </table>
 </div>
 </figure>
 </div>
-
-</div>
 </div>
 <div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-pcadata" style="flex-basis: 50.0%;justify-content: center;">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+<style type="text/css">
 </style>
 
-<div id="tbl-pcadata-2" class="dataframe do-not-create-environment quarto-float anchored" data-quarto-postprocess="true" data-border="1">
+<div id="tbl-pcadata-2" data-quarto-postprocess="true" class="anchored">
 <figure class="quarto-float quarto-subfloat-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-pcadata-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Scaled (by min/max) data
 </figcaption>
 <div aria-describedby="tbl-pcadata-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table id="tbl-pcadata-2" class="dataframe do-not-create-environment table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table id="tbl-pcadata-2" data-quarto-postprocess="true" class="table">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Is Best Seller</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Stars</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Reviews</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Price</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">List Price</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Bought In Month</th>
+<th id="T_1a8e6_level0_col0" class="col_heading level0 col0" style="text-align: left;" data-quarto-table-cell-role="th">Is Best Seller</th>
+<th id="T_1a8e6_level0_col1" class="col_heading level0 col1" style="text-align: left;" data-quarto-table-cell-role="th">Stars</th>
+<th id="T_1a8e6_level0_col2" class="col_heading level0 col2" style="text-align: left;" data-quarto-table-cell-role="th">Reviews</th>
+<th id="T_1a8e6_level0_col3" class="col_heading level0 col3" style="text-align: left;" data-quarto-table-cell-role="th">Price</th>
+<th id="T_1a8e6_level0_col4" class="col_heading level0 col4" style="text-align: left;" data-quarto-table-cell-role="th">List Price</th>
+<th id="T_1a8e6_level0_col5" class="col_heading level0 col5" style="text-align: left;" data-quarto-table-cell-role="th">Bought In Month</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th">0</td>
-<td style="text-align: left;">0.0</td>
-<td style="text-align: left;">0.96</td>
-<td style="text-align: left;">0.000000</td>
-<td style="text-align: left;">0.000216</td>
-<td style="text-align: left;">0.000369</td>
-<td style="text-align: left;">0.000</td>
+<td id="T_1a8e6_row0_col0" class="data row0 col0" style="text-align: left;">0</td>
+<td id="T_1a8e6_row0_col1" class="data row0 col1" style="text-align: left;">0.86</td>
+<td id="T_1a8e6_row0_col2" class="data row0 col2" style="text-align: left;">7.08e-05</td>
+<td id="T_1a8e6_row0_col3" class="data row0 col3" style="text-align: left;">0.00149</td>
+<td id="T_1a8e6_row0_col4" class="data row0 col4" style="text-align: left;">0.00241</td>
+<td id="T_1a8e6_row0_col5" class="data row0 col5" style="text-align: left;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;" data-quarto-table-cell-role="th">1</td>
-<td style="text-align: left;">0.0</td>
-<td style="text-align: left;">0.90</td>
-<td style="text-align: left;">0.000515</td>
-<td style="text-align: left;">0.000118</td>
-<td style="text-align: left;">0.000148</td>
-<td style="text-align: left;">0.020</td>
+<td id="T_1a8e6_row1_col0" class="data row1 col0" style="text-align: left;">0</td>
+<td id="T_1a8e6_row1_col1" class="data row1 col1" style="text-align: left;">0.88</td>
+<td id="T_1a8e6_row1_col2" class="data row1 col2" style="text-align: left;">0.00398</td>
+<td id="T_1a8e6_row1_col3" class="data row1 col3" style="text-align: left;">0.000385</td>
+<td id="T_1a8e6_row1_col4" class="data row1 col4" style="text-align: left;">0.000385</td>
+<td id="T_1a8e6_row1_col5" class="data row1 col5" style="text-align: left;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th">2</td>
-<td style="text-align: left;">0.0</td>
-<td style="text-align: left;">1.00</td>
-<td style="text-align: left;">0.000000</td>
-<td style="text-align: left;">0.000141</td>
-<td style="text-align: left;">0.000141</td>
-<td style="text-align: left;">0.000</td>
+<td id="T_1a8e6_row2_col0" class="data row2 col0" style="text-align: left;">0</td>
+<td id="T_1a8e6_row2_col1" class="data row2 col1" style="text-align: left;">0.94</td>
+<td id="T_1a8e6_row2_col2" class="data row2 col2" style="text-align: left;">0.000983</td>
+<td id="T_1a8e6_row2_col3" class="data row2 col3" style="text-align: left;">0.00265</td>
+<td id="T_1a8e6_row2_col4" class="data row2 col4" style="text-align: left;">0.00324</td>
+<td id="T_1a8e6_row2_col5" class="data row2 col5" style="text-align: left;">0.001</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;" data-quarto-table-cell-role="th">3</td>
-<td style="text-align: left;">0.0</td>
-<td style="text-align: left;">0.96</td>
-<td style="text-align: left;">0.000000</td>
-<td style="text-align: left;">0.000326</td>
-<td style="text-align: left;">0.000355</td>
-<td style="text-align: left;">0.002</td>
+<td id="T_1a8e6_row3_col0" class="data row3 col0" style="text-align: left;">0</td>
+<td id="T_1a8e6_row3_col1" class="data row3 col1" style="text-align: left;">0</td>
+<td id="T_1a8e6_row3_col2" class="data row3 col2" style="text-align: left;">0</td>
+<td id="T_1a8e6_row3_col3" class="data row3 col3" style="text-align: left;">0.000207</td>
+<td id="T_1a8e6_row3_col4" class="data row3 col4" style="text-align: left;">0.000207</td>
+<td id="T_1a8e6_row3_col5" class="data row3 col5" style="text-align: left;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th">4</td>
-<td style="text-align: left;">0.0</td>
-<td style="text-align: left;">0.92</td>
-<td style="text-align: left;">0.000000</td>
-<td style="text-align: left;">0.000429</td>
-<td style="text-align: left;">0.000548</td>
-<td style="text-align: left;">0.001</td>
+<td id="T_1a8e6_row4_col0" class="data row4 col0" style="text-align: left;">0</td>
+<td id="T_1a8e6_row4_col1" class="data row4 col1" style="text-align: left;">0.72</td>
+<td id="T_1a8e6_row4_col2" class="data row4 col2" style="text-align: left;">0</td>
+<td id="T_1a8e6_row4_col3" class="data row4 col3" style="text-align: left;">0.000171</td>
+<td id="T_1a8e6_row4_col4" class="data row4 col4" style="text-align: left;">0.000171</td>
+<td id="T_1a8e6_row4_col5" class="data row4 col5" style="text-align: left;">0</td>
 </tr>
 </tbody>
 </table>
 </div>
 </figure>
-</div>
-
 </div>
 </div>
 </div>
@@ -486,9 +451,15 @@ Table&nbsp;1: A random sample of the data used with PCA.
 <h2 class="anchored" data-anchor-id="code">Code</h2>
 <div class="columns">
 <div class="column">
-<p>The jupyter notebook code for running the PCA can be found <a href="">here</a>, or click on the link card to the right.</p>
+<p>The jupyter notebook code for running the PCA can be found <a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/PCA%20SVD.ipynb">here</a>, or click on the link card to the right.</p>
+</div><div class="column" style="width:10%;">
+<!-- Spacing column -->
 </div><div class="column" style="width:30%;">
-<p><a href="https://github.com/CUBoulder-DS/CSCI-5622"><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png" class="img-fluid"></a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/PCA%20SVD.ipynb" height="120px"><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png" height="120" class="figure-img"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -507,13 +478,18 @@ Important
 <p>If the interactive figures don’t load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website tab) until all figures load.</p>
 </div>
 </div>
-<div id="cell-fig-evbar" class="cell" data-execution_count="4">
-<div id="fig-evbar" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored">
+<p><a href="#fig-evbar" class="quarto-xref">Figure&nbsp;1</a></p>
+<div id="fig-evbar" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-evbar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div>                            <div id="20739b8b-12dc-4fc2-8246-6d14d9e56c51" class="plotly-graph-div" style="height:600px; width:500px;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("20739b8b-12dc-4fc2-8246-6d14d9e56c51")) {                    Plotly.newPlot(                        "20739b8b-12dc-4fc2-8246-6d14d9e56c51",                        [{"alignmentgroup":"True","hovertemplate":"x=%{x}\u003cbr\u003ey=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"v","showlegend":false,"textposition":"auto","x":["PC1","PC2","PC3","PC4"],"xaxis":"x","y":[0.926318388,0.0554266166,0.0182461238,8.72660644e-6],"yaxis":"y","type":"bar"},{"line":{"color":"green"},"mode":"lines+markers+text","text":["92.6%","98.2%","99.9%","99.9%"],"textfont":{"color":"darkgreen","size":13},"textposition":"top center","x":["PC1","PC2","PC3","PC4"],"y":[0.926318388,0.9817450046,0.9999911284,0.9999998550064401],"type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Principal Component"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Explained Variance Ratio"}},"legend":{"tracegroupgap":0},"barmode":"relative","font":{"color":"lightgreen"},"paper_bgcolor":"rgba(0, 0, 0, 0)","showlegend":false,"height":600,"width":500},                        {"responsive": true}                    ).then(function(){
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-evbar" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-evbar-1" class="cell-output cell-output-display quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-evbar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>                            <div id="040b1cb7-c1ca-4cac-9783-4bc82a1168e2" class="plotly-graph-div" style="height:525px; width:300px;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("040b1cb7-c1ca-4cac-9783-4bc82a1168e2")) {                    Plotly.newPlot(                        "040b1cb7-c1ca-4cac-9783-4bc82a1168e2",                        [{"alignmentgroup":"True","hovertemplate":"x=%{x}\u003cbr\u003ey=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636EFA","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"v","showlegend":false,"textposition":"auto","x":["PC1","PC2","PC3","PC4"],"xaxis":"x","y":[0.926318388,0.0554266166,0.0182461238,8.72660644e-06],"yaxis":"y","type":"bar"},{"line":{"color":"green"},"mode":"lines+markers+text","textfont":{"color":"darkgreen","size":13},"textposition":"top center","texttemplate":"%{y:.1%}","x":["PC1","PC2","PC3","PC4"],"y":[0.926318388,0.9817450046,0.9999911284,0.9999998550064401],"type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636EFA","#00CC96","#AB63FA","#FFA15A","#19D3F3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"lightgreen"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30},"paper_bgcolor":"rgba(0, 0, 0, 0)","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Principal Component"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Explained Variance Ratio"}},"legend":{"tracegroupgap":0},"barmode":"relative","showlegend":false,"width":300},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('20739b8b-12dc-4fc2-8246-6d14d9e56c51');
+var gd = document.getElementById('040b1cb7-c1ca-4cac-9783-4bc82a1168e2');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -537,11 +513,54 @@ if (outputEl) {{
 
                         })                };                });            </script>        </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-evbar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: A bar chart of the explained variance ratios of each principal component, and the cummulative percentage of the ratios
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-evbar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Unscaled data
 </figcaption>
 </figure>
 </div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-evbar" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-evbar-2" class="cell-output cell-output-display quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-evbar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>                            <div id="d0219204-ccaf-4dcf-b59e-e8c45a07b62e" class="plotly-graph-div" style="height:525px; width:300px;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("d0219204-ccaf-4dcf-b59e-e8c45a07b62e")) {                    Plotly.newPlot(                        "d0219204-ccaf-4dcf-b59e-e8c45a07b62e",                        [{"alignmentgroup":"True","hovertemplate":"x=%{x}\u003cbr\u003ey=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636EFA","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"v","showlegend":false,"textposition":"auto","x":["PC1","PC2","PC3","PC4","PC5"],"xaxis":"x","y":[0.52386047,0.24187108,0.1572563,0.04710463,0.02847362],"yaxis":"y","type":"bar"},{"line":{"color":"green"},"mode":"lines+markers+text","textfont":{"color":"darkgreen","size":13},"textposition":"top center","texttemplate":"%{y:.1%}","x":["PC1","PC2","PC3","PC4","PC5"],"y":[0.52386047,0.76573155,0.92298785,0.97009248,0.9985661],"type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636EFA","#00CC96","#AB63FA","#FFA15A","#19D3F3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"lightgreen"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30},"paper_bgcolor":"rgba(0, 0, 0, 0)","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Principal Component"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Explained Variance Ratio"}},"legend":{"tracegroupgap":0},"barmode":"relative","showlegend":false,"width":300},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('d0219204-ccaf-4dcf-b59e-e8c45a07b62e');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-evbar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Scaled (and outliers removed) data
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-evbar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A bar chart of the explained variance ratios of each principal component, and the scree plot of cummulative percentage of the ratios, for both the normal and scaled data.
+</figcaption>
+</figure>
 </div>
 <p><a href="#fig-pcs" class="quarto-xref">Figure&nbsp;2</a></p>
 <div id="fig-pcs" class="quarto-layout-panel">
@@ -550,68 +569,54 @@ Figure&nbsp;1: A bar chart of the explained variance ratios of each principal co
 Figure&nbsp;2: The found principal components, colored by a feature in the dataset where the feature has visible stratification in the PCs.
 </figcaption>
 <div aria-describedby="fig-pcs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><img src="../images/pca_f1.png" class="img-fluid figure-img"></p>
+<p><a href="../images/pca_f7.png" class="lightbox" data-description="" data-gallery="quarto-lightbox-gallery-1" title="TODO"><img src="../images/pca_f7.png" class="img-fluid figure-img"></a></p>
+<figcaption>TODO</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<figure class="figure">
+<p><a href="../images/pca_f3.png" class="lightbox" data-description="" data-gallery="quarto-lightbox-gallery-2" title="TODO"><img src="../images/pca_f3.png" class="img-fluid figure-img"></a></p>
 <figcaption>TODO</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><img src="../images/pca_f4.png" class="img-fluid figure-img"></p>
+<p><a href="../images/pca_f4.png" class="lightbox" data-description="" data-gallery="quarto-lightbox-gallery-3" title="TODO"><img src="../images/pca_f4.png" class="img-fluid figure-img"></a></p>
+<figcaption>TODO</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<figure class="figure">
+<p><a href="../images/pca_f1.png" class="lightbox" data-description="" data-gallery="quarto-lightbox-gallery-4" title="TODO"><img src="../images/pca_f1.png" class="img-fluid figure-img"></a></p>
 <figcaption>TODO</figcaption>
 </figure>
 </div>
 </div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><img src="../images/pca_f2.png" class="img-fluid figure-img"></p>
+<p><a href="../images/pca_f5.png" class="lightbox" data-description="" data-gallery="quarto-lightbox-gallery-5" title="TODO"><img src="../images/pca_f5.png" class="img-fluid figure-img"></a></p>
+<figcaption>TODO</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<figure class="figure">
+<p><a href="../images/pca_f2.png" class="lightbox" data-description="" data-gallery="quarto-lightbox-gallery-6" title="TODO"><img src="../images/pca_f2.png" class="img-fluid figure-img"></a></p>
 <figcaption>TODO</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><img src="../images/pca_f5.png" class="img-fluid figure-img"></p>
+<p><a href="../images/pca_f6.png" class="lightbox" data-description="" data-gallery="quarto-lightbox-gallery-7" title="TODO"><img src="../images/pca_f6.png" class="img-fluid figure-img"></a></p>
 <figcaption>TODO</figcaption>
 </figure>
-</div>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../images/pca_f3.png" class="img-fluid figure-img"></p>
-<figcaption>TODO</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../images/pca_f6.png" class="img-fluid figure-img"></p>
-<figcaption>TODO</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../images/pca_cat_pcs.png" class="img-fluid figure-img"></p>
-<figcaption>TODO</figcaption>
-</figure>
-</div>
 </div>
 </div>
 </div>
@@ -627,6 +632,8 @@ Figure&nbsp;2: The found principal components, colored by a feature in the datas
 <figcaption>An example of the projection of the original data points onto the reduced-dimension line of an eigenvector. The angle/direction of the line is computationally chosen to maximize the sum of all the variance, aka the dotted lines.</figcaption>
 </figure>
 </div>
+</div><div class="column" style="width:5%;">
+<!-- Spacing column -->
 </div><div class="column">
 
 </div>
@@ -768,6 +775,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
     if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
@@ -782,14 +810,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             break;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
+        typesetMath(container);
         return container.innerHTML
       } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
+        typesetMath(note);
         return note.innerHTML;
       }
     } else {
@@ -798,15 +822,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (anchorLink) {
         anchorLink.remove();
       }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      typesetMath(note);
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -1040,6 +1057,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"openEffect":"zoom","descPosition":"bottom","selector":".lightbox"});</script>
 
 
 
