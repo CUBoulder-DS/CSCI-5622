@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/data.html",
       "/models/pca.html",
+      "/data.html",
       "/intro.html",
       "/models/clustering.html",
       "/conclusions.html",

@@ -71,7 +71,12 @@ df_pca = df_pca.fillna(0)
 
 df_show_rand_sample(df_pca)
 
-df_pca_scaled = (df_pca-df_pca.min())/(df_pca.max()-df_pca.min())
+outlier_cols = ["Reviews", "Price", "List Price", "Bought In Month"]
+q99 = df_pca[outlier_cols].quantile(0.99)
+
+# Remove outliers and scale
+df_pca_scaled = df_pca[~(df_pca[outlier_cols] >= q99).any(axis=1)]
+df_pca_scaled = (df_pca_scaled-df_pca_scaled.min())/(df_pca_scaled.max()-df_pca_scaled.min())
 
 df_show_rand_sample(df_pca_scaled)
 ```

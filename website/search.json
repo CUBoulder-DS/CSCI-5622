@@ -40,7 +40,7 @@
     "href": "models/pca.html#data-preperation",
     "title": "PCA and SVD",
     "section": "Data Preperation",
-    "text": "Data Preperation\nTable 1\n\n\n\nTable 1: A random sample of the data used with PCA.\n\n\n\n\n\n\n\n\n\n(a) Unscaled data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n3.9\n1.62e+03\n6.99\n6.99\n0\n\n\n0\n4.3\n0\n6.99\n6.99\n100\n\n\n0\n4.8\n0\n11\n11\n50\n\n\n0\n4.6\n0\n31\n31\n300\n\n\n0\n4.5\n0\n10.4\n11\n400\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Scaled (by min/max) data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n0.86\n7.08e-05\n0.00149\n0.00241\n0\n\n\n0\n0.88\n0.00398\n0.000385\n0.000385\n0\n\n\n0\n0.94\n0.000983\n0.00265\n0.00324\n0.001\n\n\n0\n0\n0\n0.000207\n0.000207\n0\n\n\n0\n0.72\n0\n0.000171\n0.000171\n0",
+    "text": "Data Preperation\nTable 1\n\n\n\nTable 1: A random sample of the data used with PCA.\n\n\n\n\n\n\n\n\n\n(a) Unscaled data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n0\n0\n111\n145\n0\n\n\n0\n4.6\n0\n18\n18\n0\n\n\n0\n4.6\n0\n15\n15\n50\n\n\n0\n4.5\n23\n20\n20\n500\n\n\n0\n0\n0\n260\n260\n0\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Scaled (by min/max) data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n0.96\n0\n0.0652\n0.0601\n0\n\n\n0\n0\n0\n0.0239\n0.022\n0\n\n\n0\n0.96\n0\n0.052\n0.048\n0.05\n\n\n0\n0.96\n0\n0.0261\n0.0241\n0\n\n\n0\n0\n0\n0.063\n0.0581\n0",
     "crumbs": [
       "Code",
       "Models and Methods",
@@ -112,7 +112,7 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "Home\n\n\nWelcome to the homepage for machine learning on Amazon retail product data, made by Bhavana Jonnalagadda! You can see all pages listed below, or use the navbar to navigate the pages.\n\n\n\n\n\n\n\n\n\n\n\n\nData Prep / EDA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPCA and SVD\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nClustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConclusions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNeural Networks\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRegression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSVM (Support Vector Machine)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDecision Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNaive Bayes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
+    "text": "Home\n\n\nWelcome to the homepage for machine learning on Amazon retail product data, made by Bhavana Jonnalagadda! You can see all pages listed below, or use the navbar to navigate the pages.\n\n\n\n\n\n\n\n\n\n\n\n\nPCA and SVD\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nData Prep / EDA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nClustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConclusions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNeural Networks\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRegression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSVM (Support Vector Machine)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDecision Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNaive Bayes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Code",
       "Home"
