@@ -2,10 +2,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/models/clustering.html",
       "/models/pca.html",
       "/data.html",
       "/intro.html",
-      "/models/clustering.html",
       "/conclusions.html",
       "/models/nn.html",
       "/models/regression.html",

@@ -40,7 +40,7 @@
     "href": "models/pca.html#data-preperation",
     "title": "PCA and SVD",
     "section": "Data Preperation",
-    "text": "Data Preperation\nTable 1\n\n\n\nTable 1: A random sample of the data used with PCA.\n\n\n\n\n\n\n\n\n\n(a) Unscaled data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n0\n0\n111\n145\n0\n\n\n0\n4.6\n0\n18\n18\n0\n\n\n0\n4.6\n0\n15\n15\n50\n\n\n0\n4.5\n23\n20\n20\n500\n\n\n0\n0\n0\n260\n260\n0\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Scaled (by min/max) data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n0.96\n0\n0.0652\n0.0601\n0\n\n\n0\n0\n0\n0.0239\n0.022\n0\n\n\n0\n0.96\n0\n0.052\n0.048\n0.05\n\n\n0\n0.96\n0\n0.0261\n0.0241\n0\n\n\n0\n0\n0\n0.063\n0.0581\n0",
+    "text": "Data Preperation\nTable 1\n\n\n\nTable 1: A random sample of the data used with PCA.\n\n\n\n\n\n\n\n\n\n(a) Unscaled data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n4.3\n0\n6.69\n9.19\n400\n\n\n0\n5\n3\n120\n120\n0\n\n\n0\n4.5\n0\n12.9\n12.9\n100\n\n\n0\n5\n0\n6.99\n6.99\n0\n\n\n0\n4.4\n274\n3.55\n4.98\n300\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Scaled (by min/max) data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n0.92\n0\n0.0588\n0.0544\n0\n\n\n0\n0\n0\n0.0411\n0.0381\n0\n\n\n0\n0.94\n0\n0.0496\n0.046\n0.111\n\n\n0\n0.9\n0\n0.265\n0.264\n0.111\n\n\n0\n0\n0\n0.0191\n0.0177\n0",
     "crumbs": [
       "Code",
       "Models and Methods",
@@ -112,7 +112,7 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "Home\n\n\nWelcome to the homepage for machine learning on Amazon retail product data, made by Bhavana Jonnalagadda! You can see all pages listed below, or use the navbar to navigate the pages.\n\n\n\n\n\n\n\n\n\n\n\n\nPCA and SVD\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nData Prep / EDA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nClustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConclusions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNeural Networks\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRegression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSVM (Support Vector Machine)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDecision Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNaive Bayes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
+    "text": "Home\n\n\nWelcome to the homepage for machine learning on Amazon retail product data, made by Bhavana Jonnalagadda! You can see all pages listed below, or use the navbar to navigate the pages.\n\n\n\n\n\n\n\n\n\n\n\n\nClustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPCA and SVD\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nData Prep / EDA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConclusions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNeural Networks\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRegression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSVM (Support Vector Machine)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDecision Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNaive Bayes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Code",
       "Home"
@@ -123,7 +123,7 @@
     "href": "conclusions.html",
     "title": "Conclusions",
     "section": "",
-    "text": "Conclusions\nPlaceholder\n\n\nReferences\n\n\nBell, Sean, and Kavita Bala. 2015. “Learning Visual Similarity for Product Design with Convolutional Neural Networks.” ACM Trans. Graph. 34 (4). https://doi.org/10.1145/2766959.\n\n\nChen, Le, Alan Mislove, and Christo Wilson. 2016. “An Empirical Analysis of Algorithmic Pricing on Amazon Marketplace.” In Proceedings of the 25th International Conference on World Wide Web, 1339–49. WWW ’16. Republic; Canton of Geneva, CHE: International World Wide Web Conferences Steering Committee. https://doi.org/10.1145/2872427.2883089.\n\n\nChevalier, Judith, and Austan Goolsbee. 2003. “Measuring Prices and Price Competition Online: Amazon.com and BarnesandNoble.com.” Quantitative Marketing and Economics 1 (2): 203–22. https://doi.org/10.1023/A:1024634613982.\n\n\nMedini, Tharun, Qixuan Huang, Yiqiu Wang, Vijai Mohan, and Anshumali Shrivastava. 2019. “Extreme Classification in Log Memory Using Count-Min Sketch: A Case Study of Amazon Search with 50M Products.” CoRR abs/1910.13830. http://arxiv.org/abs/1910.13830.\n\n\nShaikh, Shakila, Sheetal Rathi, and Prachi Janrao. 2017. “Recommendation System in e-Commerce Websites: A Graph Based Approached.” In 2017 IEEE 7th International Advance Computing Conference (IACC), 931–34. https://doi.org/10.1109/IACC.2017.0189.\n\n\nSmith, Brent, and Greg Linden. 2017. “Two Decades of Recommender Systems at Amazon.com.” IEEE Internet Computing 21 (3): 12–18. https://doi.org/10.1109/MIC.2017.72.",
+    "text": "Conclusions\nPlaceholder\n\n\nReferences\n\n\nBell, Sean, and Kavita Bala. 2015. “Learning Visual Similarity for Product Design with Convolutional Neural Networks.” ACM Trans. Graph. 34 (4). https://doi.org/10.1145/2766959.\n\n\nChen, Le, Alan Mislove, and Christo Wilson. 2016. “An Empirical Analysis of Algorithmic Pricing on Amazon Marketplace.” In Proceedings of the 25th International Conference on World Wide Web, 1339–49. WWW ’16. Republic; Canton of Geneva, CHE: International World Wide Web Conferences Steering Committee. https://doi.org/10.1145/2872427.2883089.\n\n\nChevalier, Judith, and Austan Goolsbee. 2003. “Measuring Prices and Price Competition Online: Amazon.com and BarnesandNoble.com.” Quantitative Marketing and Economics 1 (2): 203–22. https://doi.org/10.1023/A:1024634613982.\n\n\nMedini, Tharun, Qixuan Huang, Yiqiu Wang, Vijai Mohan, and Anshumali Shrivastava. 2019. “Extreme Classification in Log Memory Using Count-Min Sketch: A Case Study of Amazon Search with 50M Products.” CoRR abs/1910.13830. http://arxiv.org/abs/1910.13830.\n\n\nPedregosa, F., G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, et al. 2011. “Scikit-Learn: Machine Learning in Python.” Journal of Machine Learning Research 12: 2825–30.\n\n\nShaikh, Shakila, Sheetal Rathi, and Prachi Janrao. 2017. “Recommendation System in e-Commerce Websites: A Graph Based Approached.” In 2017 IEEE 7th International Advance Computing Conference (IACC), 931–34. https://doi.org/10.1109/IACC.2017.0189.\n\n\nSmith, Brent, and Greg Linden. 2017. “Two Decades of Recommender Systems at Amazon.com.” IEEE Internet Computing 21 (3): 12–18. https://doi.org/10.1109/MIC.2017.72.\n\n\nVos, Nelis J. de. 2015--2024. “Kmodes Categorical Clustering Library.” https://github.com/nicodv/kmodes.",
     "crumbs": [
       "Code",
       "Conclusions"
@@ -200,7 +200,7 @@
     "href": "models/clustering.html",
     "title": "Clustering",
     "section": "",
-    "text": "Clustering in order to discover patterns in the data.\n\n\nHere, describe clustering, including partitional vs, hierarchical. Note the distance metrics used. Discuss how you plan to use clustering to engage in discovery. Have two images. More is fine.\n\n\n\nAll models and methods require specific data formats. Clustering requires ONLY unlabeled numeric data. Explain this and show an image of the sample of data you plan to use. LINK to the sample of data as well.\n\n\n\nUse R or Python to code k-means clustering and to code hierarchical clustering. Use Cosine Similarity as the distance measure for the hclust. LINK to the code.\n\n\n\nDiscuss, illustrate, describe, and visualize the results. Have at least one dendrogram and at least one clustering image (that is not a dendrogram). What values of k did you use for k - means (you should use at least 3 different k values to compare). What did the Silhouette method tell you about the “best k”. Include a vis of the silhouette results. Using the hierarchical clustering, how did this compare and coincide with the k-means? What value of k does hclust suggest?\n\n\n\nWhat did you learn that pertains to your topic?",
+    "text": "Clustering in order to discover patterns in the data.",
     "crumbs": [
       "Code",
       "Models and Methods",
@@ -211,8 +211,8 @@
     "objectID": "models/clustering.html#overview",
     "href": "models/clustering.html#overview",
     "title": "Clustering",
-    "section": "",
-    "text": "Here, describe clustering, including partitional vs, hierarchical. Note the distance metrics used. Discuss how you plan to use clustering to engage in discovery. Have two images. More is fine.",
+    "section": "Overview",
+    "text": "Overview\nHere, describe clustering, including partitional vs, hierarchical. Note the distance metrics used. Discuss how you plan to use clustering to engage in discovery. Have two images. More is fine.",
     "crumbs": [
       "Code",
       "Models and Methods",
@@ -223,8 +223,8 @@
     "objectID": "models/clustering.html#data-preperation",
     "href": "models/clustering.html#data-preperation",
     "title": "Clustering",
-    "section": "",
-    "text": "All models and methods require specific data formats. Clustering requires ONLY unlabeled numeric data. Explain this and show an image of the sample of data you plan to use. LINK to the sample of data as well.",
+    "section": "Data Preperation",
+    "text": "Data Preperation\n\nClustering Methods\nAll models and methods require specific data formats. Clustering requires ONLY unlabeled numeric data. Explain this and show an image of the sample of data you plan to use. LINK to the sample of data as well.\n\n\n\n\nTable 1: The data used for clustering.\n\n\n\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n0.94\n0\n0.0426\n0.0412\n0\n\n\n0\n0\n0\n0.00825\n0.00799\n0\n\n\n0\n0\n0\n0.0903\n0.0875\n0\n\n\n0\n0.8\n0\n0.018\n0.0225\n0.333\n\n\n0\n1\n0\n0.0205\n0.0199\n0",
     "crumbs": [
       "Code",
       "Models and Methods",
@@ -235,8 +235,8 @@
     "objectID": "models/clustering.html#code",
     "href": "models/clustering.html#code",
     "title": "Clustering",
-    "section": "",
-    "text": "Use R or Python to code k-means clustering and to code hierarchical clustering. Use Cosine Similarity as the distance measure for the hclust. LINK to the code.",
+    "section": "Code",
+    "text": "Code\n\n\nThe jupyter notebook code for running the PCA can be found here, or click on the link card to the right.\n\n\n\n\n\n\n\n\n\n\nUse R or Python to code k-means clustering and to code hierarchical clustering. Use Cosine Similarity as the distance measure for the hclust. LINK to the code.",
     "crumbs": [
       "Code",
       "Models and Methods",
@@ -247,8 +247,8 @@
     "objectID": "models/clustering.html#results",
     "href": "models/clustering.html#results",
     "title": "Clustering",
-    "section": "",
-    "text": "Discuss, illustrate, describe, and visualize the results. Have at least one dendrogram and at least one clustering image (that is not a dendrogram). What values of k did you use for k - means (you should use at least 3 different k values to compare). What did the Silhouette method tell you about the “best k”. Include a vis of the silhouette results. Using the hierarchical clustering, how did this compare and coincide with the k-means? What value of k does hclust suggest?",
+    "section": "Results",
+    "text": "Results\n\n\n\n\n\n\nImportant\n\n\n\nIf the interactive figures don’t load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website tab) until all figures load.\n\n\n\n\n\n\n\n\n\n\n                                                \n\n\n(a) The elbow plot of WCSS vs rank.\n\n\n\n\n\n\n\n\n                                                \n\n\n(b) The plot of silhouette scores vs rank.\n\n\n\n\n\n\n\nFigure 1: The plots showcasing the effectiveness of different ranks with Kmeans clustering.\n\n\n\n\n\n\n\n\n\nFigure 2: A dengrogram of the hierarchical clustering performed.\n\n\n\n\n\n\n\n                                                \n\n\nFigure 3: A comparison of the clustering models ran, at rank 2, using the adjusted Rand Score Index.\n\n\n\n\n\n\n\n\n                                                \n\n\nFigure 4: A splom of selected features (and the subset of rows used in the clustering methods), colored by the cluster assigned to the data point.\n\n\n\n\nDiscuss, illustrate, describe, and visualize the results. Have at least one dendrogram and at least one clustering image (that is not a dendrogram). What values of k did you use for k - means (you should use at least 3 different k values to compare). What did the Silhouette method tell you about the “best k”. Include a vis of the silhouette results. Using the hierarchical clustering, how did this compare and coincide with the k-means? What value of k does hclust suggest?",
     "crumbs": [
       "Code",
       "Models and Methods",
@@ -259,8 +259,8 @@
     "objectID": "models/clustering.html#conclusions",
     "href": "models/clustering.html#conclusions",
     "title": "Clustering",
-    "section": "",
-    "text": "What did you learn that pertains to your topic?",
+    "section": "Conclusions",
+    "text": "Conclusions\nWhat did you learn that pertains to your topic?",
     "crumbs": [
       "Code",
       "Models and Methods",

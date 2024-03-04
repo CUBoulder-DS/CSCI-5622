@@ -2,6 +2,30 @@
 
 Clustering in order to discover patterns in the data.
 
+```{python}
+#| include: false
+#| label: setup
+
+# In order to force reload any changes done to the models package files
+%load_ext autoreload
+%autoreload 2
+
+import pandas as pd
+import numpy as np
+import os
+
+from IPython.display import display
+
+import plotly
+import plotly.express as px
+import plotly.io as pio
+import plotly.graph_objects as go
+
+# Has to be after all other imports
+from common_funcs import *
+from common_funcs import df_show_rand_sample
+```
+
 
 ## Overview
 
@@ -10,13 +34,112 @@ Here, describe clustering, including partitional vs, hierarchical. Note the dist
 
 ## Data Preperation
 
+```{python}
+#| include: false
+
+df_az_clust = pd.read_csv(os.path.normpath("../../data/analysis/products_clustering.csv"),
+                       dtype={"Category": "category", "Labels": "category"},
+                       parse_dates=["Date Scraped"])
+```
+
+### Clustering Methods
+
 All models and methods require specific data formats. Clustering requires ONLY unlabeled numeric data. Explain this and show an image of the sample of data you plan to use. LINK to the sample of data as well.
 
+```{python}
+#| label: tbl-clust-data
+#| tbl-cap: The data used for clustering.
+
+# Get numerical/bool columns
+df_clust = df_az_clust.select_dtypes(include=[np.number, bool])
+df_clust["Is Best Seller"] = df_clust["Is Best Seller"].astype(int)
+# No NaNs allowed
+df_clust = df_clust.fillna(0)
+# Scale data
+df_clust = (df_clust-df_clust.min())/(df_clust.max()-df_clust.min())
+
+df_show_rand_sample(df_clust)
+```
+
 ## Code
+
+::: {.columns}
+::: {.column}
+The jupyter notebook code for running the PCA can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/clustering.ipynb), or click on the link card to the right.
+:::
+
+::: {.column width=10%}
+<!-- Spacing column -->
+:::
+
+::: {.column width=30%}
+[![](https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png)](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/clustering.ipynb)
+:::
+:::
 
 Use R or Python to code k-means clustering and to code hierarchical clustering. Use Cosine Similarity as the distance measure for the hclust. LINK to the code.
 
 ## Results
+
+::: callout-tip
+## Important
+
+If the interactive figures don't load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website tab) until all figures load.
+:::
+
+```{python}
+#| label: fig-clust-scoreplots
+#| fig-cap: The plots showcasing the effectiveness of different ranks with Kmeans clustering.
+#| fig-subcap:
+#|   - The elbow plot of WCSS vs rank.
+#|   - The plot of silhouette scores vs rank.
+#| layout-ncol: 2
+
+ks = range(2, 7)
+WCSS = [52466.445753091, 42560.703191829896, 37955.59780801967, 30010.765661165904, 25547.29077174213]
+silh = [0.7915705106907097, 0.6605539099138353, 0.33153764316747086, 0.40004941854890225, 0.6891371590207837]
+
+fig = px.line(x=ks, y=WCSS, labels={"x": "Rank", "y": "WCSS"})
+fig.show()
+
+fig = px.line(x=ks, y=silh, labels={"x": "Rank", "y": "Silhouette Score"})
+fig.show()
+```
+
+::: {#fig-clust-dend}
+
+![](../images/clust_dend.png)
+
+A dengrogram of the hierarchical clustering performed.
+:::
+
+
+
+```{python}
+#| label: fig-rand-inds
+#| fig-cap: A comparison of the clustering models ran, at rank 2, using the adjusted Rand Score Index.
+
+rands = [[1.0, 0.96363896140556, 1.0],
+        [0.96363896140556, 1.0, 0.96363896140556],
+        [1.0, 0.96363896140556, 1.0]]
+models = ["Kmeans", "Hierarchical", "KPrototypes"]
+
+fig = px.imshow(rands, x=models, y=models, text_auto=True)
+fig.show()
+```
+
+
+```{python}
+#| label: fig-clust-results
+#| fig-cap: A splom of selected features (and the subset of rows used in the clustering methods), colored by the cluster assigned to the data point.
+
+fig = px.scatter_matrix(df_az_clust,
+                        dimensions=["Is Best Seller", "Stars", "Reviews", "Price", "Date Scraped"],
+                       color="Labels")
+fig.update_traces(diagonal_visible=False, showupperhalf=False)
+fig.update_layout(height=700, legend_title="Cluster")
+fig.show()
+```
 
 Discuss, illustrate, describe, and visualize the results. Have at least one dendrogram and at least one clustering image (that is not a dendrogram). What values of k did you use for k - means (you should use at least 3 different k values to compare). What did the Silhouette method tell you about the "best k". Include a vis of the silhouette results. Using the hierarchical clustering, how did this compare and coincide with the k-means? What value of k does hclust suggest?
 
