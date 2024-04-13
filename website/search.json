@@ -1,135 +1,5 @@
 [
   {
-    "objectID": "models/svm.html",
-    "href": "models/svm.html",
-    "title": "SVM (Support Vector Machine)",
-    "section": "",
-    "text": "SVM (Support Vector Machine)\nPlaceholder",
-    "crumbs": [
-      "Code",
-      "Models and Methods",
-      "SVM (Support Vector Machine)"
-    ]
-  },
-  {
-    "objectID": "models/pca.html",
-    "href": "models/pca.html",
-    "title": "PCA and SVD",
-    "section": "",
-    "text": "Where Principal Component Analysis and Singular Value Decomposition are used, for dimensionality reduction and EDA.",
-    "crumbs": [
-      "Code",
-      "Models and Methods",
-      "PCA and SVD"
-    ]
-  },
-  {
-    "objectID": "models/pca.html#overview",
-    "href": "models/pca.html#overview",
-    "title": "PCA and SVD",
-    "section": "Overview",
-    "text": "Overview\n\n\n\n\n\n\n\n\n\nAn example 3-dimensional data set. The red, blue, green arrows are the direction of the first, second, and third principal components generated from it, respectively.\n\n\n\n\n\nScatterplot after PCA reduced from 3-dimensions to 2-dimensions.\n\n\n\n\n\nPrincipal Component Analysis (PCA) is a dimensionality reduction technique commonly used in data analysis and ML. At its core, PCA aims to transform high-dimensional data into a lower-dimensional space while preserving the most important information. This is achieved by identifying the directions of maximum variance in the original data, known as principal components. These principal components are the eigenvectors of the covariance matrix of the data, with their corresponding eigenvalues equaling the amount of variance explained by each principal component (PC). By retaining the PCs that capture the majority of the variance, PCA enables dimensionality reduction without significant loss of information.\nReducing the dimensionality of data is crucial for simplifying analysis and visualization, as it alleviates the curse of dimensionality and reduces computational complexity. High-dimensional data presents challenges such as increased computational cost, sparsity, and overfitting, which can get in the way of analysis and interpretation. Dimensionality reduction techniques like PCA help address these challenges by capturing the essential structure of the data in a lower-dimensional space, making it easier to visualize, interpret, and analyze complex datasets. Also, reducing dimensionality can improve the performance of machine learning algorithms by reducing noise, mitigating overfitting, enhancing model generalization, and potentially increasing the speed of training/evaluation of the models with the reduced amount of data.\nIn this specific project, PCA is used to reduce the amount of numerical/boolean factors to just 2 factors, which then enables the examination of those 2 components visually. The relationship between the reduced-dimension factors and the original factors in the dataset is explored, showing the effect and importance of the various factors. And especially since there are more than 1 million rows in the dataset, every amount of data reduction is helpful for subsequent machine learning model training.",
-    "crumbs": [
-      "Code",
-      "Models and Methods",
-      "PCA and SVD"
-    ]
-  },
-  {
-    "objectID": "models/pca.html#data-preperation",
-    "href": "models/pca.html#data-preperation",
-    "title": "PCA and SVD",
-    "section": "Data Preperation",
-    "text": "Data Preperation\nTable 1\n\n\n\nTable 1: A random sample of the data used with PCA.\n\n\n\n\n\n\n\n\n\n(a) Unscaled data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n4.3\n0\n6.69\n9.19\n400\n\n\n0\n5\n3\n120\n120\n0\n\n\n0\n4.5\n0\n12.9\n12.9\n100\n\n\n0\n5\n0\n6.99\n6.99\n0\n\n\n0\n4.4\n274\n3.55\n4.98\n300\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Scaled (by min/max) data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n0.92\n0\n0.0588\n0.0544\n0\n\n\n0\n0\n0\n0.0411\n0.0381\n0\n\n\n0\n0.94\n0\n0.0496\n0.046\n0.111\n\n\n0\n0.9\n0\n0.265\n0.264\n0.111\n\n\n0\n0\n0\n0.0191\n0.0177\n0",
-    "crumbs": [
-      "Code",
-      "Models and Methods",
-      "PCA and SVD"
-    ]
-  },
-  {
-    "objectID": "models/pca.html#code",
-    "href": "models/pca.html#code",
-    "title": "PCA and SVD",
-    "section": "Code",
-    "text": "Code\n\n\nThe jupyter notebook code for running the PCA can be found here, or click on the link card to the right.",
-    "crumbs": [
-      "Code",
-      "Models and Methods",
-      "PCA and SVD"
-    ]
-  },
-  {
-    "objectID": "models/pca.html#results",
-    "href": "models/pca.html#results",
-    "title": "PCA and SVD",
-    "section": "Results",
-    "text": "Results\n\n\n\n\n\n\nImportant\n\n\n\nIf the interactive figures don’t load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website tab) until all figures load.\n\n\nFigure 1\n\n\n\n\n\n\n\n\n                                                \n\n\n(a) Unscaled data\n\n\n\n\n\n\n\n\n                                                \n\n\n(b) Scaled (and outliers removed) data\n\n\n\n\n\n\n\nFigure 1: A bar chart of the explained variance ratios of each principal component, and the scree plot of cummulative percentage of the ratios, for both the normal and scaled data.\n\n\n\nFigure 2\n\n\n\nFigure 2: The found principal components, colored by a feature in the dataset where the feature has visible stratification in the PCs.\n\n\n\n\n\n\nTODO\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\nRelationship of Variables and PCs\n\n\n\n\n\nAn example of the projection of the original data points onto the reduced-dimension line of an eigenvector. The angle/direction of the line is computationally chosen to maximize the sum of all the variance, aka the dotted lines.",
-    "crumbs": [
-      "Code",
-      "Models and Methods",
-      "PCA and SVD"
-    ]
-  },
-  {
-    "objectID": "models/pca.html#conclusions",
-    "href": "models/pca.html#conclusions",
-    "title": "PCA and SVD",
-    "section": "Conclusions",
-    "text": "Conclusions",
-    "crumbs": [
-      "Code",
-      "Models and Methods",
-      "PCA and SVD"
-    ]
-  },
-  {
-    "objectID": "models/dtrees.html",
-    "href": "models/dtrees.html",
-    "title": "Decision Trees",
-    "section": "",
-    "text": "Decision Trees\nPlaceholder",
-    "crumbs": [
-      "Code",
-      "Models and Methods",
-      "Decision Trees"
-    ]
-  },
-  {
-    "objectID": "models/bayes.html",
-    "href": "models/bayes.html",
-    "title": "Naive Bayes",
-    "section": "",
-    "text": "Naive Bayes\nPlaceholder",
-    "crumbs": [
-      "Code",
-      "Models and Methods",
-      "Naive Bayes"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Home",
-    "section": "",
-    "text": "Home\n\n\nWelcome to the homepage for machine learning on Amazon retail product data, made by Bhavana Jonnalagadda! You can see all pages listed below, or use the navbar to navigate the pages.\n\n\n\n\n\n\n\n\n\n\n\n\nClustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPCA and SVD\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nData Prep / EDA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConclusions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNeural Networks\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRegression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSVM (Support Vector Machine)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDecision Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNaive Bayes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
-    "crumbs": [
-      "Code",
-      "Home"
-    ]
-  },
-  {
-    "objectID": "conclusions.html",
-    "href": "conclusions.html",
-    "title": "Conclusions",
-    "section": "",
-    "text": "Conclusions\nPlaceholder\n\n\nReferences\n\n\nBell, Sean, and Kavita Bala. 2015. “Learning Visual Similarity for Product Design with Convolutional Neural Networks.” ACM Trans. Graph. 34 (4). https://doi.org/10.1145/2766959.\n\n\nChen, Le, Alan Mislove, and Christo Wilson. 2016. “An Empirical Analysis of Algorithmic Pricing on Amazon Marketplace.” In Proceedings of the 25th International Conference on World Wide Web, 1339–49. WWW ’16. Republic; Canton of Geneva, CHE: International World Wide Web Conferences Steering Committee. https://doi.org/10.1145/2872427.2883089.\n\n\nChevalier, Judith, and Austan Goolsbee. 2003. “Measuring Prices and Price Competition Online: Amazon.com and BarnesandNoble.com.” Quantitative Marketing and Economics 1 (2): 203–22. https://doi.org/10.1023/A:1024634613982.\n\n\nMedini, Tharun, Qixuan Huang, Yiqiu Wang, Vijai Mohan, and Anshumali Shrivastava. 2019. “Extreme Classification in Log Memory Using Count-Min Sketch: A Case Study of Amazon Search with 50M Products.” CoRR abs/1910.13830. http://arxiv.org/abs/1910.13830.\n\n\nPedregosa, F., G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, et al. 2011. “Scikit-Learn: Machine Learning in Python.” Journal of Machine Learning Research 12: 2825–30.\n\n\nShaikh, Shakila, Sheetal Rathi, and Prachi Janrao. 2017. “Recommendation System in e-Commerce Websites: A Graph Based Approached.” In 2017 IEEE 7th International Advance Computing Conference (IACC), 931–34. https://doi.org/10.1109/IACC.2017.0189.\n\n\nSmith, Brent, and Greg Linden. 2017. “Two Decades of Recommender Systems at Amazon.com.” IEEE Internet Computing 21 (3): 12–18. https://doi.org/10.1109/MIC.2017.72.\n\n\nVos, Nelis J. de. 2015--2024. “Kmodes Categorical Clustering Library.” https://github.com/nicodv/kmodes.",
-    "crumbs": [
-      "Code",
-      "Conclusions"
-    ]
-  },
-  {
     "objectID": "data.html",
     "href": "data.html",
     "title": "Data Prep / EDA",
@@ -167,10 +37,117 @@
     "href": "data.html#data-preprocessing-visualization",
     "title": "Data Prep / EDA",
     "section": "Data Preprocessing / Visualization",
-    "text": "Data Preprocessing / Visualization\nVarious types of EDA were performed in order to examine the data; as a note, most visuals are interactive (zoomable, pannable, etc). The code for all visualizations can be found here.\n\n\n\n\n\n\nImportant\n\n\n\nIf the interactive figures don’t load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website) until all figures load.\n\n\nFirst, a histogram of all categories of all Amazon products is shown in Figure 1. Note scraped data did not have categories, but the Kaggle data did. It can be seen that from the figure, girl’s and boy’s clothing are the most populous categories, with toys & games the next most populous.\n\n\n\n\n                                                \n\n\nFigure 1: A histogram of all categories of all Amazon products. Note scraped data did not have categories, but the Kaggle data did.\n\n\n\n\nFigure 2 shows a histogram of the stars recieved for a product. It can be seen that the number of stars increases generally exponentially until 4.6 stars, with peaks at 0 and 5 stars as well. This data generally agrees with what can be seen on Amazon when browsing personally, and the peaks at 0 and 5 agree with having low number of reviews.\n\n\n\n\n                                                \n\n\nFigure 2: Histogram of the number of stars recieved for all products.\n\n\n\n\nFigure 3 shows violin plots of the numerical factors: volume of product bought in the month, the price of a product, and the number of reviews. A violin plot was chosen because a histogram would be visually uninformative, due to the amount of outliers. Some insights that can be drawn from these violin plots are:\n\nThese factors have a good number of outliers that are extremely large in value compared to the general distribution of values. This does not seem to be from incorrect values, but from sellers attempting to “game the system”.\n“Bought in Month” has outliers that are regularly spaced, indicating either a form of gaming the system by sellers that tend to follow specific formats, or Amazon only reports volume of bought products at low granularity for high-volume products.\nPrice tends to have outliers that continue regularly up the price scale, except for a couple at the $60-70k range. It is unclear whether to drop those rows containing those prices as they seem valid; it is entirely possible that sellers just list the product at a completely unreasonable price as a placeholder, and don’t expect anyone to purchase at that price.\nThe number of reviews for a product have been shown to be easily gameable with fake reviews, and is likely what is happening here.\n\n\n\n\n\n\n\n\nViolin plot of the number of a product bought in a month\n\n\n\n\n\nViolin plot of price of a product\n\n\n\n\n\n\n\nViolin plot of the number of reviews\n\n\n\n\n\nFigure 3: Violin plots (with overlayed box plot and outliers) of 3 of the main numerical columns.\n\n\n\nThe amount of stars, vs the number of reviews for a product can be seen in Figure 4, colored with the Is Best Seller flag. It can be seen that the distribution of Is Best Seller items tends to follow the overall distribution; additionally, the number of reviews tends to increase as the number of stars increases, with the products with the outlier number of reviews (over 200k) all above 4 stars.\n\n\n\n\n\n\n\n\nFigure 4: Stars vs number of reviews recieved by an amazon product, colored by whether the product was a best-seller.\n\n\n\n\n\nIn order to visualize the content of the text factors, namely the Category and Name of a product, a wordcloud format was used; wordclouds visualize the words that tend to appear in the text with the more frequent words appearing in larger text. In Figure 5, it can be seen that in the categories, “Care”, “Products”, “Boy’s Clothing”, “Consoles”, “Accessories”, and “Games” appear most. In the names of procucts, the words “Stainles Steel”, “Compatible”, “Heavy Duty”, “Boy”, “Girl”, and “Birthday” appear the most.\n\n\n\n\n\n\n\nWordcloud for categories of products\n\n\n\n\n\nWordcloud for the names of products\n\n\n\n\n\nFigure 5: Wordclouds (where more frequent appearing words are bigger) of the categories of products and the names of products.\n\n\n\nThe number of stars vs price, with price being on a log scale (to hangle outliers) is shown in Figure 6, along with being colored by if it’s a best seller. As was seen in Figure 4, the distribution of Is Best Seller items tends to follow the overall distribution; additionally, it can be seen that there are products with a price up to $10k across all number of stars.\n\n\n\n\n\n\n\n\nFigure 6: The number of stars a product recieved, vs the price in log scale, colored by whether the product was a best seller.\n\n\n\n\n\n\nInvestigation of products in both sets of data\nThe following plots focused on products that had the same Asin (identifying ID), that were in both the data personally scraped in 2024 and the Kaggle data from 2023. Investigating this subset of data could reveal a lot about how product prices, reviews, and other factors changed over time, as the only way to get time difference data was to use products that actually had more than one timepoint.\nFigure 7 shows the price vs list price of items, colored by what date they were scraped on, with a trendline plotted. It can be seen that on the whole, list price and actual price match and that prices seem to have increased since 2023 to 2024; however, below $50 price (when zooming in) the trendlines cross, implying that lower-priced products actually decreased in price.\n\n\n\n\n                                                \n\n\nFigure 7: Price vs list price of items with the same ASIN across dates scraped, with a trendline.\n\n\n\n\nGiven that outliers can be seen in price affecting the plot of the graph, it was decided for analysis to only consider those prices most populous, aka prices less than $800. Given that, the prices of each Asin were plotted, along with being colored by if the price increased from 2023 to 2024, or decreased. It can be seen that in Figure 8 that indeed for lower priced products (less than $50) the prices mostly did not increase, and instead decreased or stayed the same. The histogram shows the frequency of higher-priced procucts generally exponentially decreasing, and the likelihood of the price increasing going up.\n\n\n\n\n                                                \n\n\nFigure 8: Histogram of prices, colored by whether the change in price increased or decreased over time, for those items that were in both sets of data.\n\n\n\n\nFigure 9 shows a more granular form of the previous plot by plotting price vs the actual price difference amount from 2023 to 2024, with the ability to investigate which products are having such a dramatic increase or decrease in price over time. It can be seen that tech and suitcases were the outliers in price increase, and tech also being the outliers in price decrease.\n\n\n\n\n                                                \n\n\nFigure 9: Price vs the difference in price, over the two sets of data, colored by whether the price diff increased or decreased.\n\n\n\n\nFinally, it was investigated as to which product categories exactly had a price increase or decrease, and the ratio of number of increases to decreases. Only categories with more than 20 products were included, to reduce noise and to focus on meaningful categories. In Figure 10, it can be seen that “Sports and Outdoors”, “Makeup”, “Electrical Equipment”, and “Building Toys” all had more price increases than decreases; every other product category had more price decreases than increases, with “Smart Homes” and “Gift Cards” having the most price decreases.\n\n\n\n\n                                                \n\n\nFigure 10: For the included categories, a bar chat showing the ratio of products that had their price increase over time vs decrease.",
+    "text": "Data Preprocessing / Visualization\nVarious types of EDA were performed in order to examine the data; as a note, most visuals are interactive (zoomable, pannable, etc). The code for all visualizations can be found here.\n\n\n\n\n\n\nImportant\n\n\n\nIf the interactive figures don’t load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website) until all figures load.\n\n\nFirst, a histogram of all categories of all Amazon products is shown in Figure 1. Note scraped data did not have categories, but the Kaggle data did. It can be seen that from the figure, girl’s and boy’s clothing are the most populous categories, with toys & games the next most populous.\n\n\n\n\n                                                \n\n\nFigure 1: A histogram of all categories of all Amazon products. Note scraped data did not have categories, but the Kaggle data did.\n\n\n\n\nFigure 2 shows a histogram of the stars recieved for a product. It can be seen that the number of stars increases generally exponentially until 4.6 stars, with peaks at 0 and 5 stars as well. This data generally agrees with what can be seen on Amazon when browsing personally, and the peaks at 0 and 5 agree with having low number of reviews.\n\n\n\n\n                                                \n\n\nFigure 2: Histogram of the number of stars recieved for all products.\n\n\n\n\nFigure 3 shows violin plots of the numerical factors: volume of product bought in the month, the price of a product, and the number of reviews. A violin plot was chosen because a histogram would be visually uninformative, due to the amount of outliers. Some insights that can be drawn from these violin plots are:\n\nThese factors have a good number of outliers that are extremely large in value compared to the general distribution of values. This does not seem to be from incorrect values, but from sellers attempting to “game the system”.\n“Bought in Month” has outliers that are regularly spaced, indicating either a form of gaming the system by sellers that tend to follow specific formats, or Amazon only reports volume of bought products at low granularity for high-volume products.\nPrice tends to have outliers that continue regularly up the price scale, except for a couple at the $60-70k range. It is unclear whether to drop those rows containing those prices as they seem valid; it is entirely possible that sellers just list the product at a completely unreasonable price as a placeholder, and don’t expect anyone to purchase at that price.\nThe number of reviews for a product have been shown to be easily gameable with fake reviews, and is likely what is happening here.\n\n\n\n\n\n\n\n\n\nViolin plot of the number of a product bought in a month\n\n\n\n\n\n\n\nViolin plot of price of a product\n\n\n\n\n\n\n\n\n\nViolin plot of the number of reviews\n\n\n\n\n\n\nFigure 3: Violin plots (with overlayed box plot and outliers) of 3 of the main numerical columns.\n\n\n\nThe amount of stars, vs the number of reviews for a product can be seen in Figure 4, colored with the Is Best Seller flag. It can be seen that the distribution of Is Best Seller items tends to follow the overall distribution; additionally, the number of reviews tends to increase as the number of stars increases, with the products with the outlier number of reviews (over 200k) all above 4 stars.\n\n\n\n\n\n\n\n\nFigure 4: Stars vs number of reviews recieved by an amazon product, colored by whether the product was a best-seller.\n\n\n\n\n\nIn order to visualize the content of the text factors, namely the Category and Name of a product, a wordcloud format was used; wordclouds visualize the words that tend to appear in the text with the more frequent words appearing in larger text. In Figure 5, it can be seen that in the categories, “Care”, “Products”, “Boy’s Clothing”, “Consoles”, “Accessories”, and “Games” appear most. In the names of procucts, the words “Stainles Steel”, “Compatible”, “Heavy Duty”, “Boy”, “Girl”, and “Birthday” appear the most.\n\n\n\n\n\n\n\n\nWordcloud for categories of products\n\n\n\n\n\n\n\nWordcloud for the names of products\n\n\n\n\n\n\nFigure 5: Wordclouds (where more frequent appearing words are bigger) of the categories of products and the names of products.\n\n\n\nThe number of stars vs price, with price being on a log scale (to hangle outliers) is shown in Figure 6, along with being colored by if it’s a best seller. As was seen in Figure 4, the distribution of Is Best Seller items tends to follow the overall distribution; additionally, it can be seen that there are products with a price up to $10k across all number of stars.\n\n\n\n\n\n\n\n\nFigure 6: The number of stars a product recieved, vs the price in log scale, colored by whether the product was a best seller.\n\n\n\n\n\n\nInvestigation of products in both sets of data\nThe following plots focused on products that had the same Asin (identifying ID), that were in both the data personally scraped in 2024 and the Kaggle data from 2023. Investigating this subset of data could reveal a lot about how product prices, reviews, and other factors changed over time, as the only way to get time difference data was to use products that actually had more than one timepoint.\nFigure 7 shows the price vs list price of items, colored by what date they were scraped on, with a trendline plotted. It can be seen that on the whole, list price and actual price match and that prices seem to have increased since 2023 to 2024; however, below $50 price (when zooming in) the trendlines cross, implying that lower-priced products actually decreased in price.\n\n\n\n\n                                                \n\n\nFigure 7: Price vs list price of items with the same ASIN across dates scraped, with a trendline.\n\n\n\n\nGiven that outliers can be seen in price affecting the plot of the graph, it was decided for analysis to only consider those prices most populous, aka prices less than $800. Given that, the prices of each Asin were plotted, along with being colored by if the price increased from 2023 to 2024, or decreased. It can be seen that in Figure 8 that indeed for lower priced products (less than $50) the prices mostly did not increase, and instead decreased or stayed the same. The histogram shows the frequency of higher-priced procucts generally exponentially decreasing, and the likelihood of the price increasing going up.\n\n\n\n\n                                                \n\n\nFigure 8: Histogram of prices, colored by whether the change in price increased or decreased over time, for those items that were in both sets of data.\n\n\n\n\nFigure 9 shows a more granular form of the previous plot by plotting price vs the actual price difference amount from 2023 to 2024, with the ability to investigate which products are having such a dramatic increase or decrease in price over time. It can be seen that tech and suitcases were the outliers in price increase, and tech also being the outliers in price decrease.\n\n\n\n\n                                                \n\n\nFigure 9: Price vs the difference in price, over the two sets of data, colored by whether the price diff increased or decreased.\n\n\n\n\nFinally, it was investigated as to which product categories exactly had a price increase or decrease, and the ratio of number of increases to decreases. Only categories with more than 20 products were included, to reduce noise and to focus on meaningful categories. In Figure 10, it can be seen that “Sports and Outdoors”, “Makeup”, “Electrical Equipment”, and “Building Toys” all had more price increases than decreases; every other product category had more price decreases than increases, with “Smart Homes” and “Gift Cards” having the most price decreases.\n\n\n\n\n                                                \n\n\nFigure 10: For the included categories, a bar chat showing the ratio of products that had their price increase over time vs decrease.",
     "crumbs": [
       "Code",
       "Data Prep / EDA"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "Home\n\n\nWelcome to the homepage for machine learning on Amazon retail product data, made by Bhavana Jonnalagadda! You can see all pages listed below, or use the navbar to navigate the pages.\n\n\n\n\n\n\n\n\n\n\n\n\nPCA and SVD\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nClustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nData Prep / EDA\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConclusions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNeural Networks\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRegression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSVM (Support Vector Machine)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDecision Trees\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNaive Bayes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Code",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "models/pca.html",
+    "href": "models/pca.html",
+    "title": "PCA and SVD",
+    "section": "",
+    "text": "Where Principal Component Analysis and Singular Value Decomposition are used, for dimensionality reduction and EDA.",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "PCA and SVD"
+    ]
+  },
+  {
+    "objectID": "models/pca.html#overview",
+    "href": "models/pca.html#overview",
+    "title": "PCA and SVD",
+    "section": "Overview",
+    "text": "Overview\n\n\n\n\n\n\n\n\n\n\nAn example 3-dimensional data set. The red, blue, green arrows are the direction of the first, second, and third principal components generated from it, respectively.\n\n\n\n\n\n\n\nScatterplot after PCA reduced from 3-dimensions to 2-dimensions.\n\n\n\n\n\n\nPrincipal Component Analysis (PCA) is a dimensionality reduction technique commonly used in data analysis and ML. At its core, PCA aims to transform high-dimensional data into a lower-dimensional space while preserving the most important information. This is achieved by identifying the directions of maximum variance in the original data, known as principal components. These principal components are the eigenvectors of the covariance matrix of the data, with their corresponding eigenvalues equaling the amount of variance explained by each principal component (PC). By retaining the PCs that capture the majority of the variance, PCA enables dimensionality reduction without significant loss of information.\nReducing the dimensionality of data is crucial for simplifying analysis and visualization, as it alleviates the curse of dimensionality and reduces computational complexity. High-dimensional data presents challenges such as increased computational cost, sparsity, and overfitting, which can get in the way of analysis and interpretation. Dimensionality reduction techniques like PCA help address these challenges by capturing the essential structure of the data in a lower-dimensional space, making it easier to visualize, interpret, and analyze complex datasets. Also, reducing dimensionality can improve the performance of machine learning algorithms by reducing noise, mitigating overfitting, enhancing model generalization, and potentially increasing the speed of training/evaluation of the models with the reduced amount of data.\nIn this specific project, PCA is used to reduce the amount of numerical/boolean factors to just 2 factors, which then enables the examination of those 2 components visually. The relationship between the reduced-dimension factors and the original factors in the dataset is explored, showing the effect and importance of the various factors. And especially since there are more than 1 million rows in the dataset, every amount of data reduction is helpful for subsequent machine learning model training.",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "PCA and SVD"
+    ]
+  },
+  {
+    "objectID": "models/pca.html#data-preperation",
+    "href": "models/pca.html#data-preperation",
+    "title": "PCA and SVD",
+    "section": "Data Preperation",
+    "text": "Data Preperation\n\nData Prep: All models and methods require specific data formats. Explain what kind of data is needed for PCA and show an image of the sample of data you plan to use. LINK to the sample of data as well.\nCode: Use R or Python to code PCA. LINK to the code.\nResults: Discuss, illustrate, describe, and visualize the results. Understand and explain how to visualize the relationship between variables and principal components. Include at least 2 visualizations for your data.\nConclusions: What did you learn that pertains to your topic?\n\nTable 1\n\n\n\nTable 1: A random sample of the data used with PCA.\n\n\n\n\n\n\n\n\n\n(a) Unscaled data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n4.5\n618\n26\n26\n600\n\n\n0\n0\n0\n8.89\n8.89\n0\n\n\n0\n2.9\n2\n7.99\n7.99\n100\n\n\n0\n4.8\n0\n100\n100\n0\n\n\n0\n4.6\n408\n259\n370\n200\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Scaled (by min/max) data\n\n\n\n\n\nIs Best Seller\nStars\nReviews\nPrice\nList Price\nBought In Month\n\n\n\n\n0\n1\n0\n0.0588\n0.0544\n0\n\n\n0\n0.82\n0\n0.497\n0.542\n0.778\n\n\n0\n0.88\n0.419\n0.117\n0.109\n0.333\n\n\n0\n0.76\n0\n0.0764\n0.0708\n0\n\n\n0\n0.94\n0\n0.0617\n0.0686\n0",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "PCA and SVD"
+    ]
+  },
+  {
+    "objectID": "models/pca.html#code",
+    "href": "models/pca.html#code",
+    "title": "PCA and SVD",
+    "section": "Code",
+    "text": "Code\n\n\nThe jupyter notebook code for running the PCA can be found here, or click on the link card to the right.",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "PCA and SVD"
+    ]
+  },
+  {
+    "objectID": "models/pca.html#results",
+    "href": "models/pca.html#results",
+    "title": "PCA and SVD",
+    "section": "Results",
+    "text": "Results\n\n\n\n\n\n\nImportant\n\n\n\nIf the interactive figures don’t load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website tab) until all figures load.\n\n\nFigure 1\n\n\n\n\n\n\n\n\n                                                \n\n\n(a) Unscaled data\n\n\n\n\n\n\n\n\n                                                \n\n\n(b) Scaled (and outliers removed) data\n\n\n\n\n\n\n\nFigure 1: A bar chart of the explained variance ratios of each principal component, and the scree plot of cummulative percentage of the ratios, for both the normal and scaled data.\n\n\n\nFigure 2\n\n\n\nFigure 2: The found principal components, colored by a feature in the dataset where the feature has visible stratification in the PCs.\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\n\n\nTODO\n\n\n\n\n\n\n\n\nRelationship of Variables and PCs\n\n\n\n\n\nAn example of the projection of the original data points onto the reduced-dimension line of an eigenvector. The angle/direction of the line is computationally chosen to maximize the sum of all the variance, aka the dotted lines.",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "PCA and SVD"
+    ]
+  },
+  {
+    "objectID": "models/pca.html#conclusions",
+    "href": "models/pca.html#conclusions",
+    "title": "PCA and SVD",
+    "section": "Conclusions",
+    "text": "Conclusions\n\n\n\nTODO\nTODO\nTODO\nTODO\nTODO\nTODO\nTODO",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "PCA and SVD"
+    ]
+  },
+  {
+    "objectID": "models/nn.html",
+    "href": "models/nn.html",
+    "title": "Neural Networks",
+    "section": "",
+    "text": "Neural Networks\nPlaceholder",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "Neural Networks"
+    ]
+  },
+  {
+    "objectID": "models/bayes.html",
+    "href": "models/bayes.html",
+    "title": "Naive Bayes",
+    "section": "",
+    "text": "Naive Bayes\nPlaceholder",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "Naive Bayes"
     ]
   },
   {
@@ -236,7 +213,7 @@
     "href": "models/clustering.html#code",
     "title": "Clustering",
     "section": "Code",
-    "text": "Code\n\n\nThe jupyter notebook code for running the PCA can be found here, or click on the link card to the right.\n\n\n\n\n\n\n\n\n\n\nUse R or Python to code k-means clustering and to code hierarchical clustering. Use Cosine Similarity as the distance measure for the hclust. LINK to the code.",
+    "text": "Code\n\n\nThe jupyter notebook code for running the PCA can be found here, or click on the link card to the right.\n\n\n\n\n\n\nUse R or Python to code k-means clustering and to code hierarchical clustering. Use Cosine Similarity as the distance measure for the hclust. LINK to the code.",
     "crumbs": [
       "Code",
       "Models and Methods",
@@ -268,15 +245,15 @@
     ]
   },
   {
-    "objectID": "models/nn.html",
-    "href": "models/nn.html",
-    "title": "Neural Networks",
+    "objectID": "models/svm.html",
+    "href": "models/svm.html",
+    "title": "SVM (Support Vector Machine)",
     "section": "",
-    "text": "Neural Networks\nPlaceholder",
+    "text": "SVM (Support Vector Machine)\nPlaceholder",
     "crumbs": [
       "Code",
       "Models and Methods",
-      "Neural Networks"
+      "SVM (Support Vector Machine)"
     ]
   },
   {
@@ -289,6 +266,29 @@
       "Code",
       "Models and Methods",
       "Regression"
+    ]
+  },
+  {
+    "objectID": "models/dtrees.html",
+    "href": "models/dtrees.html",
+    "title": "Decision Trees",
+    "section": "",
+    "text": "Decision Trees\nPlaceholder",
+    "crumbs": [
+      "Code",
+      "Models and Methods",
+      "Decision Trees"
+    ]
+  },
+  {
+    "objectID": "conclusions.html",
+    "href": "conclusions.html",
+    "title": "Conclusions",
+    "section": "",
+    "text": "Conclusions\nPlaceholder\n\n\nReferences\n\n\nBell, Sean, and Kavita Bala. 2015. “Learning Visual Similarity for Product Design with Convolutional Neural Networks.” ACM Trans. Graph. 34 (4). https://doi.org/10.1145/2766959.\n\n\nChen, Le, Alan Mislove, and Christo Wilson. 2016. “An Empirical Analysis of Algorithmic Pricing on Amazon Marketplace.” In Proceedings of the 25th International Conference on World Wide Web, 1339–49. WWW ’16. Republic; Canton of Geneva, CHE: International World Wide Web Conferences Steering Committee. https://doi.org/10.1145/2872427.2883089.\n\n\nChevalier, Judith, and Austan Goolsbee. 2003. “Measuring Prices and Price Competition Online: Amazon.com and BarnesandNoble.com.” Quantitative Marketing and Economics 1 (2): 203–22. https://doi.org/10.1023/A:1024634613982.\n\n\nMedini, Tharun, Qixuan Huang, Yiqiu Wang, Vijai Mohan, and Anshumali Shrivastava. 2019. “Extreme Classification in Log Memory Using Count-Min Sketch: A Case Study of Amazon Search with 50M Products.” CoRR abs/1910.13830. http://arxiv.org/abs/1910.13830.\n\n\nPedregosa, F., G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, et al. 2011. “Scikit-Learn: Machine Learning in Python.” Journal of Machine Learning Research 12: 2825–30.\n\n\nShaikh, Shakila, Sheetal Rathi, and Prachi Janrao. 2017. “Recommendation System in e-Commerce Websites: A Graph Based Approached.” In 2017 IEEE 7th International Advance Computing Conference (IACC), 931–34. https://doi.org/10.1109/IACC.2017.0189.\n\n\nSmith, Brent, and Greg Linden. 2017. “Two Decades of Recommender Systems at Amazon.com.” IEEE Internet Computing 21 (3): 12–18. https://doi.org/10.1109/MIC.2017.72.\n\n\nVos, Nelis J. de. 2015--2024. “Kmodes Categorical Clustering Library.” https://github.com/nicodv/kmodes.",
+    "crumbs": [
+      "Code",
+      "Conclusions"
     ]
   }
 ]

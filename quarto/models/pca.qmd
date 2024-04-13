@@ -44,7 +44,6 @@ In this specific project, PCA is used to reduce the amount of numerical/boolean 
 
 
 
-
 ## Data Preperation
 
 ```{python}
@@ -54,6 +53,18 @@ data_path = os.path.normpath("../../data/products_cleaned.csv")
 
 df_az = pd.read_csv(data_path, dtype={"Category": "category"}, parse_dates=["Date Scraped"])
 ```
+
+
+
+
+(b) Data Prep: All models and methods require specific data formats. Explain what kind of data is needed for PCA and show an image of the sample of data you plan to use. LINK to the sample of data as well.
+
+(c) Code: Use R or Python to code PCA. LINK to the code.
+
+(d) Results: Discuss, illustrate, describe, and visualize the results. Understand and explain how to visualize the relationship between variables and principal components. Include at least 2 visualizations for your data.
+
+(e) Conclusions: What did you learn that pertains to your topic?
+
 
 @tbl-pcadata
 
