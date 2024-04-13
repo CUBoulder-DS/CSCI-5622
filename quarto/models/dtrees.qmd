@@ -1,3 +1,51 @@
 # Decision Trees
 
-Placeholder
+## Overview
+
+::: {style="width:100%;"}
+::: {style="float:right; width:34%; padding:2%"}
+![Decision tree structure](../images/dt_1.jpg)
+:::
+:::
+
+Decision trees are a popular supervised learning algorithm used for both classification and regression tasks in machine learning. They are tree-like structures where each internal node represents a feature, each branch represents a decision based on that feature, and each leaf node represents a class label (for classification) or a numerical value (for regression). In classification, they can classify instances by learning decision rules inferred from the features. With regression, they can predict continuous values by averaging the target values of instances falling into the same leaf. When it comes to determining the "goodness" of a split in the decision tree and updating it, several methods are employed. Gini Impurity measures the impurity of a node, where a node is pure (GINI = 0) if all instances below a node belong to the same class. Entropy measures the randomness or uncertainty of a node; it is maximum (1) when all classes are equally distributed and decreases as the node becomes more pure. Information Gain is used to determine the best split in a decision tree. It calculates the difference in entropy (or GINI impurity) before and after the split. The split with the highest information gain is chosen.
+
+::: {style="width:100%;"}
+::: {style="float:left; width:34%; padding:2%"}
+![The decision tree structure for the given example](../images/dt_2.png)
+:::
+:::
+
+For example, consider a dataset with weather attributes (including the feature "Outlook") and a target class 'Play' (Yes/No). Suppose we want to split based on the 'Outlook' attribute. We calculate the entropy for the current node (before split), then we calculate the entropy for each possible branch ('Sunny', 'Overcast', 'Rainy'). We then use Information Gain to determine the best split.
+
+It's generally possible to create an infinite number of decision trees because:
+
+- There can be different orderings of features for splitting.
+- For continuous features, there can be infinitely many possible split points.
+- Tree depth and complexity can vary widely, leading to numerous possible structures.
+
+To manage this complexity and avoid overfitting, techniques like pruning, limiting tree depth, and using ensemble methods (like Random Forests) are employed. These strategies help create more generalizable and robust decision trees.
+
+In this particular project, classification decision trees will be used to predict whether a product is a best seller or not; regression decision trees will be used to predict the price of a product. All numerical, boolean, and categorical features of the dataset will be used in the prediction (but not the unique string features like "Name" and "ASIN").
+
+## Data Prep
+
+## Code
+
+::: {.columns}
+::: {.column}
+The jupyter notebook code for running decision trees, data prep, and everything else on this page can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb), or click on the link card to the right.
+:::
+
+::: {.column width=10%}
+<!-- Spacing column -->
+:::
+
+::: {.column width=30%}
+[![](https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png)](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb)
+:::
+:::
+
+## Results
+
+## Conclusion

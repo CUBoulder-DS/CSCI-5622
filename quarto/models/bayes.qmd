@@ -1,3 +1,37 @@
 # Naive Bayes
 
-Placeholder
+## Overview
+
+::: {style="width:100%;"}
+::: {style="float:right; width:34%; padding:2%"}
+![How Naive Bayes classifies categories.](../images/nb.jpg)
+:::
+:::
+
+Naive Bayes is a popular and simple probabilistic machine learning algorithm based on Bayes' theorem. It is commonly used for classification tasks, such as spam email detection, sentiment analysis, and medical diagnosis. The "naive" part of its name comes from the assumption that features are independent of each other, which is often not true in real-world data but simplifies the model and makes it computationally efficient. It uses Bayes' Theorem, which calculates the probability of a hypothesis (H) given some evidence (E). Standard Multinomial Naive Bayes is suitable for text classification tasks where features are discrete and represent word counts or frequencies; it calculates the likelihood probabilities using the frequency of each word in each class of the label. Bernoulli Naive Bayes is suitable when features are binary (e.g., word presence or absence), and it considers whether features are present or absent in each class of the label.
+
+Smoothing is required in Naive Bayes models to handle situations where a particular feature (word) in the test data was not present in the training data. This can lead to zero probabilities and cause the model to fail during prediction. Laplace smoothing or add-one smoothing is a common technique where a small constant value (often 1) is added to all counts to avoid zero probabilities. In summary, Naive Bayes is a straightforward yet powerful algorithm for classification tasks, making probabilistic predictions based on Bayes' theorem and assuming independence between features. Multinomial Naive Bayes works with word frequencies, while Bernoulli Naive Bayes handles binary features, and smoothing is essential to prevent zero probabilities.
+
+For this particular project, multinomial Naive Bayes will be used with the feature of product `Name`, to predict the `Category` that the product falls into.
+
+## Data Prep
+
+## Code
+
+::: {.columns}
+::: {.column}
+The jupyter notebook code for running Naive Bayes, data prep, and everything else on this page can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb), or click on the link card to the right.
+:::
+
+::: {.column width=10%}
+<!-- Spacing column -->
+:::
+
+::: {.column width=30%}
+[![](https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png)](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb)
+:::
+:::
+
+## Results
+
+## Conclusion
