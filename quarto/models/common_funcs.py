@@ -9,7 +9,8 @@ def df_show_rand_sample(df: pd.DataFrame):
                 .reset_index(drop=True)\
                 .head()\
                 .style.hide(axis="index")\
-                        .format(formatter="{:.3g}")
+                        .format(formatter="{:.3g}",
+                                subset=df.select_dtypes(include='number').columns)
     )
 
 ## Custom plotly plot styling

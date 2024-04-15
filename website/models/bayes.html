@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
@@ -69,6 +69,9 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -213,25 +216,36 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#naive-bayes" id="toc-naive-bayes" class="nav-link active" data-scroll-target="#naive-bayes">Naive Bayes</a>
-  <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#data-prep" id="toc-data-prep" class="nav-link" data-scroll-target="#data-prep">Data Prep</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../models/bayes.html">Models and Methods</a></li><li class="breadcrumb-item"><a href="../models/bayes.html">Naive Bayes</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Naive Bayes</h1>
+</div>
 
 
 
-<section id="naive-bayes" class="level1">
-<h1>Naive Bayes</h1>
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <div style="width:100%;">
@@ -250,6 +264,88 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="data-prep" class="level2">
 <h2 class="anchored" data-anchor-id="data-prep">Data Prep</h2>
+<div class="columns">
+<div class="column">
+<p>With Naive Bayes, the input data of vectorized text works well; here, multinomial Naive Bayes will be used with the feature of product <code>Name</code>, to predict the <code>Category</code> that the product falls into. <a href="#tbl-data" class="quarto-xref">Table&nbsp;1</a> shows the input data used for all models used, and the data can be found <a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/scraped/scraped1.csv">at this link</a>.</p>
+</div><div class="column">
+<div class="cell" data-execution_count="2">
+<div id="tbl-data" class="cell quarto-float anchored" data-execution_count="2">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: The input feature pre-transformation for input into the model, and the label feature “Category”
+</figcaption>
+<div aria-describedby="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<style type="text/css">
+</style>
+
+<table id="T_1c5f1" class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th id="T_1c5f1_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Name</th>
+<th id="T_1c5f1_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_1c5f1_row0_col0" class="data row0 col0">DLMAC8 Pin Point Syringe Kit</td>
+<td id="T_1c5f1_row0_col1" class="data row0 col1">Kids' Play Trains &amp; Trams</td>
+</tr>
+<tr class="even">
+<td id="T_1c5f1_row1_col0" class="data row1 col0">Dry Backpack (Olive, 30L)</td>
+<td id="T_1c5f1_row1_col1" class="data row1 col1">Backpacks</td>
+</tr>
+<tr class="odd">
+<td id="T_1c5f1_row2_col0" class="data row2 col0">TAODUDU Toddler Toys Cars Kids Truck Transport Cars Boys Gift for Ages 3-8 Year Old,Transport Cars Carrier Set with 12 Die-cast Vehicles</td>
+<td id="T_1c5f1_row2_col1" class="data row2 col1">Toys &amp; Games</td>
+</tr>
+<tr class="even">
+<td id="T_1c5f1_row3_col0" class="data row3 col0">LUV HER Princess Toys Tiaras For Girls - Jewelry for Girls - Dress Up set All in one Giftable Box - Tiaras - Play Jewelry Set - 4pc Princess Tiara, Necklace, Dress Up Bracelet, Ring Ages 3+</td>
+<td id="T_1c5f1_row3_col1" class="data row3 col1">Kids' Dress Up &amp; Pretend Play</td>
+</tr>
+<tr class="odd">
+<td id="T_1c5f1_row4_col0" class="data row4 col0">Allerpet Cat Dander Remover w/Free Pair of Grooming Gloves and Mitt - Effective Cat Dander Reduction, Anti Allergen Solution Made in USA - (12oz)</td>
+<td id="T_1c5f1_row4_col1" class="data row4 col1">Cat Supplies</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>The data, before transforming into N-gram word vectors (more info below), must be split into training and testing datasets. This can easily be done by randomly choosing each row to go into training or test, with about 25% of the data going into testing. We also stratify the splitting of data on the label categories, for fairness in evaluation. We split before vectorization for fairness in the conversion/tranformation of the data into vectors.</p>
+<p>It’s essential for the training and test data to be disjoint, meaning they should not overlap, to ensure the validity and accuracy of the model’s performance evaluation. Reasons for this include to avoid overfitting, assessing bias and variance, supporting reproducability and validation, and preventing data leakage.</p>
+<p>Based on how the input feature is turned into a vector format, several different models will be run; the following formats of the intput transformed into a sparse matrix vector are used, where a sparse matrix is an efficient representation of a large matrix with many zeros:</p>
+<ul>
+<li><strong>Count frequency vector</strong>, which does text preprocessing, tokenizing and filtering of stopwords in order to turn a text string into an N-gram of words feature vector. Essentially, each occurence of a word adds to a count in a given row, with the number of columns equaling the number of all words across all input (training) text. Stop words are common English words that should not be considered due to their frequency, like “and” or “the”. The stop words used here are <code>["and", "for", "with", "to"]</code>, which are the ones most commonly found in Amazon product titles.</li>
+<li><strong>Term-frequency (TF) vector</strong>, where instead of the count of a word appearing, the number of occurrences of each word in a document is divided by the total number of words in the document. This is to adjust for how longer documents will have higher average count values than shorter documents, even though they might talk about the same topics.</li>
+<li><strong>Binary frequency vector</strong>, where instead of count a binary 0/1 is used to represent if a word appears in the given row <code>Name</code>. This is used for Bernoulli NB.</li>
+</ul>
+<div class="columns">
+<div class="column">
+<p>Thus, the following NB models will be used with the following data:</p>
+<ul>
+<li>Multinomial with count frequency vectors</li>
+<li>Multinomial with TF vectors</li>
+<li>Bernoulli with binary frequency vectors</li>
+</ul>
+</div><div class="column">
+<div id="fig-sparse" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sparse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><code>&lt;343558x183699 sparse matrix of type '&lt;class 'numpy.float64'&gt;</code> <code>with 5305684 stored elements in Compressed Sparse Row format&gt;</code></p>
+<p><img src="../images/sparse.png" class="img-fluid figure-img"></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sparse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: An example of how sparse matrices are used and the training data as a sparse matrix.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="code" class="level2">
 <h2 class="anchored" data-anchor-id="code">Code</h2>
@@ -265,12 +361,220 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>Each model was run as described above in “Data Prep”. The results can be seen in <a href="#tbl-acc" class="quarto-xref">Table&nbsp;2</a>; as we can see, the base Multinomial NB was the best, with Bernoulli NS significantly underperforming.</p>
+<div id="tbl-acc" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-acc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: The table of result accuracy for each model
+</figcaption>
+<div aria-describedby="tbl-acc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<colgroup>
+<col style="width: 62%">
+<col style="width: 20%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Data Format</th>
+<th style="text-align: right;">Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MultinomialNB</td>
+<td style="text-align: left;">Counts</td>
+<td style="text-align: right;">0.682597</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MultinomialNB</td>
+<td style="text-align: left;">TF</td>
+<td style="text-align: right;">0.606549</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BernoulliNB</td>
+<td style="text-align: left;">Occurence</td>
+<td style="text-align: right;">0.229279</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>For the best performing model, performance metrics were found for each category in the labels; in <a href="#tbl-perf" class="quarto-xref">Table&nbsp;3</a> we show the top 10 performing categories, along with the words that were found to have the highest log-prior-probabilities; aka, the words that most influenced the choosing of that category by the model.</p>
+<div id="tbl-perf" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-perf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: The table of performance metrics for the top 15 correctly-labeled categories, along with the most influential words for each category.
+</figcaption>
+<div aria-describedby="tbl-perf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Category</th>
+<th style="text-align: right;">precision</th>
+<th style="text-align: right;">recall</th>
+<th style="text-align: right;">f1-score</th>
+<th style="text-align: left;">Top Feature Words</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Computers &amp; Tablets</td>
+<td style="text-align: right;">0.898876</td>
+<td style="text-align: right;">0.981595</td>
+<td style="text-align: right;">0.938416</td>
+<td style="text-align: left;">[‘laptop’, ‘10’, ‘ssd’, ‘intel’, ‘core’, ‘ram’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Knitting &amp; Crochet Supplies</td>
+<td style="text-align: right;">0.933824</td>
+<td style="text-align: right;">0.937962</td>
+<td style="text-align: right;">0.935888</td>
+<td style="text-align: left;">[‘set’, ‘kit’, ‘needles’, ‘knitting’, ‘crochet’, ‘yarn’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Additive Manufacturing Products</td>
+<td style="text-align: right;">0.937198</td>
+<td style="text-align: right;">0.9312</td>
+<td style="text-align: right;">0.934189</td>
+<td style="text-align: left;">[‘pla’, ‘pro’, ‘filament’, ‘ender’, ‘printer’, ‘3d’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sexual Wellness Products</td>
+<td style="text-align: right;">0.981538</td>
+<td style="text-align: right;">0.859838</td>
+<td style="text-align: right;">0.916667</td>
+<td style="text-align: left;">[‘vibrator’, ‘women’, ‘dildo’, ‘adult’, ‘toys’, ‘sex’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Needlework Supplies</td>
+<td style="text-align: right;">0.926941</td>
+<td style="text-align: right;">0.900888</td>
+<td style="text-align: right;">0.913728</td>
+<td style="text-align: left;">[‘needle’, ‘kits’, ‘cross’, ‘stitch’, ‘kit’, ‘embroidery’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pet Bird Supplies</td>
+<td style="text-align: right;">0.974684</td>
+<td style="text-align: right;">0.857939</td>
+<td style="text-align: right;">0.912593</td>
+<td style="text-align: left;">[‘parakeet’, ‘toys’, ‘toy’, ‘parrot’, ‘cage’, ‘bird’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Light Bulbs</td>
+<td style="text-align: right;">0.865291</td>
+<td style="text-align: right;">0.954485</td>
+<td style="text-align: right;">0.907702</td>
+<td style="text-align: left;">[‘base’, ‘pack’, ‘bulbs’, ‘led’, ‘bulb’, ‘light’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Craft &amp; Hobby Fabric</td>
+<td style="text-align: right;">0.919408</td>
+<td style="text-align: right;">0.891547</td>
+<td style="text-align: right;">0.905263</td>
+<td style="text-align: left;">[‘sewing’, ‘cotton’, ‘the’, ‘by’, ‘yard’, ‘fabric’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wall Art</td>
+<td style="text-align: right;">0.8475</td>
+<td style="text-align: right;">0.956276</td>
+<td style="text-align: right;">0.898608</td>
+<td style="text-align: left;">[‘room’, ‘canvas’, ‘poster’, ‘decor’, ‘art’, ‘wall’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Vacuum Cleaners &amp; Floor Care</td>
+<td style="text-align: right;">0.819462</td>
+<td style="text-align: right;">0.952381</td>
+<td style="text-align: right;">0.880936</td>
+<td style="text-align: left;">[‘compatible’, ‘filter’, ‘pack’, ‘cleaner’, ‘replacement’, ‘vacuum’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fish &amp; Aquatic Pets</td>
+<td style="text-align: right;">0.922201</td>
+<td style="text-align: right;">0.837931</td>
+<td style="text-align: right;">0.878049</td>
+<td style="text-align: left;">[‘pump’, ‘water’, ‘filter’, ‘tank’, ‘fish’, ‘aquarium’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cutting Tools</td>
+<td style="text-align: right;">0.808673</td>
+<td style="text-align: right;">0.950525</td>
+<td style="text-align: right;">0.87388</td>
+<td style="text-align: left;">[‘bits’, ‘shank’, ‘set’, ‘inch’, ‘drill’, ‘bit’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Industrial Materials</td>
+<td style="text-align: right;">0.85907</td>
+<td style="text-align: right;">0.888372</td>
+<td style="text-align: right;">0.873476</td>
+<td style="text-align: left;">[‘diy’, ‘length’, ‘12’, ‘in’, ‘sheet’, ‘rubber’]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rain Umbrellas</td>
+<td style="text-align: right;">0.982609</td>
+<td style="text-align: right;">0.784722</td>
+<td style="text-align: right;">0.872587</td>
+<td style="text-align: left;">[‘compact’, ‘folding’, ‘travel’, ‘windproof’, ‘rain’, ‘umbrella’]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Power Transmission Products</td>
+<td style="text-align: right;">0.861373</td>
+<td style="text-align: right;">0.879121</td>
+<td style="text-align: right;">0.870156</td>
+<td style="text-align: left;">[‘steel’, ‘ball’, ‘rubber’, ‘bearings’, ‘bearing’, ‘belt’]</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The confusion matrix of all categories can be seen in <a href="#fig-cm1" class="quarto-xref">Figure&nbsp;2</a>. As can be seen, this is not necessarily informative; instead, we create a confusion matrix of the subset of categories that had the top 15 F1-scores in <a href="#fig-cm2" class="quarto-xref">Figure&nbsp;3</a>.</p>
+<div class="columns">
+<div class="column">
+<div id="fig-cm1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/nb_cm.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cm1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The confusion matrix of all categories
+</figcaption>
+</figure>
+</div>
+</div><div class="column">
+<div id="fig-cm2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cm2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/nb_cm_top.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cm2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The confusion matrix for top 15 correctly-classified categories
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Based on the above results, some interesting conclusions can be drawn:</p>
+<ul>
+<li>Even though term-frequency (TF) vectors are supposed to be a better data format for input into Naive Bayes models, the count frequency vector data format actually consistently outperformed.</li>
+<li>Though the general accuracy was 68% at best, that’s because there were 248 categories in the label. When examining the performance by each category, many had accuracy over 88% and 6 had performance over 91%.</li>
+<li>Some words were extremely predictive for a unique category; however, some words like “boy” and “clothing” led the model to easily mis-classify the category.</li>
+</ul>
+<p>Overall, the multinomial Naive Bayes model performed surprisingly well at predicting the category of a given Amazon product given its product name.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

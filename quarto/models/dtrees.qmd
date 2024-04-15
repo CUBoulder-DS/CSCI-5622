@@ -30,6 +30,11 @@ In this particular project, classification decision trees will be used to predic
 
 ## Data Prep
 
+
+
+
+It's essential for the training and test data to be disjoint, meaning they should not overlap, to ensure the validity and accuracy of the model's performance evaluation. Reasons for this include to avoid overfitting, assessing bias and variance, supporting reproducability and validation, and preventing data leakage.
+
 ## Code
 
 ::: {.columns}

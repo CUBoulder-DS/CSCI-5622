@@ -14,7 +14,81 @@ Smoothing is required in Naive Bayes models to handle situations where a particu
 
 For this particular project, multinomial Naive Bayes will be used with the feature of product `Name`, to predict the `Category` that the product falls into.
 
+```{python}
+#| include: false
+#| label: setup
+
+# In order to force reload any changes done to the models package files
+%load_ext autoreload
+%autoreload 2
+
+import pandas as pd
+import numpy as np
+import os
+
+from IPython.display import display
+
+import plotly
+import plotly.express as px
+import plotly.io as pio
+import plotly.graph_objects as go
+
+# Has to be after all other imports
+from common_funcs import *
+from common_funcs import df_show_rand_sample
+```
+
 ## Data Prep
+
+::: {.columns}
+::: {.column}
+With Naive Bayes, the input data of vectorized text works well; here, multinomial Naive Bayes will be used with the feature of product `Name`, to predict the `Category` that the product falls into. @tbl-data shows the input data used for all models used, and the data can be found [at this link](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/scraped/scraped1.csv).
+:::
+
+::: {.column}
+```{python}
+#| label: tbl-data
+#| tbl-cap: The input feature pre-transformation for input into the model, and the label feature "Category"
+
+df_az = pd.read_csv("../../data/output/products_sample.csv")
+
+df_show_rand_sample(df_az[["Name", "Category"]])
+```
+:::
+:::
+
+
+The data, before transforming into N-gram word vectors (more info below), must be split into training and testing datasets. This can easily be done by randomly choosing each row to go into training or test, with about 25% of the data going into testing. We also stratify the splitting of data on the label categories, for fairness in evaluation. We split before vectorization for fairness in the conversion/tranformation of the data into vectors.
+
+It's essential for the training and test data to be disjoint, meaning they should not overlap, to ensure the validity and accuracy of the model's performance evaluation. Reasons for this include to avoid overfitting, assessing bias and variance, supporting reproducability and validation, and preventing data leakage.
+
+
+Based on how the input feature is turned into a vector format, several different models will be run; the following formats of the intput transformed into a sparse matrix vector are used, where a sparse matrix is an efficient representation of a large matrix with many zeros:
+
+- **Count frequency vector**, which does text preprocessing, tokenizing and filtering of stopwords in order to turn a text string into an N-gram of words feature vector. Essentially, each occurence of a word adds to a count in a given row, with the number of columns equaling the number of all words across all input (training) text. Stop words are common English words that should not be considered due to their frequency, like "and" or "the". The stop words used here are `["and", "for", "with", "to"]`, which are the ones most commonly found in Amazon product titles.
+- **Term-frequency (TF) vector**, where instead of the count of a word appearing, the number of occurrences of each word in a document is divided by the total number of words in the document. This is to adjust for how longer documents will have higher average count values than shorter documents, even though they might talk about the same topics.
+- **Binary frequency vector**, where instead of count a binary 0/1 is used to represent if a word appears in the given row `Name`. This is used for Bernoulli NB.
+
+::: {.columns}
+::: {.column}
+Thus, the following NB models will be used with the following data:
+
+- Multinomial with count frequency vectors
+- Multinomial with TF vectors
+- Bernoulli with binary frequency vectors
+:::
+
+::: {.column}
+::: {#fig-sparse}
+`<343558x183699 sparse matrix of type '<class 'numpy.float64'>`
+`       with 5305684 stored elements in Compressed Sparse Row format>`
+
+![](../images/sparse.png)
+
+An example of how sparse matrices are used and the training data as a sparse matrix.
+:::
+:::
+:::
 
 ## Code
 
@@ -34,4 +108,57 @@ The jupyter notebook code for running Naive Bayes, data prep, and everything els
 
 ## Results
 
+Each model was run as described above in "Data Prep". The results can be seen in @tbl-acc; as we can see, the base Multinomial NB was the best, with Bernoulli NS significantly underperforming.
+
+| Model                                       | Data Format   |   Accuracy |
+|:--------------------------------------------|:--------------|-----------:|
+| MultinomialNB | Counts        |   0.682597 |
+| MultinomialNB | TF            |   0.606549 |
+| BernoulliNB   | Occurence     |   0.229279 |
+
+: The table of result accuracy for each model {#tbl-acc}
+
+
+For the best performing model, performance metrics were found for each category in the labels; in @tbl-perf we show the top 10 performing categories, along with the words that were found to have the highest log-prior-probabilities; aka, the words that most influenced the choosing of that category by the model.
+
+| Category                        |   precision |   recall |   f1-score | Top Feature Words                                                    |
+|:--------------------------------|------------:|---------:|-----------:|:---------------------------------------------------------------------|
+| Computers & Tablets             |    0.898876 | 0.981595 |   0.938416 | ['laptop', '10', 'ssd', 'intel', 'core', 'ram']                      |
+| Knitting & Crochet Supplies     |    0.933824 | 0.937962 |   0.935888 | ['set', 'kit', 'needles', 'knitting', 'crochet', 'yarn']             |
+| Additive Manufacturing Products |    0.937198 | 0.9312   |   0.934189 | ['pla', 'pro', 'filament', 'ender', 'printer', '3d']                 |
+| Sexual Wellness Products        |    0.981538 | 0.859838 |   0.916667 | ['vibrator', 'women', 'dildo', 'adult', 'toys', 'sex']               |
+| Needlework Supplies             |    0.926941 | 0.900888 |   0.913728 | ['needle', 'kits', 'cross', 'stitch', 'kit', 'embroidery']           |
+| Pet Bird Supplies               |    0.974684 | 0.857939 |   0.912593 | ['parakeet', 'toys', 'toy', 'parrot', 'cage', 'bird']                |
+| Light Bulbs                     |    0.865291 | 0.954485 |   0.907702 | ['base', 'pack', 'bulbs', 'led', 'bulb', 'light']                    |
+| Craft & Hobby Fabric            |    0.919408 | 0.891547 |   0.905263 | ['sewing', 'cotton', 'the', 'by', 'yard', 'fabric']                  |
+| Wall Art                        |    0.8475   | 0.956276 |   0.898608 | ['room', 'canvas', 'poster', 'decor', 'art', 'wall']                 |
+| Vacuum Cleaners & Floor Care    |    0.819462 | 0.952381 |   0.880936 | ['compatible', 'filter', 'pack', 'cleaner', 'replacement', 'vacuum'] |
+| Fish & Aquatic Pets             |    0.922201 | 0.837931 |   0.878049 | ['pump', 'water', 'filter', 'tank', 'fish', 'aquarium']              |
+| Cutting Tools                   |    0.808673 | 0.950525 |   0.87388  | ['bits', 'shank', 'set', 'inch', 'drill', 'bit']                     |
+| Industrial Materials            |    0.85907  | 0.888372 |   0.873476 | ['diy', 'length', '12', 'in', 'sheet', 'rubber']                     |
+| Rain Umbrellas                  |    0.982609 | 0.784722 |   0.872587 | ['compact', 'folding', 'travel', 'windproof', 'rain', 'umbrella']    |
+| Power Transmission Products     |    0.861373 | 0.879121 |   0.870156 | ['steel', 'ball', 'rubber', 'bearings', 'bearing', 'belt']           |
+
+: The table of performance metrics for the top 15 correctly-labeled categories, along with the most influential words for each category. {#tbl-perf}
+
+The confusion matrix of all categories can be seen in @fig-cm1. As can be seen, this is not necessarily informative; instead, we create a confusion matrix of the subset of categories that had the top 15 F1-scores in @fig-cm2.
+
+::: {.columns}
+::: {.column}
+![The confusion matrix of all categories](../images/nb_cm.png){#fig-cm1}
+:::
+::: {.column}
+![The confusion matrix for top 15 correctly-classified categories](../images/nb_cm_top.png){#fig-cm2}
+:::
+:::
+
+
 ## Conclusion
+
+Based on the above results, some interesting conclusions can be drawn:
+
+- Even though term-frequency (TF) vectors are supposed to be a better data format for input into Naive Bayes models, the count frequency vector data format actually consistently outperformed.
+- Though the general accuracy was 68% at best, that's because there were 248 categories in the label. When examining the performance by each category, many had accuracy over 88% and 6 had performance over 91%.
+- Some words were extremely predictive for a unique category; however, some words like "boy" and "clothing" led the model to easily mis-classify the category.
+
+Overall, the multinomial Naive Bayes model performed surprisingly well at predicting the category of a given Amazon product given its product name.
