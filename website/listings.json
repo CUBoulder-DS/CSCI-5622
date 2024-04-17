@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/models/bayes.html",
       "/models/dtrees.html",
+      "/models/bayes.html",
       "/intro.html",
       "/models/pca.html",
       "/models/clustering.html",

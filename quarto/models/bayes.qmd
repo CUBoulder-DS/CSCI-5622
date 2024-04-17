@@ -1,3 +1,7 @@
+---
+lightbox: true
+---
+
 # Naive Bayes
 
 ## Overview

@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -217,8 +220,13 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#data-prep" id="toc-data-prep" class="nav-link" data-scroll-target="#data-prep">Data Prep</a></li>
+  <li><a href="#models-used" id="toc-models-used" class="nav-link" data-scroll-target="#models-used">Models Used</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#regression-plots" id="toc-regression-plots" class="nav-link" data-scroll-target="#regression-plots">Regression Plots</a></li>
+  <li><a href="#classifier-plot" id="toc-classifier-plot" class="nav-link" data-scroll-target="#classifier-plot">Classifier Plot</a></li>
+  </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul></li>
   </ul>
@@ -238,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
 <div style="float:right; width:34%; padding:2%">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/dt_1.jpg" class="img-fluid figure-img"></p>
+<p><a href="../images/dt_1.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Decision tree structure"><img src="../images/dt_1.jpg" class="img-fluid figure-img" alt="Decision tree structure"></a></p>
 <figcaption>Decision tree structure</figcaption>
 </figure>
 </div>
@@ -249,7 +257,7 @@ ul.task-list li input[type="checkbox"] {
 <div style="float:left; width:34%; padding:2%">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/dt_2.png" class="img-fluid figure-img"></p>
+<p><a href="../images/dt_2.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="The decision tree structure for the given example"><img src="../images/dt_2.png" class="img-fluid figure-img" alt="The decision tree structure for the given example"></a></p>
 <figcaption>The decision tree structure for the given example</figcaption>
 </figure>
 </div>
@@ -267,7 +275,220 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="data-prep" class="level2">
 <h2 class="anchored" data-anchor-id="data-prep">Data Prep</h2>
-<p>It’s essential for the training and test data to be disjoint, meaning they should not overlap, to ensure the validity and accuracy of the model’s performance evaluation. Reasons for this include to avoid overfitting, assessing bias and variance, supporting reproducability and validation, and preventing data leakage.</p>
+<p>The data features used were:</p>
+<ul>
+<li><code>"Stars", "Reviews", "Price", "Date Scraped", "Bought In Month"</code> for predicting <code>"Is Best Seller"</code></li>
+<li><code>"Stars", "Reviews", "Date Scraped", "Bought In Month", "Is Best Seller"</code> for predicting <code>"Price"</code>.</li>
+</ul>
+<p>The data is already clean with outliers removed and NaNs dealt with, but some more data engineering had to take place to make the features fit for running the models:</p>
+<ul>
+<li>Only select rows that contain a non-NaN value for <code>Category</code> and <code>Bought in Month</code></li>
+<li>Select rows such that 1% of them are <code>Is Best Seller == True</code>. This is because the dataset contains more than &gt;1M rows, with only 0.4% of them <code>Is Best Seller == True</code>; this makes the prediction less biased and invariant for the model.</li>
+<li>Make datetime binary, as there are only 2 values used for it anyways.</li>
+</ul>
+<p>As DTs are invariant to the scale of the data, no normalization/min-max scaling was needed.</p>
+<p>The data was also split into 25% test data, and 75% training data. It’s essential for the training and test data to be disjoint, meaning they should not overlap, to ensure the validity and accuracy of the model’s performance evaluation. Reasons for this include to avoid overfitting, assessing bias and variance, supporting reproducability and validation, and preventing data leakage.</p>
+<p><a href="#tbl-data" class="quarto-xref">Table&nbsp;1</a> shows the final input data used for all models used, and the data can be found <a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/scraped/scraped1.csv">at this link</a>. The test data is exactly the same format as the pictured samples of training data, except with 75% less rows.</p>
+<div id="tbl-data" class="quarto-layout-panel anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: The input training and test data for the classifying and regression decision trees.
+</figcaption>
+<div aria-describedby="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>The training features for the classification DT</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Stars</th>
+<th style="text-align: right;">Reviews</th>
+<th style="text-align: right;">Price</th>
+<th style="text-align: right;">Date Scraped</th>
+<th style="text-align: right;">Bought In Month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">45.99</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">22.99</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">345</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">28.49</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: right;">23.55</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">71.13</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>The label for the classification DT</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Is Best Seller</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>The training features for the regression DT</caption>
+<colgroup>
+<col style="width: 12%">
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 26%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Stars</th>
+<th style="text-align: right;">Reviews</th>
+<th style="text-align: right;">Date Scraped</th>
+<th style="text-align: right;">Bought In Month</th>
+<th style="text-align: left;">Is Best Seller</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">False</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">3874</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: left;">False</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: left;">False</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: left;">False</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">700</td>
+<td style="text-align: left;">False</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">False</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>The label for the regression DT</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">24.99</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">33.99</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">31.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9.99</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">20.38</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</section>
+<section id="models-used" class="level2">
+<h2 class="anchored" data-anchor-id="models-used">Models Used</h2>
+<p>As described above, a classification DT and a regression DT were run on their respective subsets of the dataset, using the standard defaults given by <code>sklearn</code>. In addition, a third DT was run: using random forests for classification (using the same dataset as for the standard classification DT). Random forests is an ensemble learning method for classification, regression and other tasks that operates by constructing a multitude of decision trees at training time. For classification tasks, the output of the random forest is the class selected by most trees. Random decision forests correct for decision trees’ habit of overfitting to their training set.</p>
 </section>
 <section id="code" class="level2">
 <h2 class="anchored" data-anchor-id="code">Code</h2>
@@ -283,11 +504,273 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>The models were run, and the standard metrics for evaluating classification (including accuracy) and regression (including R^2 score) are shown in <a href="#tbl-metrics" class="quarto-xref">Table&nbsp;2</a>. As we can see, the random forest classfier (described from here on as “best classifier DT”) was the better performing model slightly; we can also see that the regression DT did not perform well.</p>
+<div id="tbl-metrics" class="quarto-layout-panel anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-metrics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Standard metrics showing the performance of the 3 models.
+</figcaption>
+<div aria-describedby="tbl-metrics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>The performance of the regression DT.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Metric</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Mean Squared Error (MSE)</td>
+<td style="text-align: right;">3996.33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean Absolute Error (MAE)</td>
+<td style="text-align: right;">32.5754</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R^2</td>
+<td style="text-align: right;">-0.030492</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>The performance of the 2 classification DT models.</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;"></th>
+<th style="text-align: right;">precision</th>
+<th style="text-align: right;">recall</th>
+<th style="text-align: right;">f1-score</th>
+<th style="text-align: right;">support</th>
+<th style="text-align: right;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Standard Classifier DT</td>
+<td style="text-align: left;">False</td>
+<td style="text-align: right;">0.990381</td>
+<td style="text-align: right;">0.995355</td>
+<td style="text-align: right;">0.992862</td>
+<td style="text-align: right;">166850</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">True</td>
+<td style="text-align: right;">0.0673887</td>
+<td style="text-align: right;">0.033553</td>
+<td style="text-align: right;">0.0448</td>
+<td style="text-align: right;">1669</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.985829</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">macro avg</td>
+<td style="text-align: right;">0.528885</td>
+<td style="text-align: right;">0.514454</td>
+<td style="text-align: right;">0.518831</td>
+<td style="text-align: right;">168519</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">weighted avg</td>
+<td style="text-align: right;">0.98124</td>
+<td style="text-align: right;">0.985829</td>
+<td style="text-align: right;">0.983472</td>
+<td style="text-align: right;">168519</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Random Forest Classifier</td>
+<td style="text-align: left;">False</td>
+<td style="text-align: right;">0.990312</td>
+<td style="text-align: right;">0.997393</td>
+<td style="text-align: right;">0.99384</td>
+<td style="text-align: right;">166850</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">True</td>
+<td style="text-align: right;">0.0861345</td>
+<td style="text-align: right;">0.0245656</td>
+<td style="text-align: right;">0.0382284</td>
+<td style="text-align: right;">1669</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.987758</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">macro avg</td>
+<td style="text-align: right;">0.538223</td>
+<td style="text-align: right;">0.510979</td>
+<td style="text-align: right;">0.516034</td>
+<td style="text-align: right;">168519</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">weighted avg</td>
+<td style="text-align: right;">0.981357</td>
+<td style="text-align: right;">0.987758</td>
+<td style="text-align: right;">0.984376</td>
+<td style="text-align: right;">168519</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>We also show the structure of the decision trees at the first 3 levels (all trees had more than 50 final levels which was unable to be visualized). In <a href="#fig-dts" class="quarto-xref">Figure&nbsp;1</a>, we can see that <code>Bought in Month</code> feature was very important to all 3 trees; we can also see that <code>Stars</code> and <code>Price</code> has a very low Gini index for both classifier DTs with <code>Stars</code> also appearing early in the tree, indicating the features’ importances to the predictions.</p>
+<div id="fig-dts" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../images/dt_tree_rf.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" title="Random Forest Classifier"><img src="../images/dt_tree_rf.png" class="img-fluid figure-img"></a></p>
+<figcaption>Random Forest Classifier</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../images/dt_tree_class.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4" title="Standard Classifier"><img src="../images/dt_tree_class.png" class="img-fluid figure-img"></a></p>
+<figcaption>Standard Classifier</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../images/dt_tree_reg.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5" title="Regression DT"><img src="../images/dt_tree_reg.png" class="img-fluid figure-img"></a></p>
+<figcaption>Regression DT</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A visualization of the first 3 levels of the 3 decision tree models run.
+</figcaption>
+</figure>
+</div>
+<section id="regression-plots" class="level3">
+<h3 class="anchored" data-anchor-id="regression-plots">Regression Plots</h3>
+<p>We show the basic plot of true vs predicted label (aka <code>Price</code>) for the regression decision tree in <a href="#fig-reg1" class="quarto-xref">Figure&nbsp;2</a>; we can see that unlike the straight line of scatter points we would see in a perfect classification, we have an approximate log-negative trend. The model tended to overprice items with actual price &lt; $100, and underprice the products with high prices.</p>
+<p>We also show the predicted price vs the error residuals in <a href="#fig-reg2" class="quarto-xref">Figure&nbsp;3</a>; this plot gives similar insight to the previous, where we can see highest error on low predicted prices and less, but still increasing, error on higher-predicted prices.</p>
+<div class="columns">
+<div class="column">
+<div id="fig-reg1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="../images/dt_reg1.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6"><img src="../images/dt_reg1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reg1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: True vs predicted label for the regression DT.
+</figcaption>
+</figure>
+</div>
+</div><div class="column">
+<div id="fig-reg2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="../images/dt_reg2.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7"><img src="../images/dt_reg2.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reg2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Predicted price vs the residuals for the regression DT.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="classifier-plot" class="level3">
+<h3 class="anchored" data-anchor-id="classifier-plot">Classifier Plot</h3>
+<div class="columns">
+<div class="column">
+<p>For the best performing classifier DT, we show the confusion matrix of the labels in <a href="#fig-cm" class="quarto-xref">Figure&nbsp;4</a>. As we can see, The model did great on correctly classifying not best-sellers; however, that was because there were very few true best-sellers (this agrees with the F1 scores per-category in the above table). The model struggled with correctly classifying true best sellers and had many more FP and FN than TP.</p>
+</div><div class="column">
+<div id="fig-cm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="../images/dt_cm.png" class="lightbox" data-glightbox="description: .lightbox-desc-8" data-gallery="quarto-lightbox-gallery-8"><img src="../images/dt_cm.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The confusion matrix of true vs predicted labels of the random forest classifier.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>For the classification task, some conclusions and observations can be drawn from the results:</p>
+<ul>
+<li>The accuracy is deceptively high for both classifiers, as the second <code>True</code> label only was present in 1% of the data.</li>
+<li>The classifiers were biased towards predicting that a product was NOT a best-seller, as that gave the highest accuracy ultimately.</li>
+<li>Although the model had more FP than TP, overall it had many more FN than FP, indicating once again that the model tended to classify products as not best-sellers.</li>
+</ul>
+<p>For the regression task, similarly we can draw observations from the results:</p>
+<ul>
+<li>Though the MAE was low, the low R^2 score indicates that the model overall tended to not predict the price well.</li>
+<li>Based on the residuals plots, the model did best (most residuals near zero) when the predicted price was around $150.</li>
+<li>The model tended to underprice and overprice when further from the $150 price value.</li>
+</ul>
+<p>Overall, it seemed the models struggled to perform well but did adequately, especially the regression model which was mildly suprising. It can be concluded that the best-seller status of a product, along with price, is somewhat hard to predict from just the numerical values present in the dataset.</p>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Decision tree structure</span>
+<span class="glightbox-desc lightbox-desc-2">The decision tree structure for the given example</span>
+<span class="glightbox-desc lightbox-desc-3">Random Forest Classifier</span>
+<span class="glightbox-desc lightbox-desc-4">Standard Classifier</span>
+<span class="glightbox-desc lightbox-desc-5">Regression DT</span>
+<span class="glightbox-desc lightbox-desc-6">Figure&nbsp;2: True vs predicted label for the regression DT.</span>
+<span class="glightbox-desc lightbox-desc-7">Figure&nbsp;3: Predicted price vs the residuals for the regression DT.</span>
+<span class="glightbox-desc lightbox-desc-8">Figure&nbsp;4: The confusion matrix of true vs predicted labels of the random forest classifier.</span>
+</div>
 </section>
 </section>
 
@@ -692,6 +1175,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"closeEffect":"zoom","selector":".lightbox"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 
