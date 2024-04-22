@@ -70,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -213,7 +242,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#svm-support-vector-machine" id="toc-svm-support-vector-machine" class="nav-link active" data-scroll-target="#svm-support-vector-machine">SVM (Support Vector Machine)</a></li>
+  <li><a href="#svm-support-vector-machine" id="toc-svm-support-vector-machine" class="nav-link active" data-scroll-target="#svm-support-vector-machine">SVM (Support Vector Machine)</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#polynomial-kernel-and-rbf-kernel-functions" id="toc-polynomial-kernel-and-rbf-kernel-functions" class="nav-link" data-scroll-target="#polynomial-kernel-and-rbf-kernel-functions">Polynomial Kernel and RBF Kernel Functions</a></li>
+  <li><a href="#example-of-polynomial-kernel-transformation" id="toc-example-of-polynomial-kernel-transformation" class="nav-link" data-scroll-target="#example-of-polynomial-kernel-transformation">Example of Polynomial Kernel Transformation</a></li>
+  </ul></li>
+  <li><a href="#data-prep" id="toc-data-prep" class="nav-link" data-scroll-target="#data-prep">Data Prep</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -225,9 +265,78 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="svm-support-vector-machine" class="level1">
 <h1>SVM (Support Vector Machine)</h1>
-<p>Placeholder</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<div style="width:100%;">
+<div style="float:right; width:34%; padding:2%">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/svm_1.png" class="img-fluid figure-img"></p>
+<figcaption>Example SVM</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Support Vector Machines (SVMs) are a type of supervised learning model used for classification and regression tasks. They work by finding the hyperplane that best separates the data points into different classes.</p>
+<p>SVMs are considered linear separators because they aim to find the best hyperplane that separates data points of different classes with the maximum margin. This hyperplane is defined by a set of weights and biases that are optimized during the training process to minimize classification errors. The kernel function in SVMs allows them to handle nonlinear data by implicitly mapping the input data into a higher-dimensional space where a linear separation is possible. The dot product plays a critical role in the kernel function because it measures the similarity between two data points in this higher-dimensional space.</p>
+<div style="width:100%;">
+<div style="float:left; width:34%; padding:2%">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/svm_2.png" class="img-fluid figure-img"></p>
+<figcaption>Example SVM</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="polynomial-kernel-and-rbf-kernel-functions" class="level3">
+<h3 class="anchored" data-anchor-id="polynomial-kernel-and-rbf-kernel-functions">Polynomial Kernel and RBF Kernel Functions</h3>
+<ol type="1">
+<li><strong>Polynomial Kernel:</strong> <span class="math inline">\(K(x, y) = (x \cdot y + r)^d\)</span>
+<ul>
+<li><span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are input data points.</li>
+<li><span class="math inline">\(r\)</span> is a constant term.</li>
+<li><span class="math inline">\(d\)</span> is the degree of the polynomial.</li>
+</ul></li>
+<li><strong>RBF (Radial Basis Function) Kernel:</strong> <span class="math inline">\(K(x, y) = \exp(-\gamma \| x - y \|^2)\)</span>
+<ul>
+<li><span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are input data points.</li>
+<li><span class="math inline">\(\gamma\)</span> is a hyperparameter that determines the “spread” of the kernel.</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-of-polynomial-kernel-transformation" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-polynomial-kernel-transformation">Example of Polynomial Kernel Transformation</h3>
+<p>Let’s say we have a 2D point <span class="math inline">\((x, y) = (3, 4)\)</span> and we want to use a polynomial kernel with <span class="math inline">\(r = 1\)</span> and <span class="math inline">\(d = 2\)</span> to “cast” this point into the proper number of dimensions.</p>
+<ol type="1">
+<li><strong>Original Point</strong>: <span class="math inline">\((x, y) = (3, 4)\)</span></li>
+<li><strong>Polynomial Kernel Transformation</strong>: <span class="math display">\[
+\begin{align*}
+K((3, 4), (x, y)) &amp; = ((3 \cdot x + 4 \cdot y) + 1)^2 \\
+&amp; = ((3x + 4y) + 1)^2 \\
+&amp; = (3x + 4y + 1)^2
+\end{align*}
+\]</span></li>
+</ol>
+<p>So, applying the polynomial kernel with <span class="math inline">\(r = 1\)</span> and <span class="math inline">\(d = 2\)</span> to the point <span class="math inline">\((3, 4)\)</span> transforms it into the new representation <span class="math inline">\((3x + 4y + 1)^2\)</span> in the higher-dimensional space. This transformed representation enables SVMs to find a nonlinear decision boundary.</p>
+<p>In summary, SVMs are powerful classifiers that use linear separators in higher-dimensional spaces facilitated by kernel functions like the polynomial and RBF kernels, which allow them to handle nonlinear data effectively.</p>
+<p>In this project, SVMs will be used specifically to categorize and predict whether a product is a <code>best seller</code>.</p>
+</section>
+</section>
+<section id="data-prep" class="level2">
+<h2 class="anchored" data-anchor-id="data-prep">Data Prep</h2>
+</section>
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code</h2>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -1,3 +1,63 @@
 # SVM (Support Vector Machine)
 
-Placeholder
+## Overview
+
+::: {style="width:100%;"}
+::: {style="float:right; width:34%; padding:2%"}
+![Example SVM](../images/svm_1.png)
+:::
+:::
+
+Support Vector Machines (SVMs) are a type of supervised learning model used for classification and regression tasks. They work by finding the hyperplane that best separates the data points into different classes.
+
+SVMs are considered linear separators because they aim to find the best hyperplane that separates data points of different classes with the maximum margin. This hyperplane is defined by a set of weights and biases that are optimized during the training process to minimize classification errors. The kernel function in SVMs allows them to handle nonlinear data by implicitly mapping the input data into a higher-dimensional space where a linear separation is possible. The dot product plays a critical role in the kernel function because it measures the similarity between two data points in this higher-dimensional space.
+
+::: {style="width:100%;"}
+::: {style="float:left; width:34%; padding:2%"}
+![Example SVM](../images/svm_2.png)
+:::
+:::
+
+### Polynomial Kernel and RBF Kernel Functions
+
+1. **Polynomial Kernel:** $K(x, y) = (x \cdot y + r)^d$
+   - $x$ and $y$ are input data points.
+   - $r$ is a constant term.
+   - $d$ is the degree of the polynomial.
+
+2. **RBF (Radial Basis Function) Kernel:** $K(x, y) = \exp(-\gamma \| x - y \|^2)$
+   - $x$ and $y$ are input data points.
+   - $\gamma$ is a hyperparameter that determines the "spread" of the kernel.
+
+### Example of Polynomial Kernel Transformation
+
+Let's say we have a 2D point $(x, y) = (3, 4)$ and we want to use a polynomial kernel with $r = 1$ and $d = 2$ to "cast" this point into the proper number of dimensions.
+
+1. **Original Point**: $(x, y) = (3, 4)$
+2. **Polynomial Kernel Transformation**:
+   $$
+   \begin{align*}
+   K((3, 4), (x, y)) & = ((3 \cdot x + 4 \cdot y) + 1)^2 \\
+   & = ((3x + 4y) + 1)^2 \\
+   & = (3x + 4y + 1)^2
+   \end{align*}
+   $$
+
+So, applying the polynomial kernel with $r = 1$ and $d = 2$ to the point $(3, 4)$ transforms it into the new representation $(3x + 4y + 1)^2$ in the higher-dimensional space. This transformed representation enables SVMs to find a nonlinear decision boundary.
+
+In summary, SVMs are powerful classifiers that use linear separators in higher-dimensional spaces facilitated by kernel functions like the polynomial and RBF kernels, which allow them to handle nonlinear data effectively.
+
+In this project, SVMs will be used specifically to categorize and predict whether a product is a `best seller`.
+
+## Data Prep
+
+
+## Code
+
+
+## Results
+
+
+## Conclusions
+
+
