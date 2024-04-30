@@ -1,4 +1,9 @@
+---
+lightbox: true
+---
+
 # SVM (Support Vector Machine)
+
 
 ## Overview
 
@@ -10,7 +15,7 @@
 
 Support Vector Machines (SVMs) are a type of supervised learning model used for classification and regression tasks. They work by finding the hyperplane that best separates the data points into different classes.
 
-SVMs are considered linear separators because they aim to find the best hyperplane that separates data points of different classes with the maximum margin. This hyperplane is defined by a set of weights and biases that are optimized during the training process to minimize classification errors. The kernel function in SVMs allows them to handle nonlinear data by implicitly mapping the input data into a higher-dimensional space where a linear separation is possible. The dot product plays a critical role in the kernel function because it measures the similarity between two data points in this higher-dimensional space.
+SVMs are considered linear separators because they aim to find the best hyperplane that separates data points of different classes with the maximum margin. This hyperplane is defined by a set of weights and biases that are optimized during the training process to minimize classification errors. The kernel function in SVMs allows them to handle nonlinear data by implicitly mapping the input data into a higher-dimensional space where a linear separation is possible. The dot product plays a critical role in the kernel function because it measures the similarity between two data points in this higher-dimensional space, from which the similarity is used to compute the support vectors and margins.
 
 ::: {style="width:100%;"}
 ::: {style="float:left; width:34%; padding:2%"}
@@ -28,6 +33,7 @@ SVMs are considered linear separators because they aim to find the best hyperpla
 2. **RBF (Radial Basis Function) Kernel:** $K(x, y) = \exp(-\gamma \| x - y \|^2)$
    - $x$ and $y$ are input data points.
    - $\gamma$ is a hyperparameter that determines the "spread" of the kernel.
+   - nonlinearly maps samples into a higher dimensional space [@svmPractical]
 
 ### Example of Polynomial Kernel Transformation
 
@@ -47,17 +53,168 @@ So, applying the polynomial kernel with $r = 1$ and $d = 2$ to the point $(3, 4)
 
 In summary, SVMs are powerful classifiers that use linear separators in higher-dimensional spaces facilitated by kernel functions like the polynomial and RBF kernels, which allow them to handle nonlinear data effectively.
 
-In this project, SVMs will be used specifically to categorize and predict whether a product is a `best seller`.
+In this project, SVMs will be used specifically to categorize and predict whether a product, given that we have data from 2 time points of its price, will have its price increase over time.
+
+## Model Selection
+
+For this project, we will use three different types of common kernels with the SVMs: the RBF kernel, which is commonly used; the linear kernel, which is the base type; and the polynomial kernel, which enables nonlinear tranforms. The linear kernel is the most basic form, but could still have efficacy, as "there are some situations where the RBF kernel is not suitable. In particular, when the number of features is very large, one may just use the linear kernel" [@svmPractical].
+
+### Hyperparameter Selection using Cross-Validation (CV)
+
+In addition to the kernel selection, there are other hyperparameters (options of a model that must be set before training/fitting it) that need to be selected. For all kernels, the cost, or penalty parameter of the error term, `C` must be selected. For the linear kernel, no other parameter needs to be selected. For the RBF and polynomial kernels, the `gamma` $\gamma$ parameter needs to be set; and for the polynomial kernel, the degree `d` and coefficient `r` as described above also need to be picked. To do this selection of hyperparameters, a grid search across all possible combinations of parameters will be used, along with cross-validation with that grid search used as picking which values to search.
+
+Cross-validation is a technique used in machine learning model selection to evaluate the performance and generalization ability of a model. It involves partitioning the available data into subsets: one subset is used for training the model, and the remaining subsets are used for validation. This process is repeated multiple times, each time with a different partitioning scheme. The K-fold cross-validation specifically divides the data into K equally sized folds, using K-1 folds for training and the remaining fold for validation, iterating through all combinations to ensure robust evaluation and minimize overfitting. The average performance across all iterations provides a reliable estimate of the model's performance on unseen data, helping in selecting the best model for deployment.
+
 
 ## Data Prep
+
+SVMs can only work on labeled numeric data; this is because they are generating lines to seperate points in various dimensions, which thus must be in a continuous ordinal space (aka numeric); thus, any categorical variables used must be converted to integers (if ordinal) or one-hot encoded (if not). In addition, SVMs need the numeric data to be scaled [@svmPractical] and there to be a label that is being predicted.
+
+Various transformations were done to the initial Amazon product data in order to get the data to fit these conditions, as well as to create the label being used:
+
+* Make DF of products that have a calculable price difference over time
+* Use initial price and data, in order to predict later price change
+* Only use data with `Category` categories that have more than 5 products occuring, to improve prediction
+* Scale numerical data to [0, 1], make bool `Is Best Seller` an int
+* One-hot encode categorical var `Category`
+* Split into train/test, stratifying on the prediction label
+
+
+A sample of the final form of the data used can be seen in @tbl-data. A link to the data used can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/output/products_sample.csv).
+
+::: {#tbl-data layout-ncol=2}
+
+|   Price Increased |
+|------------------:|
+|                 1 |
+|                 0 |
+|                 1 |
+|                 0 |
+|                 0 |
+|                 0 |
+
+: A sample of the label/classification/predictive feature used in the training/test datasets.
+
+|   Is Best Seller |    Stars |   Reviews |      Price |   List Price |   Bought In Month | Category                       |
+|-----------------:|---------:|----------:|-----------:|-------------:|------------------:|:-------------------------------|
+|                0 | 0.826087 | 0.168665  | 0.0486961  |   0.0453502  |                 0 | Industrial & Scientific        |
+|                0 | 0.478261 | 0.306469  | 0.0437793  |   0.0893706  |                 0 | Heating, Cooling & Air Quality |
+|                0 | 0.73913  | 0.0756083 | 0.0919231  |   0.110697   |                 0 | Vacuum Cleaners & Floor Care   |
+|                0 | 0.782609 | 0.703739  | 0.0164206  |   0.0152924  |                 0 | Computers                      |
+|                0 | 0.956522 | 0.0452226 | 0.105394   |   0.0981521  |                 0 | Women's Handbags               |
+|                0 | 0.173913 | 0.0608902 | 0.00975268 |   0.00908258 |                 0 | Oral Care Products             |
+
+: The features used in both the training and test datasets.
+
+Sample of dataset used after transformation.
+:::
+
+The data was also split into 25% test data, and 75% training data. It's essential for the training and test data to be disjoint, meaning they should not overlap, to ensure the validity and accuracy of the model's performance evaluation. Reasons for this include to avoid overfitting, assessing bias and variance, supporting reproducability and validation, and preventing data leakage.  We also stratify the splitting of data on the label categories, for fairness in evaluation. Both sets of data look exactly like the included table visualization, except have disjoint values and different lengths of observations/samples.
+
 
 
 ## Code
 
+::: {.columns}
+::: {.column}
+The jupyter notebook code for running the SVMs, data prep, and everything else on this page can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/SVM.ipynb), or click on the link card to the right.
+:::
+
+::: {.column width=10%}
+<!-- Spacing column -->
+:::
+
+::: {.column width=30%}
+[![](https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png)](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/SVM.ipynb)
+:::
+:::
+
 
 ## Results
 
+::: {.columns}
+::: {.column}
+
+The grid-search cross-validation was run on set of hyperparameters, and the top results for each kernel and for each cost searched are shown in @tbl-acc. All the hyperparameters run/tested against are given below:
+
+```{python}
+#| echo: true
+#| eval: false
+
+rbf_params = {"kernel": ["rbf"], "C": [0.5, 1, 10, 100], "gamma": ["auto", "scale", 0.01, 0.001, 0.0001]}
+poly_params = {"kernel": ["poly"], "C": [0.5, 1, 10, 100], "degree": [2, 3, 4], "coef0": [0.5, 1, 5]}
+lin_params = {"kernel": ["linear"], "C": [0.5, 1, 10, 100]}
+```
+
+As one can seee, the best kernel tested was the RBF kernel, and had the same accuracy across all costs tested with gamma equaling about 0.01/0.001.
+
+
+:::
+::: {.column}
+| Kernel   |     C | Gamma   | Degree   | R   |   Accuracy Score |
+|:---------|------:|:--------|:---------|:----|-----------------:|
+| rbf      | 100   | 0.001   |          |     |         0.74661  |
+| rbf      |  10   | auto    |          |     |         0.74661  |
+| rbf      |   1   | auto    |          |     |         0.74661  |
+| rbf      |   0.5 | auto    |          |     |         0.74661  |
+| poly     | 100   |         | 2        | 1   |         0.710169 |
+| poly     |  10   |         | 2        | 0.5 |         0.723729 |
+| poly     |   1   |         | 2        | 0.5 |         0.728814 |
+| poly     |   0.5 |         | 2        | 0.5 |         0.74322  |
+| linear   | 100   |         |          |     |         0.729661 |
+| linear   |  10   |         |          |     |         0.729661 |
+| linear   |   1   |         |          |     |         0.729661 |
+| linear   |   0.5 |         |          |     |         0.744068 |
+
+: The top accuracy results for each kernel, for each cost C, with the top hyperparameters listed. A gamma $\gamma$ = `auto` means a value of about 0.01. {#tbl-acc}
+:::
+:::
+
+The confusion matrix for the best model tested for each kernel is shown below in @fig-cm. Unfortunately, it appears that the top 74.66% accuracy came from the model classifying all input as `False`, even though about 1/4 or 25% were `True`. This imbalance held even when the performance metric that was being optimized against, in the cross-validation grid search, was balanced accuracy (where an imlabance in output label classes is taken into account).
+
+::: {#fig-cm layout-ncol=3}
+
+![](../images/svm_cm1.png)
+
+![](../images/svm_cm2.png)
+
+![](../images/svm_cm3.png)
+
+Confusion matrices of the classification output (on the test dataset) from the best performing model, for each kernel tested.
+:::
+
+
+::: {.columns}
+::: {.column width=40%}
+
+::: {#fig-db layout-ncol=1}
+
+![Decision boundaries by the best performing overall model (RBF kernel)](../images/svm_db.png)
+
+![Decision boundaries by the best performing Polynomial kernel model (balanced accuracy score, achieved 53%) ](../images/svm_db_poly.png)
+
+The decision boundaries for 2 models, visualized across all combination of non-category features.
+:::
+:::
+
+::: {.column width=5%}
+<!-- Spacing column -->
+:::
+
+::: {.column width=55%}
+
+The decision boundaries by the best performing model, visualized across all combination of features (except the one-hot encoded category) is shown in @fig-db. The areas that are filled white are because the model was not evaluated against those values for technical python reasons. As one can see, the decision boundaries agree with the output of the confusion matrix, namely that the best model simply classifies everything as the dominant label in order to achieve the best performance.
+
+:::
+:::
 
 ## Conclusions
 
+From the above results, several interesting conclusions can be drawn:
+
+* The SVMs struggled to classify the data, and achieved near 75% accuracy simply by classifying everything as the dominant label (which was present in about 75% of the test and train data).
+* The amount of training data to allow the model to separate the classes was likely not enough; an alternative is that the features used are strictly not seperable by class, leading to the model being unable to do so and therefore classifying everything as the dominant label.
+* Changes in order of magnitude of the cost of kernels had barely any impact.
+
+Overall, the label `Price Increased` seems to be a difficult one to predict and the SVMs struggled to classify as such.
 

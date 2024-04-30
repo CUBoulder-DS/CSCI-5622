@@ -20,7 +20,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -41,6 +95,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -242,48 +299,63 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#svm-support-vector-machine" id="toc-svm-support-vector-machine" class="nav-link active" data-scroll-target="#svm-support-vector-machine">SVM (Support Vector Machine)</a>
-  <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
   <ul class="collapse">
   <li><a href="#polynomial-kernel-and-rbf-kernel-functions" id="toc-polynomial-kernel-and-rbf-kernel-functions" class="nav-link" data-scroll-target="#polynomial-kernel-and-rbf-kernel-functions">Polynomial Kernel and RBF Kernel Functions</a></li>
   <li><a href="#example-of-polynomial-kernel-transformation" id="toc-example-of-polynomial-kernel-transformation" class="nav-link" data-scroll-target="#example-of-polynomial-kernel-transformation">Example of Polynomial Kernel Transformation</a></li>
+  </ul></li>
+  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection">Model Selection</a>
+  <ul class="collapse">
+  <li><a href="#hyperparameter-selection-using-cross-validation-cv" id="toc-hyperparameter-selection-using-cross-validation-cv" class="nav-link" data-scroll-target="#hyperparameter-selection-using-cross-validation-cv">Hyperparameter Selection using Cross-Validation (CV)</a></li>
   </ul></li>
   <li><a href="#data-prep" id="toc-data-prep" class="nav-link" data-scroll-target="#data-prep">Data Prep</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../models/bayes.html">Models and Methods</a></li><li class="breadcrumb-item"><a href="../models/svm.html">SVM (Support Vector Machine)</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">SVM (Support Vector Machine)</h1>
+</div>
 
 
 
-<section id="svm-support-vector-machine" class="level1">
-<h1>SVM (Support Vector Machine)</h1>
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <div style="width:100%;">
 <div style="float:right; width:34%; padding:2%">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/svm_1.png" class="img-fluid figure-img"></p>
+<p><a href="../images/svm_1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Example SVM"><img src="../images/svm_1.png" class="img-fluid figure-img" alt="Example SVM"></a></p>
 <figcaption>Example SVM</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Support Vector Machines (SVMs) are a type of supervised learning model used for classification and regression tasks. They work by finding the hyperplane that best separates the data points into different classes.</p>
-<p>SVMs are considered linear separators because they aim to find the best hyperplane that separates data points of different classes with the maximum margin. This hyperplane is defined by a set of weights and biases that are optimized during the training process to minimize classification errors. The kernel function in SVMs allows them to handle nonlinear data by implicitly mapping the input data into a higher-dimensional space where a linear separation is possible. The dot product plays a critical role in the kernel function because it measures the similarity between two data points in this higher-dimensional space.</p>
+<p>SVMs are considered linear separators because they aim to find the best hyperplane that separates data points of different classes with the maximum margin. This hyperplane is defined by a set of weights and biases that are optimized during the training process to minimize classification errors. The kernel function in SVMs allows them to handle nonlinear data by implicitly mapping the input data into a higher-dimensional space where a linear separation is possible. The dot product plays a critical role in the kernel function because it measures the similarity between two data points in this higher-dimensional space, from which the similarity is used to compute the support vectors and margins.</p>
 <div style="width:100%;">
 <div style="float:left; width:34%; padding:2%">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/svm_2.png" class="img-fluid figure-img"></p>
+<p><a href="../images/svm_2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="Example SVM"><img src="../images/svm_2.png" class="img-fluid figure-img" alt="Example SVM"></a></p>
 <figcaption>Example SVM</figcaption>
 </figure>
 </div>
@@ -302,6 +374,7 @@ window.Quarto = {
 <ul>
 <li><span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are input data points.</li>
 <li><span class="math inline">\(\gamma\)</span> is a hyperparameter that determines the “spread” of the kernel.</li>
+<li>nonlinearly maps samples into a higher dimensional space <span class="citation" data-cites="svmPractical">(<a href="#ref-svmPractical" role="doc-biblioref">Hsu et al. 2003</a>)</span></li>
 </ul></li>
 </ol>
 </section>
@@ -320,26 +393,387 @@ K((3, 4), (x, y)) &amp; = ((3 \cdot x + 4 \cdot y) + 1)^2 \\
 </ol>
 <p>So, applying the polynomial kernel with <span class="math inline">\(r = 1\)</span> and <span class="math inline">\(d = 2\)</span> to the point <span class="math inline">\((3, 4)\)</span> transforms it into the new representation <span class="math inline">\((3x + 4y + 1)^2\)</span> in the higher-dimensional space. This transformed representation enables SVMs to find a nonlinear decision boundary.</p>
 <p>In summary, SVMs are powerful classifiers that use linear separators in higher-dimensional spaces facilitated by kernel functions like the polynomial and RBF kernels, which allow them to handle nonlinear data effectively.</p>
-<p>In this project, SVMs will be used specifically to categorize and predict whether a product is a <code>best seller</code>.</p>
+<p>In this project, SVMs will be used specifically to categorize and predict whether a product, given that we have data from 2 time points of its price, will have its price increase over time.</p>
+</section>
+</section>
+<section id="model-selection" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection">Model Selection</h2>
+<p>For this project, we will use three different types of common kernels with the SVMs: the RBF kernel, which is commonly used; the linear kernel, which is the base type; and the polynomial kernel, which enables nonlinear tranforms. The linear kernel is the most basic form, but could still have efficacy, as “there are some situations where the RBF kernel is not suitable. In particular, when the number of features is very large, one may just use the linear kernel” <span class="citation" data-cites="svmPractical">(<a href="#ref-svmPractical" role="doc-biblioref">Hsu et al. 2003</a>)</span>.</p>
+<section id="hyperparameter-selection-using-cross-validation-cv" class="level3">
+<h3 class="anchored" data-anchor-id="hyperparameter-selection-using-cross-validation-cv">Hyperparameter Selection using Cross-Validation (CV)</h3>
+<p>In addition to the kernel selection, there are other hyperparameters (options of a model that must be set before training/fitting it) that need to be selected. For all kernels, the cost, or penalty parameter of the error term, <code>C</code> must be selected. For the linear kernel, no other parameter needs to be selected. For the RBF and polynomial kernels, the <code>gamma</code> <span class="math inline">\(\gamma\)</span> parameter needs to be set; and for the polynomial kernel, the degree <code>d</code> and coefficient <code>r</code> as described above also need to be picked. To do this selection of hyperparameters, a grid search across all possible combinations of parameters will be used, along with cross-validation with that grid search used as picking which values to search.</p>
+<p>Cross-validation is a technique used in machine learning model selection to evaluate the performance and generalization ability of a model. It involves partitioning the available data into subsets: one subset is used for training the model, and the remaining subsets are used for validation. This process is repeated multiple times, each time with a different partitioning scheme. The K-fold cross-validation specifically divides the data into K equally sized folds, using K-1 folds for training and the remaining fold for validation, iterating through all combinations to ensure robust evaluation and minimize overfitting. The average performance across all iterations provides a reliable estimate of the model’s performance on unseen data, helping in selecting the best model for deployment.</p>
 </section>
 </section>
 <section id="data-prep" class="level2">
 <h2 class="anchored" data-anchor-id="data-prep">Data Prep</h2>
+<p>SVMs can only work on labeled numeric data; this is because they are generating lines to seperate points in various dimensions, which thus must be in a continuous ordinal space (aka numeric); thus, any categorical variables used must be converted to integers (if ordinal) or one-hot encoded (if not). In addition, SVMs need the numeric data to be scaled <span class="citation" data-cites="svmPractical">(<a href="#ref-svmPractical" role="doc-biblioref">Hsu et al. 2003</a>)</span> and there to be a label that is being predicted.</p>
+<p>Various transformations were done to the initial Amazon product data in order to get the data to fit these conditions, as well as to create the label being used:</p>
+<ul>
+<li>Make DF of products that have a calculable price difference over time</li>
+<li>Use initial price and data, in order to predict later price change</li>
+<li>Only use data with <code>Category</code> categories that have more than 5 products occuring, to improve prediction</li>
+<li>Scale numerical data to [0, 1], make bool <code>Is Best Seller</code> an int</li>
+<li>One-hot encode categorical var <code>Category</code></li>
+<li>Split into train/test, stratifying on the prediction label</li>
+</ul>
+<p>A sample of the final form of the data used can be seen in <a href="#tbl-data" class="quarto-xref">Table&nbsp;1</a>. A link to the data used can be found <a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/output/products_sample.csv">here</a>.</p>
+<div id="tbl-data" class="quarto-layout-panel anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Sample of dataset used after transformation.
+</figcaption>
+<div aria-describedby="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>A sample of the label/classification/predictive feature used in the training/test datasets.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Price Increased</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="table">
+<caption>The features used in both the training and test datasets.</caption>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Is Best Seller</th>
+<th style="text-align: right;">Stars</th>
+<th style="text-align: right;">Reviews</th>
+<th style="text-align: right;">Price</th>
+<th style="text-align: right;">List Price</th>
+<th style="text-align: right;">Bought In Month</th>
+<th style="text-align: left;">Category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.826087</td>
+<td style="text-align: right;">0.168665</td>
+<td style="text-align: right;">0.0486961</td>
+<td style="text-align: right;">0.0453502</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Industrial &amp; Scientific</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.478261</td>
+<td style="text-align: right;">0.306469</td>
+<td style="text-align: right;">0.0437793</td>
+<td style="text-align: right;">0.0893706</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Heating, Cooling &amp; Air Quality</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.73913</td>
+<td style="text-align: right;">0.0756083</td>
+<td style="text-align: right;">0.0919231</td>
+<td style="text-align: right;">0.110697</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Vacuum Cleaners &amp; Floor Care</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.782609</td>
+<td style="text-align: right;">0.703739</td>
+<td style="text-align: right;">0.0164206</td>
+<td style="text-align: right;">0.0152924</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Computers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.956522</td>
+<td style="text-align: right;">0.0452226</td>
+<td style="text-align: right;">0.105394</td>
+<td style="text-align: right;">0.0981521</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Women’s Handbags</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.173913</td>
+<td style="text-align: right;">0.0608902</td>
+<td style="text-align: right;">0.00975268</td>
+<td style="text-align: right;">0.00908258</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Oral Care Products</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>The data was also split into 25% test data, and 75% training data. It’s essential for the training and test data to be disjoint, meaning they should not overlap, to ensure the validity and accuracy of the model’s performance evaluation. Reasons for this include to avoid overfitting, assessing bias and variance, supporting reproducability and validation, and preventing data leakage. We also stratify the splitting of data on the label categories, for fairness in evaluation. Both sets of data look exactly like the included table visualization, except have disjoint values and different lengths of observations/samples.</p>
 </section>
 <section id="code" class="level2">
 <h2 class="anchored" data-anchor-id="code">Code</h2>
+<div class="columns">
+<div class="column">
+<p>The jupyter notebook code for running the SVMs, data prep, and everything else on this page can be found <a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/SVM.ipynb">here</a>, or click on the link card to the right.</p>
+</div><div class="column" style="width:10%;">
+<!-- Spacing column -->
+</div><div class="column" style="width:30%;">
+<p><a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/SVM.ipynb"><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png" class="img-fluid"></a></p>
+</div>
+</div>
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
+<div class="columns">
+<div class="column">
+<p>The grid-search cross-validation was run on set of hyperparameters, and the top results for each kernel and for each cost searched are shown in <a href="#tbl-acc" class="quarto-xref">Table&nbsp;2</a>. All the hyperparameters run/tested against are given below:</p>
+<div id="6b844546" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rbf_params <span class="op">=</span> {<span class="st">"kernel"</span>: [<span class="st">"rbf"</span>], <span class="st">"C"</span>: [<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>], <span class="st">"gamma"</span>: [<span class="st">"auto"</span>, <span class="st">"scale"</span>, <span class="fl">0.01</span>, <span class="fl">0.001</span>, <span class="fl">0.0001</span>]}</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>poly_params <span class="op">=</span> {<span class="st">"kernel"</span>: [<span class="st">"poly"</span>], <span class="st">"C"</span>: [<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>], <span class="st">"degree"</span>: [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>], <span class="st">"coef0"</span>: [<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>]}</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>lin_params <span class="op">=</span> {<span class="st">"kernel"</span>: [<span class="st">"linear"</span>], <span class="st">"C"</span>: [<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As one can seee, the best kernel tested was the RBF kernel, and had the same accuracy across all costs tested with gamma equaling about 0.01/0.001.</p>
+</div><div class="column">
+<div id="tbl-acc" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-acc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: The top accuracy results for each kernel, for each cost C, with the top hyperparameters listed. A gamma <span class="math inline">\(\gamma\)</span> = <code>auto</code> means a value of about 0.01.
+</figcaption>
+<div aria-describedby="tbl-acc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Kernel</th>
+<th style="text-align: right;">C</th>
+<th style="text-align: left;">Gamma</th>
+<th style="text-align: left;">Degree</th>
+<th style="text-align: left;">R</th>
+<th style="text-align: right;">Accuracy Score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rbf</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: left;">0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.74661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rbf</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">auto</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.74661</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rbf</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">auto</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.74661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rbf</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: left;">auto</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.74661</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">poly</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">0.710169</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">poly</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0.5</td>
+<td style="text-align: right;">0.723729</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">poly</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0.5</td>
+<td style="text-align: right;">0.728814</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">poly</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0.5</td>
+<td style="text-align: right;">0.74322</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">linear</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.729661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">linear</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.729661</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">linear</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.729661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">linear</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.744068</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>The confusion matrix for the best model tested for each kernel is shown below in <a href="#fig-cm" class="quarto-xref">Figure&nbsp;1</a>. Unfortunately, it appears that the top 74.66% accuracy came from the model classifying all input as <code>False</code>, even though about 1/4 or 25% were <code>True</code>. This imbalance held even when the performance metric that was being optimized against, in the cross-validation grid search, was balanced accuracy (where an imlabance in output label classes is taken into account).</p>
+<div id="fig-cm" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><a href="../images/svm_cm1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="../images/svm_cm1.png" class="img-fluid figure-img"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><a href="../images/svm_cm2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="../images/svm_cm2.png" class="img-fluid figure-img"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><a href="../images/svm_cm3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5"><img src="../images/svm_cm3.png" class="img-fluid figure-img"></a></p>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Confusion matrices of the classification output (on the test dataset) from the best performing model, for each kernel tested.
+</figcaption>
+</figure>
+</div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div id="fig-db" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-db-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../images/svm_db.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" data-glightbox="description: .lightbox-desc-6" title="Decision boundaries by the best performing overall model (RBF kernel)"><img src="../images/svm_db.png" class="img-fluid figure-img"></a></p>
+<figcaption>Decision boundaries by the best performing overall model (RBF kernel)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../images/svm_db_poly.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-glightbox="description: .lightbox-desc-7" title="Decision boundaries by the best performing Polynomial kernel model (balanced accuracy score, achieved 53%)"><img src="../images/svm_db_poly.png" class="img-fluid figure-img"></a></p>
+<figcaption>Decision boundaries by the best performing Polynomial kernel model (balanced accuracy score, achieved 53%)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-db-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The decision boundaries for 2 models, visualized across all combination of non-category features.
+</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:5%;">
+<!-- Spacing column -->
+</div><div class="column" style="width:55%;">
+<p>The decision boundaries by the best performing model, visualized across all combination of features (except the one-hot encoded category) is shown in <a href="#fig-db" class="quarto-xref">Figure&nbsp;2</a>. The areas that are filled white are because the model was not evaluated against those values for technical python reasons. As one can see, the decision boundaries agree with the output of the confusion matrix, namely that the best model simply classifies everything as the dominant label in order to achieve the best performance.</p>
+</div>
+</div>
 </section>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<p>From the above results, several interesting conclusions can be drawn:</p>
+<ul>
+<li>The SVMs struggled to classify the data, and achieved near 75% accuracy simply by classifying everything as the dominant label (which was present in about 75% of the test and train data).</li>
+<li>The amount of training data to allow the model to separate the classes was likely not enough; an alternative is that the features used are strictly not seperable by class, leading to the model being unable to do so and therefore classifying everything as the dominant label.</li>
+<li>Changes in order of magnitude of the cost of kernels had barely any impact.</li>
+</ul>
+<p>Overall, the label <code>Price Increased</code> seems to be a difficult one to predict and the SVMs struggled to classify as such.</p>
 
+
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Example SVM</span>
+<span class="glightbox-desc lightbox-desc-2">Example SVM</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;1: Confusion matrices of the classification output (on the test dataset) from the best performing model, for each kernel tested.</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;1: Confusion matrices of the classification output (on the test dataset) from the best performing model, for each kernel tested.</span>
+<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;1: Confusion matrices of the classification output (on the test dataset) from the best performing model, for each kernel tested.</span>
+<span class="glightbox-desc lightbox-desc-6">Decision boundaries by the best performing overall model (RBF kernel)</span>
+<span class="glightbox-desc lightbox-desc-7">Decision boundaries by the best performing Polynomial kernel model (balanced accuracy score, achieved 53%)</span>
+</div>
 
 </section>
-</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-svmPractical" class="csl-entry" role="listitem">
+Hsu, Chih-Wei, Chih-Chung Chang, Chih-Jen Lin, et al. 2003. <span>“A Practical Guide to Support Vector Classification.”</span> Tapei.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -740,6 +1174,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 
