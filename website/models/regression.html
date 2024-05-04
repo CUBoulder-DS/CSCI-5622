@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,6 +73,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../models/bayes.html">Models and Methods</a></li><li class="breadcrumb-item"><a href="../models/regression.html">Regression</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../models/bayes.html">Models and Methods</a></li><li class="breadcrumb-item"><a href="../models/regression.html">Linear Regression</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -186,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../models/regression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Regression</span></a>
+ <span class="menu-text">Linear Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -213,7 +245,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#regression" id="toc-regression" class="nav-link active" data-scroll-target="#regression">Regression</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link active" data-scroll-target="#linear-regression">Linear Regression</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection">Model Selection</a></li>
+  <li><a href="#data-prep" id="toc-data-prep" class="nav-link" data-scroll-target="#data-prep">Data Prep</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -223,11 +263,139 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="regression" class="level1">
-<h1>Regression</h1>
-<p>Placeholder</p>
+<section id="linear-regression" class="level1">
+<h1>Linear Regression</h1>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<div style="width:100%;">
+<div style="float:right; width:34%; padding:2%">
+<p><a href="../images/lr.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../images/lr.png" class="img-fluid"></a></p>
+</div>
+</div>
+<p>Linear regression is a statistical method used to model the relationship between a dependent variable and one or more independent variables. It’s a fundamental technique in machine learning and statistics, often used for predictive analysis and understanding the underlying patterns in data.</p>
+<ul>
+<li><p><strong>Assumptions</strong>: Linear regression assumes a linear relationship between the independent variables (features) and the dependent variable (target). It also assumes that the errors or residuals (the differences between actual and predicted values) are normally distributed and have constant variance (homoscedasticity).</p></li>
+<li><p><strong>Model Representation</strong>: The linear regression model is represented as: <span class="math display">\[
+  y = \beta_0 + \beta_1x_1 + \beta_2x_2 + ... + \beta_nx_n + \epsilon
+  \]</span> Where:</p>
+<ul>
+<li><span class="math inline">\(y\)</span> is the dependent variable.</li>
+<li><span class="math inline">\(x_1, x_2, ..., x_n\)</span> are the independent variables.</li>
+<li><span class="math inline">\(\beta_0, \beta_1, \beta_2, ..., \beta_n\)</span> are the coefficients (parameters) that represent the relationship between the independent and dependent variables.</li>
+<li><span class="math inline">\(\epsilon\)</span> is the error term.</li>
+</ul></li>
+</ul>
+<p>During the training process, the goal is to find the best values for the coefficients (weights) that minimize the difference between the actual and predicted values. This is often done using optimization algorithms like Ordinary Least Squares (OLS) or gradient descent. Once the model is trained, it can be used to make predictions on new data by plugging in the values of the independent variables into the model equation. Limitations of linear regression include:</p>
+<ol type="1">
+<li><p><strong>Linearity Assumption</strong>: Linear regression assumes a linear relationship between variables. If the true relationship is non-linear, linear regression may not capture it accurately.</p></li>
+<li><p><strong>Outliers</strong>: Linear regression is sensitive to outliers, which are data points that deviate significantly from the rest of the data. Outliers can distort the model and lead to inaccurate predictions.</p></li>
+<li><p><strong>Multicollinearity</strong>: When independent variables are highly correlated, it can cause multicollinearity issues in linear regression, leading to unstable coefficient estimates.</p></li>
+<li><p><strong>Overfitting/Underfitting</strong>: Linear regression can suffer from overfitting (capturing noise in the training data) or underfitting (oversimplifying the relationship), especially when dealing with complex data patterns.</p></li>
+<li><p><strong>Assumption Violations</strong>: If the assumptions of linear regression are violated (e.g., non-normality of residuals, heteroscedasticity), the model’s reliability and interpretability may be compromised.</p></li>
+</ol>
+<p>Despite these limitations, linear regression remains a valuable and widely used tool due to its simplicity, interpretability, and ability to provide insights into relationships between variables.</p>
+<p>In this project, we specifically perform very simple linear regression by picking only one independent variable (<code>Reviews</code>) and the dependent variable (<code>Stars</code>).</p>
+</section>
+<section id="model-selection" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection">Model Selection</h2>
+<p>We choose the independent variable to be <code>Reviews</code> and the dependent variable to be <code>Stars</code>, as they appear to have the most predictable linear relationship (see <a href="#fig-splom" class="quarto-xref">Figure&nbsp;1</a>); the variables <code>List Price</code> and <code>Price</code> are more linear but they also have too much multicollinearity and are not useful for prediction.</p>
+<div id="fig-splom" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-splom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="../images/lr_splom.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="../images/lr_splom.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-splom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Splom of all the numerical variables in the dataset.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="data-prep" class="level2">
+<h2 class="anchored" data-anchor-id="data-prep">Data Prep</h2>
+<p>As there is only one independent variable, no tranformations/scaling was needed for the dataset other than selecting the subset of the columns. <a href="#tbl-data" class="quarto-xref">Table&nbsp;1</a> shows the final input data used for all models used, and the data can be found <a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/scraped/scraped1.csv">at this link</a>.</p>
+<div id="tbl-data" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: A sample of the data used for the linear regression modeling. <code>Reviews</code> is the independent variable and <code>Stars</code> is the dependent variable/prediction.
+</figcaption>
+<div aria-describedby="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Reviews</th>
+<th style="text-align: right;">Stars</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">515</td>
+<td style="text-align: right;">4.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">502</td>
+<td style="text-align: right;">4.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3364</td>
+<td style="text-align: right;">4.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1106</td>
+<td style="text-align: right;">3.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">164</td>
+<td style="text-align: right;">4.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code</h2>
+<div class="columns">
+<div class="column">
+<p>The jupyter notebook code for running linear regression, data prep, and everything else on this page can be found <a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb">here</a>, or click on the link card to the right.</p>
+</div><div class="column" style="width:10%;">
+<!-- Spacing column -->
+</div><div class="column" style="width:30%;">
+<p><a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb"><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png" class="img-fluid"></a></p>
+</div>
+</div>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;1: Splom of all the numerical variables in the dataset.</span>
+</div>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -631,6 +799,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

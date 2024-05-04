@@ -1,3 +1,93 @@
-# Regression
+---
+lightbox: true
+---
 
-Placeholder
+# Linear Regression
+
+## Overview
+
+::: {style="width:100%;"}
+::: {style="float:right; width:34%; padding:2%"}
+![](../images/lr.png)
+:::
+:::
+
+Linear regression is a statistical method used to model the relationship between a dependent variable and one or more independent variables. It's a fundamental technique in machine learning and statistics, often used for predictive analysis and understanding the underlying patterns in data.
+
+- **Assumptions**: Linear regression assumes a linear relationship between the independent variables (features) and the dependent variable (target). It also assumes that the errors or residuals (the differences between actual and predicted values) are normally distributed and have constant variance (homoscedasticity).
+
+- **Model Representation**: The linear regression model is represented as:
+    $$
+    y = \beta_0 + \beta_1x_1 + \beta_2x_2 + ... + \beta_nx_n + \epsilon
+    $$
+    Where:
+  - $y$ is the dependent variable.
+  - $x_1, x_2, ..., x_n$ are the independent variables.
+  - $\beta_0, \beta_1, \beta_2, ..., \beta_n$ are the coefficients (parameters) that represent the relationship between the independent and dependent variables.
+  - $\epsilon$ is the error term.
+
+During the training process, the goal is to find the best values for the coefficients (weights) that minimize the difference between the actual and predicted values. This is often done using optimization algorithms like Ordinary Least Squares (OLS) or gradient descent. Once the model is trained, it can be used to make predictions on new data by plugging in the values of the independent variables into the model equation. Limitations of linear regression include:
+
+1. **Linearity Assumption**: Linear regression assumes a linear relationship between variables. If the true relationship is non-linear, linear regression may not capture it accurately.
+
+2. **Outliers**: Linear regression is sensitive to outliers, which are data points that deviate significantly from the rest of the data. Outliers can distort the model and lead to inaccurate predictions.
+
+3. **Multicollinearity**: When independent variables are highly correlated, it can cause multicollinearity issues in linear regression, leading to unstable coefficient estimates.
+
+4. **Overfitting/Underfitting**: Linear regression can suffer from overfitting (capturing noise in the training data) or underfitting (oversimplifying the relationship), especially when dealing with complex data patterns.
+
+5. **Assumption Violations**: If the assumptions of linear regression are violated (e.g., non-normality of residuals, heteroscedasticity), the model's reliability and interpretability may be compromised.
+
+Despite these limitations, linear regression remains a valuable and widely used tool due to its simplicity, interpretability, and ability to provide insights into relationships between variables.
+
+In this project, we specifically perform very simple linear regression by picking only one independent variable (`Reviews`) and the dependent variable (`Stars`).
+
+
+## Model Selection
+
+We choose the independent variable to be `Reviews` and the dependent variable to be `Stars`, as they appear to have the most predictable linear relationship (see @fig-splom); the variables `List Price` and `Price` are more linear but they also have too much multicollinearity and are not useful for prediction.
+
+![Splom of all the numerical variables in the dataset.](../images/lr_splom.png){#fig-splom}
+
+
+## Data Prep
+
+As there is only one independent variable, no tranformations/scaling was needed for the dataset other than selecting the subset of the columns. @tbl-data shows the final input data used for all models used, and the data can be found [at this link](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/scraped/scraped1.csv).
+
+
+|   Reviews |   Stars |
+|----------:|--------:|
+|       515 |     4.2 |
+|         0 |     3.7 |
+|       502 |     4.3 |
+|         0 |     4.4 |
+|      3364 |     4.5 |
+|      1106 |     3.8 |
+|         0 |     4   |
+|         0 |     4.8 |
+|         0 |     4.6 |
+|       164 |     4.4 |
+
+: A sample of the data used for the linear regression modeling. `Reviews` is the independent variable and `Stars` is the dependent variable/prediction. {#tbl-data}
+
+
+## Code
+
+::: {.columns}
+::: {.column}
+The jupyter notebook code for running linear regression, data prep, and everything else on this page can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb), or click on the link card to the right.
+:::
+
+::: {.column width=10%}
+<!-- Spacing column -->
+:::
+
+::: {.column width=30%}
+[![](https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png)](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb)
+:::
+:::
+
+## Results
+
+## Conclusions
+
