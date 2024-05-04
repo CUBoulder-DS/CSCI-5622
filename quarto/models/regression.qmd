@@ -75,7 +75,7 @@ As there is only one independent variable, no tranformations/scaling was needed 
 
 ::: {.columns}
 ::: {.column}
-The jupyter notebook code for running linear regression, data prep, and everything else on this page can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb), or click on the link card to the right.
+The jupyter notebook code for running linear regression, data prep, and everything else on this page can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/NN%20LM.ipynb), or click on the link card to the right.
 :::
 
 ::: {.column width=10%}
@@ -83,11 +83,55 @@ The jupyter notebook code for running linear regression, data prep, and everythi
 :::
 
 ::: {.column width=30%}
-[![](https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png)](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/Bayes%20DT.ipynb)
+[![](https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png)](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/NN%20LM.ipynb)
 :::
 :::
 
 ## Results
 
+::: {.columns}
+::: {.column}
+The resulting fitted regression line formula is below, and can be seen in @fig-lrplot.
+
+$$
+\textbf{y} = 0.0001696\ \textbf{x} + 3.9747
+$$
+
+- y: What it predicts, aka the average number of stars a product recieved.
+- x: The input number of reviews a product recieved.
+
+:::
+::: {.column}
+
+![The original data, with the fitted linear regression line plotted over.](../images/lr_plot.png){#fig-lrplot}
+:::
+:::
+
+
+::: {.columns}
+::: {.column}
+
+| Metric                   |      Value |
+|:-------------------------|-----------:|
+| mean_squared_error       | 1.819      |
+| mean_absolute_error      | 0.849941   |
+| explained_variance_score | 0.00510836 |
+| r2_score                 | 0.00510836 |
+
+: The metrics of the fitted linear regression model. {#tbl-metrics}
+
+:::
+::: {.column}
+The metrics of the fitted model can be seen in @tbl-metrics. Some explanation of the metrics and how to interpret them, along with a judgement of the model is provided below:
+
+- $R^2$ Score: Represents the proportion of variance (of y) that has been explained by the independent variables in the model. It provides an indication of goodness of fit and therefore a measure of how well unseen samples are likely to be predicted by the model, through the proportion of explained variance. A score of 0 means perfect fit. As we can see, it is quite low, meaning the model ON AVERAGE predicts close to the value, even though as we can see from the fitted line, the spread of points is quite large.
+- mean absolute error: A risk metric corresponding to the expected value of the absolute error loss or l1-norm loss. Aka, the average difference between the true and predicted value. Given that the total scale of `Stars` is only 0-5, an error of 0.85 is more than one SD away, giving large error.
+- mean square error: A risk metric corresponding to the expected value of the squared (quadratic) error or loss. Used especially when needing a derivable loss function. In this case, it's quite large given that the total scale of `Stars` is only 0-5.
+-  explained variance regression score: The difference between the explained variance score and the R² score, the coefficient of determination is that when the explained variance score does not account for systematic offset in the prediction. For this reason, the R² score, the coefficient of determination should be preferred in general.
+:::
+:::
+
+
 ## Conclusions
 
+In general, the linear regression model performed quite poorly; however, this was to be expected given that the input variables did not appear to have an easy linear relationship to model in the first place. Overall, given the nature of the relationships between the variables in this dataset, no linear relationship-based model would have performed well and other methods need to be sought out in order to make statistically significant predictions.
