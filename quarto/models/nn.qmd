@@ -6,6 +6,16 @@ lightbox: true
 
 ## Overview
 
+::: {style="width:100%;"}
+::: {style="float:right; width:45%; padding:2%"}
+![](../images/nn.png)
+:::
+:::
+
+Neural networks are machine learning models inspired by the brain's neural structure, comprising interconnected neurons organized in layers. Input data enters the input layer, propagates through hidden layers where computations with weights and biases occur, and outputs are generated from the output layer. Activation functions introduce non-linearity, aiding in learning complex patterns. Training involves adjusting weights and biases via algorithms like backpropagation to minimize prediction errors using labeled data. Once trained, neural networks can make predictions on new data, excelling in tasks like image recognition and natural language processing due to their ability to extract features, adapt to domains, and achieve high performance. In general their use and complexity (both mathematical formulation and construction) have exploded in recent years, and are used heavily in massive AI/ML applications (such as the popular ChatGPT).
+
+In this project, two simple neural networks will be trained; one in order to predict `Is Best Seller`, and another to predict the value of `Price Diff`, the change in product price over time.
+
 ## Model Selection
 
 ## Data Prep
