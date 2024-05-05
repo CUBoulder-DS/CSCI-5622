@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/models/regression.html",
       "/models/nn.html",
+      "/models/regression.html",
       "/models/svm.html",
       "/intro.html",
       "/models/dtrees.html",

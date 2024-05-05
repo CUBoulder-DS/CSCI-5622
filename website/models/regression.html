@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.521">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -75,33 +75,6 @@ ul.task-list li input[type="checkbox"] {
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -299,10 +272,10 @@ window.Quarto = {
 <section id="model-selection" class="level2">
 <h2 class="anchored" data-anchor-id="model-selection">Model Selection</h2>
 <p>We choose the independent variable to be <code>Reviews</code> and the dependent variable to be <code>Stars</code>, as they appear to have the most predictable linear relationship (see <a href="#fig-splom" class="quarto-xref">Figure&nbsp;1</a>); the variables <code>List Price</code> and <code>Price</code> are more linear but they also have too much multicollinearity and are not useful for prediction.</p>
-<div id="fig-splom" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-splom" class="quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-splom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="../images/lr_splom.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="../images/lr_splom.png" class="img-fluid figure-img"></a>
+<a href="../images/lr_splom.png" class="lightbox" data-description="Figure&nbsp;1: Splom of all the numerical variables in the dataset." data-gallery="quarto-lightbox-gallery-2"><img src="../images/lr_splom.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-splom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Splom of all the numerical variables in the dataset.
@@ -313,7 +286,7 @@ Figure&nbsp;1: Splom of all the numerical variables in the dataset.
 <section id="data-prep" class="level2">
 <h2 class="anchored" data-anchor-id="data-prep">Data Prep</h2>
 <p>As there is only one independent variable, no tranformations/scaling was needed for the dataset other than selecting the subset of the columns. <a href="#tbl-data" class="quarto-xref">Table&nbsp;1</a> shows the final input data used for all models used, and the data can be found <a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/scraped/scraped1.csv">at this link</a>.</p>
-<div id="tbl-data" class="quarto-float anchored">
+<div id="tbl-data" class="anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: A sample of the data used for the linear regression modeling. <code>Reviews</code> is the independent variable and <code>Stars</code> is the dependent variable/prediction.
@@ -381,7 +354,11 @@ Table&nbsp;1: A sample of the data used for the linear regression modeling. <cod
 </div><div class="column" style="width:10%;">
 <!-- Spacing column -->
 </div><div class="column" style="width:30%;">
-<p><a href="https://github.com/CUBoulder-DS/CSCI-5622/blob/main/src/NN%20LM.ipynb"><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png" class="img-fluid"></a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/CUBoulder-DS/CSCI-5622.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -398,10 +375,10 @@ Table&nbsp;1: A sample of the data used for the linear regression modeling. <cod
 <li>x: The input number of reviews a product recieved.</li>
 </ul>
 </div><div class="column">
-<div id="fig-lrplot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-lrplot" class="quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lrplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="../images/lr_plot.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="../images/lr_plot.png" class="img-fluid figure-img"></a>
+<a href="../images/lr_plot.png" class="lightbox" data-description="Figure&nbsp;2: The original data, with the fitted linear regression line plotted over." data-gallery="quarto-lightbox-gallery-4"><img src="../images/lr_plot.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lrplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: The original data, with the fitted linear regression line plotted over.
@@ -412,7 +389,7 @@ Figure&nbsp;2: The original data, with the fitted linear regression line plotted
 </div>
 <div class="columns">
 <div class="column">
-<div id="tbl-metrics" class="quarto-float anchored">
+<div id="tbl-metrics" class="anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-metrics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: The metrics of the fitted linear regression model.
@@ -463,10 +440,6 @@ Table&nbsp;2: The metrics of the fitted linear regression model.
 <p>In general, the linear regression model performed quite poorly; however, this was to be expected given that the input variables did not appear to have an easy linear relationship to model in the first place. Overall, given the nature of the relationships between the variables in this dataset, no linear relationship-based model would have performed well and other methods need to be sought out in order to make statistically significant predictions.</p>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;1: Splom of all the numerical variables in the dataset.</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;2: The original data, with the fitted linear regression line plotted over.</span>
-</div>
 </section>
 </section>
 
@@ -599,6 +572,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
     if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
@@ -613,14 +607,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             break;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
+        typesetMath(container);
         return container.innerHTML
       } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
+        typesetMath(note);
         return note.innerHTML;
       }
     } else {
@@ -629,15 +619,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (anchorLink) {
         anchorLink.remove();
       }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      typesetMath(note);
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -871,31 +854,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
-    }
-  });
-
-};
-          </script>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom"});</script>
 
 
 

@@ -16,9 +16,97 @@ Neural networks are machine learning models inspired by the brain's neural struc
 
 In this project, two simple neural networks will be trained; one in order to predict `Is Best Seller`, and another to predict the value of `Price Diff`, the change in product price over time.
 
-## Model Selection
-
 ## Data Prep
+
+The data is already clean with outliers removed and NaNs dealt with, but some more data engineering had to take place to make the features fit for running the models. The following transformations were done to the original (cleaned) dataset in order to make the 2 different input datasets:
+
+::: {.columns}
+::: {.column}
+**Best Seller NN**
+
+- Only select rows that contain a non-NaN value for `Category` and `Bought in Month`
+- Select rows such that 1% of them are `Is Best Seller == True`. This is because the dataset contains more than >1M rows, with only 0.4% of them `Is Best Seller == True`; this makes the prediction less biased and invariant for the model.
+- Make datetime binary, as there are only 2 values used for it anyways.
+- One-hot encode categorical var `Category`
+:::
+::: {.column}
+**Price Difference NN**
+
+
+* Make DF of products that have a calculable price difference over time
+* Use initial price and data, in order to predict later price change
+* Only use data with `Category` categories that have more than 5 products occuring, to improve prediction
+* Scale numerical data to [0, 1], make bool `Is Best Seller` an int
+* One-hot encode categorical var `Category`
+:::
+:::
+
+The data was also split into 25% test data, and 75% training data. It's essential for the training and test data to be disjoint, meaning they should not overlap, to ensure the validity and accuracy of the model's performance evaluation. Reasons for this include to avoid overfitting, assessing bias and variance, supporting reproducability and validation, and preventing data leakage.
+
+A sample of the final form of the data used can be seen in @tbl-data. A link to the data used can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/output/products_sample.csv).
+
+::: {#tbl-data layout-ncol=2}
+|   Stars |   Reviews |   Price |   Date Scraped |   Bought In Month |   Is Best Seller |
+|--------:|----------:|--------:|---------------:|------------------:|-----------------:|
+|     4.8 |       508 |   20.99 |              0 |               900 |                0 |
+|     5   |         2 |   17.99 |              0 |               200 |                0 |
+|     4.8 |         0 |  550    |              0 |                 0 |                0 |
+|     0   |         0 |    0    |              0 |                 0 |                0 |
+|     0   |         0 |    0    |              0 |                 0 |                0 |
+|     0   |         0 |    0    |              0 |                 0 |                0 |
+|     4.1 |         0 |   22.9  |              0 |                 0 |                0 |
+|     0   |         0 |    0    |              0 |                 0 |                0 |
+|     3.3 |         0 |   34.52 |              0 |                 0 |                0 |
+|     0   |         0 |    0    |              0 |                 0 |                0 |
+
+: Sample of input data, where `Is Best Seller` is the binary classification label to predict.
+
+|   Is Best Seller |   Stars |   Reviews |   Price |   List Price |   Bought In Month |   Price Diff |
+|-----------------:|--------:|----------:|--------:|-------------:|------------------:|-------------:|
+|                0 |     4.7 |      5815 |   12.97 |        12.97 |              3000 |         1    |
+|                0 |     4.4 |      2457 |   57.96 |        57.96 |               900 |       -11.95 |
+|                0 |     3.8 |       185 |    7.19 |         7.19 |               500 |         1.69 |
+|                0 |     4.6 |       657 |   89.99 |       139.99 |               300 |         0.04 |
+|                0 |     4.8 |      1907 |    8.97 |        12.95 |              1000 |        -3.98 |
+|                0 |     4.8 |        72 |   19.99 |        19.99 |                 0 |         0    |
+|                0 |     4.8 |      1783 |   21.99 |        21.99 |               200 |         0    |
+|                0 |     4.5 |       668 |  244.95 |       244.95 |                50 |        37.05 |
+|                0 |     4   |      1615 |  211.94 |       211.94 |                 0 |        32.15 |
+|                0 |     4.7 |       151 |    7.95 |         7.95 |                 0 |        -0.24 |
+
+: Sample of input data, where `Price Diff` is the continuous numerical label to predict.
+
+The form of the final dataset used for each of the 2 models, without the one-hot encoded `Category` columns included. The training and test sets made from these data look exactly the same, except with differing number of observations.
+:::
+
+
+## Model Selection/Definition
+
+There are a lot of hyperparameters (options of a model that must be set before training/fitting it) associated with neural networks. For both networks, 3 hidden layers were used, with a sigmoid activation function after each layer. They also both used the ADAM algorithm optimizer for performing the gradient descent, with default values for rate and tolerance. They differ in the following hyperparameters:
+
+::: {.columns}
+::: {.column}
+**Best Seller NN**
+
+- Input dimensions: 253 cols (including the one-hot encoded `Category` columns)
+- Epochs: 50, loss did not improve after that
+- Loss function: Cross-entropy loss with extra weight on the `True/1` class, in order to account for the imbalance and to properly get loss on the two binary classes.
+- Output: vector of dims `[batch size, 2]` where the 2 output values are the predicted probabilities for each class.
+- Batch size: 100, as there are more than > 1M input observations.
+:::
+::: {.column}
+**Price Difference NN**
+
+- Input dimensions: 118 cols (including the one-hot encoded `Category` columns)
+- Epochs: 200, loss did not improve after that
+- Loss function: mean squared error (MSE) loss
+- Output: vector of dims `[batch size, 1]` where the output value is the predicted price difference
+- Batch size: 1, as there is only about a thousand training input observations.
+:::
+:::
+
+
+The final structure of the networks can be seen below in [Results](#results).
 
 ## Code
 
@@ -38,4 +126,77 @@ The jupyter notebook code for running the neural networks, data prep, and everyt
 
 ## Results
 
+### Model structure
+
+The structures of each of the networks can be seen below in @fig-nns. "Gemm" stands for General Matrix Multiplication, and represents the standard linear layer with weights B and bias C.
+
+::: {#fig-nns layout-ncol=2}
+
+![The structure of  the "Is Best Seller" NN](../images/nn_bs_structure.png)
+
+![The structure of  the "Price Diff" NN](../images/nn_pd_structure.png)
+
+The NN structures used
+:::
+
+### Performance
+
+The average loss found at each epoch of the training can be seen in @fig-loss. As can be seen, both NNs improved over time and had a typical bottoming-out of improvement, though at different number of epochs. We can also observe that the validation loss (or the loss when checked against the test data at that time) varies wildly, with spikes in both plots. The Price Diff NN even has the validation loss being consistently lower than the training loss, which is unusual; it is more common to see it being higher based on the amount of overfitting happening.
+
+::: {#fig-loss layout-ncol=2}
+
+!["Is Best Seller" NN](../images/nn_bs_loss.png)
+
+!["Price Diff" NN](../images/nn_pd_loss.png)
+
+The loss plots over all training epochs
+:::
+
+**Best Seller NN**
+
+::: {.columns}
+::: {.column}
+
+ The performance metrics of the "Is Best Seller" NN can be seen in @tbl-pm. As we can see, the model actually achieved lower accuracy (95%) than would have been gotten from predicting everything to be the dominant class (which comprised 99% of the data); this was due to the loss function being weighted to be biased towards the smaller class `Is Best Seller=True`.
+
+ The confusion matrix can be seen in @fig-cm. As we can see, many observations were predicted to be a FP (flase positive), which aligns with the earlier observation that the network was biased towards the smaller class.
+:::
+::: {.column}
+
+|                 |   precision |   recall |   f1-score |       support | accuracy |
+|:----------------|------------:|---------:|-----------:|--------------:|--------------:|
+| Not Best Seller |    0.998181 | 0.952533 |   0.974823 | 342237        | |
+| Is Best Seller  |    0.062067 | 0.644098 |   0.113223 |   1669        | |
+|         |     |  |    |       | 0.951036 |
+
+: The performance metrics of the "Is Best Seller" NN. {#tbl-pm}
+
+![The confusion matrix of the "Is Best Seller" NN.](../images/nn_bs_cm.png){#fig-cm}
+
+:::
+:::
+
+
+
+**Price Difference NN**
+
+::: {.columns}
+::: {.column}
+
+![The plot of the actual true price difference, visualized against how much of a difference the model's predicted value was against the true value.](../images/nn_pd_diff.png){#fig-pd-diff}
+
+:::
+::: {.column}
+As the model was fitting to a continuous label, there are no binary/classification report we can use; however, the overall MSE was $6.056$.
+
+In @fig-pd-diff, we observe the plot of the actual true price difference, visualized against how much of a difference the model's predicted value was against the true value. As we can see, the model di fairly well at getting near the true value for price diffs of around -$4.30 to $300; we can also see that the model did much better for negative values than for positive values. Additionally, as the true price differences become large, the model struggles to adjust and predict the large values.
+:::
+:::
+
+
+
 ## Conclusions
+
+From the above results, several interesting conclusions can be drawn:
+
+-
