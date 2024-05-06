@@ -38,7 +38,7 @@ bibliography: references.bib
 format:
   html:
     theme:
-      - quartz
+      - solar
       - custom.scss
     page-layout: full
     smooth-scroll: true
@@ -73,7 +73,7 @@ format:
 ## Extra settings
 execute:
   echo: false # Don't include code in the report
-  freeze: true # Not useful when rendering across multiple users
+  freeze: auto # Not useful when rendering across multiple users
   warning: false
   error: false
 

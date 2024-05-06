@@ -1,7 +1,5 @@
 # Clustering
 
-Clustering in order to discover patterns in the data.
-
 ```{python}
 #| include: false
 #| label: setup
@@ -29,8 +27,15 @@ from common_funcs import df_show_rand_sample
 
 ## Overview
 
-Here, describe clustering, including partitional vs, hierarchical. Note the distance metrics used. Discuss how you plan to use clustering to engage in discovery. Have two images. More is fine.
+Clustering is a fundamental unsupervised learning technique in machine learning that involves grouping similar data points together based on certain features or characteristics. The goal of clustering is to partition a dataset into subsets or clusters, where data points within the same cluster are more similar to each other than to those in other clusters. This process helps in discovering inherent structures within the data, identifying patterns, and gaining insights into the underlying relationships.
 
+Partitional clustering algorithms, such as k-means, partition the data into a predefined number of clusters. The k-means algorithm iteratively assigns data points to the nearest cluster centroid based on a distance metric, commonly the Euclidean distance. The centroids are then recalculated as the mean of the data points in each cluster, and the process continues until convergence. K-means is efficient for large datasets and works well when clusters are spherical and of similar size. However, it may struggle with non-linear or irregularly shaped clusters and requires specifying the number of clusters beforehand.
+
+Hierarchical clustering, on the other hand, does not require specifying the number of clusters in advance. It creates a hierarchical tree-like structure, called a dendrogram, by iteratively merging or splitting clusters based on their similarity. There are two main approaches to hierarchical clustering: agglomerative (bottom-up) and divisive (top-down). Agglomerative clustering starts with each data point as a separate cluster and then merges the closest pairs of clusters until only one cluster remains. Divisive clustering begins with all data points in one cluster and recursively splits them into smaller clusters. The choice of distance metric, such as Euclidean, Manhattan, or Mahalanobis distance, influences the clustering results in hierarchical algorithms.
+
+The distance metric used in clustering plays a crucial role in determining the similarity or dissimilarity between data points. Euclidean distance is commonly used and measures the straight-line distance between two points in Euclidean space. It works well when data features are continuous and have similar scales. Manhattan distance, also known as city block distance, calculates the distance along the axes, making it suitable for high-dimensional data or when features are not directly comparable in scale. Mahalanobis distance accounts for the covariance between variables and is useful when dealing with correlated features or data with different variances.
+
+In this specific project, we will be using clustering in order to see if any trends can be found by hierarchical clustering that show relationships between the features that were previously unknown.
 
 ## Data Preperation
 
@@ -44,10 +49,16 @@ df_az_clust = pd.read_csv(os.path.normpath("../../data/analysis/products_cluster
 
 ### Clustering Methods
 
-All models and methods require specific data formats. Clustering requires ONLY unlabeled numeric data. Explain this and show an image of the sample of data you plan to use. LINK to the sample of data as well.
+Clustering requires only unlabeled numeric data, so the following work was done in order to prepare the data:
+
+- Get only the numerical/boolean columns
+- Fill NaNs with zeros
+- Scale the data to min/max [0, 1]
+
+A sample of the final form of the data used can be seen in @tbl-data. A link to the data used can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/output/products_sample.csv).
 
 ```{python}
-#| label: tbl-clust-data
+#| label: tbl-data
 #| tbl-cap: The data used for clustering.
 
 # Get numerical/bool columns
@@ -77,7 +88,6 @@ The jupyter notebook code for running the PCA can be found [here](https://github
 :::
 :::
 
-Use R or Python to code k-means clustering and to code hierarchical clustering. Use Cosine Similarity as the distance measure for the hclust. LINK to the code.
 
 ## Results
 
@@ -86,6 +96,16 @@ Use R or Python to code k-means clustering and to code hierarchical clustering. 
 
 If the interactive figures don't load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website tab) until all figures load.
 :::
+
+The following clustering algorithms were tested:
+
+- K-means clustering via `sklearn`, with k = 2...5
+- Hierarchical clustering via `sklearn`, using Cosine Similarity as the distance measure
+- Kprototypes viea `kprot`, in order to cluster on the categorical data as well
+
+The Kprototypes algorithm performed nearly exactly the same as hierarchical clustering, so from this point on we will only be discussing the first 2 clustering methods used.
+
+Unfortunately, the k-means clustering performed poorly, as can be seen in @fig-clust-scoreplots. Additionally, the silhouette scores changed dramatically upon each re-run of the algorithm, showing poor convergence.
 
 ```{python}
 #| label: fig-clust-scoreplots
@@ -106,14 +126,14 @@ fig = px.line(x=ks, y=silh, labels={"x": "Rank", "y": "Silhouette Score"})
 fig.show()
 ```
 
-::: {#fig-clust-dend}
 
-![](../images/clust_dend.png)
-
-A dengrogram of the hierarchical clustering performed.
-:::
+The hierarchical clustering also struggled, likely as there were over 1M observations seen; ultimately, as seen in @fig-clust-dend, the clustering that produced 2 clusters seemed to be the "best".
 
 
+![A dengrogram of the hierarchical clustering performed.](../images/clust_dend.png){#fig-clust-dend}
+
+
+We compare the output of the clusters found, at rank 2, across all algorithms used in @fig-rand-inds. As one can see, they were very similar, with Rand indexes very high (a Rand index of 1 means perfectly same clusters, and 0 meaning no relation at all).
 
 ```{python}
 #| label: fig-rand-inds
@@ -128,21 +148,33 @@ fig = px.imshow(rands, x=models, y=models, text_auto=True)
 fig.show()
 ```
 
+We include a splom of the clusters found by hierarchical clutering in @fig-clust-results. By visually inspecting the colored clusters, we can describe the clusters as the following:
 
-```{python}
-#| label: fig-clust-results
-#| fig-cap: A splom of selected features (and the subset of rows used in the clustering methods), colored by the cluster assigned to the data point.
+::: {.columns}
+::: {.column}
+**Cluster 1**
 
-fig = px.scatter_matrix(df_az_clust,
-                        dimensions=["Is Best Seller", "Stars", "Reviews", "Price", "Date Scraped"],
-                       color="Labels")
-fig.update_traces(diagonal_visible=False, showupperhalf=False)
-fig.update_layout(height=700, legend_title="Cluster")
-fig.show()
-```
+- Stars above about 2.5
+- Most review amounts
+- No discernible pattern amongst `Price`, `Date Scraped`
+:::
 
-Discuss, illustrate, describe, and visualize the results. Have at least one dendrogram and at least one clustering image (that is not a dendrogram). What values of k did you use for k - means (you should use at least 3 different k values to compare). What did the Silhouette method tell you about the "best k". Include a vis of the silhouette results. Using the hierarchical clustering, how did this compare and coincide with the k-means? What value of k does hclust suggest?
+::: {.column}
+**Cluster 2**
+
+- Stars below about 2.5
+- Small amount of reviews
+- No discernible pattern amongst `Price`, `Date Scraped`
+:::
+:::
+
+![A splom of selected features (and the subset of rows used in the clustering methods), colored by the cluster assigned to the data point.](../images/clust_splom.png){#fig-clust-results}
+
+
 
 ## Conclusions
 
-What did you learn that pertains to your topic?
+From the above results, several interesting conclusions can be drawn:
+
+- The clusters found were in general very similar to each other across all algorithms used, when rank = 2.
+- The clusters found seemed to indicate a strong relation between products that have low amount of stars and reviews, vs everything else.

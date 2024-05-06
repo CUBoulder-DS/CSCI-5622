@@ -1,7 +1,5 @@
 # PCA and SVD
 
-Where Principal Component Analysis and Singular Value Decomposition are used, for dimensionality reduction and EDA.
-
 ```{python}
 #| include: false
 #| label: setup
@@ -54,22 +52,19 @@ data_path = os.path.normpath("../../data/products_cleaned.csv")
 df_az = pd.read_csv(data_path, dtype={"Category": "category"}, parse_dates=["Date Scraped"])
 ```
 
+The data, since already cleaned, did not need much transformation to work with PCA. The following steps were taken to prepare the data:
+
+- Selected only numerical and boolean columns
+- Outliers (outside the 99% quantile) were removed
+- The data was scaled to min/max of 0, 1
+
+A sample of the final form of the data used can be seen in @tbl-data. A link to the data used can be found [here](https://github.com/CUBoulder-DS/CSCI-5622/blob/main/data/output/products_sample.csv).
 
 
-
-(b) Data Prep: All models and methods require specific data formats. Explain what kind of data is needed for PCA and show an image of the sample of data you plan to use. LINK to the sample of data as well.
-
-(c) Code: Use R or Python to code PCA. LINK to the code.
-
-(d) Results: Discuss, illustrate, describe, and visualize the results. Understand and explain how to visualize the relationship between variables and principal components. Include at least 2 visualizations for your data.
-
-(e) Conclusions: What did you learn that pertains to your topic?
-
-
-@tbl-pcadata
+@tbl-data
 
 ```{python}
-#| label: tbl-pcadata
+#| label: tbl-data
 #| layout-ncol: 2
 #| tbl-cap: A random sample of the data used with PCA.
 #| tbl-subcap:
@@ -118,8 +113,7 @@ The jupyter notebook code for running the PCA can be found [here](https://github
 If the interactive figures don't load (is blank screen space with caption showing), dont worry: just turn off all ad-blockers/privacy browsing, make sure that Chrome/Firefox is being used, and refresh the page (or close and re-open the website tab) until all figures load.
 :::
 
-
-@fig-evbar
+In  @fig-evbar, we show the results of running PCA on both the unscaled data, and the data that was scaled (and outliers removed) as a scree plot of the explained variance for each PC found. As one can see, The unscaled data found that 2 PCs were enough, while the scaled data benefits from keeping 3/4 of the PCs. Based on teh number of input columns (6), 3 was chosen.
 
 ```{python}
 #| label: fig-evbar
@@ -168,23 +162,23 @@ fig.show()
 
 
 
-@fig-pcs
+In @fig-pcs, one can see the visualization of the PCs, colored by specific features chosen that show clear stratification in the PC points. The 3-PC data (from using scaled data) is shown on the left, and the 2-PC data (unscaled data) on the right.
 
 ::: {#fig-pcs layout-ncol=2 fig-cap-location=top}
 
-![TODO](../images/pca_f7.png){.lightbox}
+![](../images/pca_f7.png){.lightbox}
 
-![TODO](../images/pca_f3.png){.lightbox}
+![](../images/pca_f3.png){.lightbox}
 
-![TODO](../images/pca_f4.png){.lightbox}
+![](../images/pca_f4.png){.lightbox}
 
-![TODO](../images/pca_f1.png){.lightbox}
+![](../images/pca_f1.png){.lightbox}
 
-![TODO](../images/pca_f5.png){.lightbox}
+![](../images/pca_f5.png){.lightbox}
 
-![TODO](../images/pca_f2.png){.lightbox}
+![](../images/pca_f2.png){.lightbox}
 
-![TODO](../images/pca_f6.png){.lightbox}
+![](../images/pca_f6.png){.lightbox}
 
 The found principal components, colored by a feature in the dataset where the feature has visible stratification in the PCs.
 :::
@@ -201,6 +195,7 @@ The found principal components, colored by a feature in the dataset where the fe
 :::
 
 ::: {.column}
+Principal Component Analysis (PCA) seeks to capture the maximum variance in a dataset by transforming the original variables into a new set of uncorrelated variables called principal components (PCs). The relationship between the variables and the principal components lies in the weights or loadings assigned to each variable in the construction of these components. These loadings indicate the contribution of each variable to each principal component. Variables with higher loadings on a particular principal component are more strongly correlated with that component and thus play a more significant role in defining its characteristics. Conversely, variables with low or near-zero loadings contribute less to that component's representation. Therefore, PCA helps to uncover underlying patterns in data by highlighting the relationships and importance of variables in creating the principal components that capture the data's variance efficiently.
 :::
 :::
 
@@ -208,3 +203,11 @@ The found principal components, colored by a feature in the dataset where the fe
 
 ## Conclusions
 
+From the above results, several interesting conclusions can be drawn:
+
+- Bought in month was an "important" enough feature that PCA stratified on it in both the 3 PC and 2 PC cases.
+- No other feature was as cleanly stratified-on in both cases.
+- The features that were stratified on in teh 2 PC case (where data was not scaled) were the features that didn't need scaling anyways (`Reviews`, `Date Scraped`); this implies the scaling made the features more able to be seperable on variance, which aligns to the reasoning for scaling (and dropping outliers) int the first place.
+- The high explained variance indicates a good ability to capture the variance in the data.
+
+Overall, PCA did a reasonable job with dimensionality reduction, though futher work is needed as only 6 features were used in the first place.
