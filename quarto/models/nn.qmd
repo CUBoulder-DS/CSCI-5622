@@ -199,4 +199,4 @@ In @fig-pd-diff, we observe the plot of the actual true price difference, visual
 
 From the above results, several interesting conclusions can be drawn:
 
--
+The networks were able to learn and fit to the data, which was evident by the loss rate during training. They also performed better than other ML methods used in this project, on the same tasks. However, they did not perform amazingly; this seems like a lack in the amount of data (in the case of price difference prediction) or not predictive enough variables in the dataset (in the case of predicting best seller).
