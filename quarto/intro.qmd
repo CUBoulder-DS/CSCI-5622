@@ -22,18 +22,28 @@ To get specific, the way that machine learning will be used is in both supervise
 
 In addition to the techniques mentioned, reinforcement learning models can also be employed to optimize strategies in response to changing market dynamics. By simulating different scenarios and learning from interactions, these models can adapt and refine decision-making processes over time, enhancing business agility and resilience. Moreover, natural language processing (NLP) techniques can extract sentiment analysis from customer reviews, providing valuable insights into product perception and sentiment trends that influence purchasing decisions. The integration of these advanced methodologies into the analysis of Amazon's retail product data signifies a holistic approach to understanding consumer behavior and market trends, empowering businesses to stay ahead in an ever-evolving digital landscape.
 
-## Questions to Answer
+## Q & A
 
 1. Is there noticable trends in prices over time, over all products?
+    * It was observed that, on the whole, prices [decreased over time](https://cuboulder-ds.github.io/CSCI-5622/data.html#fig-dupehist).
 2. Are there price trends over time within a specific product category?
-3. Is there any meaningful similarities in the images between products with similar descriptions?
-4. Are there price/rating similarities between the products with similar images?
-5. Do ratings have any correlation with the price of products?
-6. Do ratings have any correlation with the product category?
-7. Can the price of a product be predicted based on all other factors?
-8. Can the rating of a product be predicted based on all other factors?
-9. Can the category of a product be predicted based on the description?
-10. Is the description of a product similar to the generated description based on the product image (or the generated bag of words, tags, etc)?
+    * Smart Home devices consistently had prices decrease, along with: Gift Cards, Computer Monitors, and Travel Accessories. Makeup, Electrical Equipment, and Sports & Outdoors had their prices mostly increase. See [here](https://cuboulder-ds.github.io/CSCI-5622/data.html#fig-dupecats)
+3. Are there price/rating similarities between the products with similar titles/categories?
+   * No noticable trends were observed.
+4. Do ratings have any correlation with the price of products?
+   * No noticable trends were [observed](https://cuboulder-ds.github.io/CSCI-5622/data.html#fig-prstars).
+5. Do ratings have any correlation with the product category?
+   * No noticable trends were observed.
+6. Do stars and the numer of reviews have a noticable correlation?
+   * There are many products with zero (or close to) reviews that have a variable amount of stars; excluding those, [as reviews increase, the stars tend to be high.](https://cuboulder-ds.github.io/CSCI-5622/data.html#fig-starreview). Clustering methods found this relation as well.
+7. Can the "Best Seller" label of a product be predicted based on all other factors?
+   * Not with this dataset; classification decision trees tended to classify everything as "Not a Best Seller" in order to achieve a [false high accuracy rate](https://cuboulder-ds.github.io/CSCI-5622/models/dtrees.html#tbl-metrics). This was likely due to the extreme imbalance in the label. Neural networks [performed better](https://cuboulder-ds.github.io/CSCI-5622/models/nn.html#tbl-pm) with the imbalance but still struggled.
+8. Can the price of a product be predicted based on all other factors?
+   * Regression decision trees performed [poorly](https://cuboulder-ds.github.io/CSCI-5622/models/dtrees.html#fig-reg1) at predicting price based on all other features.
+9.  Can the category of a product be predicted based on the description/title?
+    * Yes, Naive Bayes methods performed exceedingly well as correctly categorizing products, especially if they has highly-correlated keywords in the title or were in a popular category.
+10. Can the price difference of a product over time be predicted based on all other factors?
+    * Neural networks [performed adequately](https://cuboulder-ds.github.io/CSCI-5622/models/nn.html#fig-pd-diff) at this, but still could not predict the amount of a price increase (only could handle a price decrease) nor handle extreme/large price differences. SVMs [performed poorly](https://cuboulder-ds.github.io/CSCI-5622/models/svm.html#tbl-acc), indicating a need for a more comprehensive dataset.
 
 
 

@@ -233,7 +233,7 @@ div.csl-indent {
    
   <ul>
   <li><a href="#sec-conclusions" id="toc-sec-conclusions" class="nav-link active" data-scroll-target="#sec-conclusions">Conclusions</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#references-used-in-project" id="toc-references-used-in-project" class="nav-link" data-scroll-target="#references-used-in-project">References Used in Project</a></li>
   </ul>
 </nav>
     </div>
@@ -245,10 +245,19 @@ div.csl-indent {
 
 <section id="sec-conclusions" class="level1">
 <h1>Conclusions</h1>
-<p>Placeholder</p>
+<div style="width:100%;">
+<div style="float:right; width:50%; padding:3%">
+<p><img src="images/endimg.jpg" class="img-fluid"></p>
+</div>
+</div>
+<p>The exploration of Amazon’s vast retail product data through advanced analytics and machine learning techniques has given implications across various domains. This endeavor would resonate strongly with stakeholders ranging from consumers to marketers and researchers, each benefiting from the nuanced understanding of modern consumption patterns and market dynamics. Through the application of techniques such as Principal Component Analysis (PCA), clustering algorithms, neural networks, and regression analysis, among others, meaningful patterns and relationships have been understood, paving the way for targeted marketing strategies, personalized recommendations, and predictive capabilities in demand forecasting and inventory management. The utilization of reinforcement learning models and natural language processing (NLP) techniques, in the future, will further enrich this analytical landscape, enabling businesses to adapt and innovate in response to changing market scenarios and consumer sentiments. As we delve deeper into this realm of data-driven insights, the potential for further exploration and innovation remains vast, promising continued advancements in optimizing business operations and enhancing customer experiences in the dynamic digital marketplace dominated by e-commerce giants like Amazon. More specifically, examining the results found in this site, several interesting conclusions can be drawn.</p>
+<p>Exploring the vast Amazon product dataset has revealed intriguing insights into the dynamics of prices, ratings, product categories, and consumer behavior. One of the key questions posed was about the trends in prices over time across all products. It was found that, on average, prices tended to decrease over time. Delving deeper into specific product categories, such as Smart Home devices, Gift Cards, Computer Monitors, and Travel Accessories, consistent price decreases were noted. Conversely, categories like Makeup, Electrical Equipment, and Sports &amp; Outdoors showed predominantly increasing price trends.</p>
+<p>An intriguing aspect explored was the correlation between product titles/categories and their prices or ratings. Surprisingly, no noticeable trends were observed in these correlations, indicating that factors other than product descriptions or categories significantly influence pricing and ratings. Similarly, the relationship between ratings and product categories did not reveal any significant trends, suggesting that consumer preferences and satisfaction levels transcend specific product categories. Analyzing the relationship between stars (ratings) and the number of reviews shed light on consumer sentiment and product popularity. While many products with zero or few reviews exhibited variable star ratings, excluding these cases revealed a trend where products with higher review counts tended to have higher star ratings. Clustering methods corroborated this finding, emphasizing the importance of customer feedback in shaping product perceptions.</p>
+<p>Moving on to predictive analyses, attempts were made to predict the “Best Seller” label and product prices based on various factors. Surprisingly, the dataset did not support accurate predictions of Best Seller labels, as classification decision trees tended to overpredict non-Best Sellers due to label imbalance. Neural networks showed some improvement but still faced challenges. Predicting prices based on other factors also proved challenging, with regression decision trees performing poorly. However, Naive Bayes methods excelled in categorizing products based on their descriptions or titles, showcasing the potential of text-based analysis in product categorization. Lastly, predicting price differences over time based on other factors was moderately successful with neural networks but struggled with extreme price variations. Support Vector Machines (SVMs) performed poorly in this regard, emphasizing the need for a more comprehensive dataset to accurately model price dynamics over time.</p>
+<p>Overall, the analysis of the Amazon product dataset provides valuable insights into pricing strategies, consumer preferences, and the challenges of predictive modeling in a dynamic e-commerce environment. These findings underscore the complexity of factors influencing product pricing, ratings, and categorization, highlighting the ongoing need for robust analytical approaches and comprehensive data sources to drive informed decision-making in retail and e-commerce settings.</p>
 </section>
-<section id="references" class="level1">
-<h1>References</h1>
+<section id="references-used-in-project" class="level1">
+<h1>References Used in Project</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-BellVis" class="csl-entry" role="listitem">
 Bell, Sean, and Kavita Bala. 2015. <span>“Learning Visual Similarity for Product Design with Convolutional Neural Networks.”</span> <em>ACM Trans. Graph.</em> 34 (4). <a href="https://doi.org/10.1145/2766959">https://doi.org/10.1145/2766959</a>.

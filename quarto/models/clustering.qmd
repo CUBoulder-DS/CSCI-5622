@@ -27,6 +27,12 @@ from common_funcs import df_show_rand_sample
 
 ## Overview
 
+::: {style="width:100%;"}
+::: {style="float:right; width:35%; padding:3%"}
+![](../images/clust_base.png)
+:::
+:::
+
 Clustering is a fundamental unsupervised learning technique in machine learning that involves grouping similar data points together based on certain features or characteristics. The goal of clustering is to partition a dataset into subsets or clusters, where data points within the same cluster are more similar to each other than to those in other clusters. This process helps in discovering inherent structures within the data, identifying patterns, and gaining insights into the underlying relationships.
 
 Partitional clustering algorithms, such as k-means, partition the data into a predefined number of clusters. The k-means algorithm iteratively assigns data points to the nearest cluster centroid based on a distance metric, commonly the Euclidean distance. The centroids are then recalculated as the mean of the data points in each cluster, and the process continues until convergence. K-means is efficient for large datasets and works well when clusters are spherical and of similar size. However, it may struggle with non-linear or irregularly shaped clusters and requires specifying the number of clusters beforehand.

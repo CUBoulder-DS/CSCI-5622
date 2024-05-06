@@ -235,7 +235,7 @@ div.csl-indent {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#questions-to-answer" id="toc-questions-to-answer" class="nav-link" data-scroll-target="#questions-to-answer">Questions to Answer</a></li>
+  <li><a href="#q-a" id="toc-q-a" class="nav-link" data-scroll-target="#q-a">Q &amp; A</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -273,19 +273,49 @@ div.csl-indent {
 <p>In this project, machine learning methods play a pivotal role in extracting meaningful insights from the vast sea of Amazon’s retail product data. Techniques such as Principal Component Analysis (PCA) enable dimensionality reduction, allowing for the identification of key features influencing consumer behavior. Clustering algorithms group similar products or consumers together, facilitating targeted marketing strategies and personalized recommendations. Neural networks, with their ability to learn intricate patterns, offer valuable predictive capabilities, aiding in demand forecasting and inventory management. Regression analysis uncovers relationships between variables, potentially helping businesses understand the impact of pricing, promotions, and other factors on sales. Support Vector Machines (SVM), Naive Bayes, and decision trees provide additional tools for classification and prediction tasks, enriching the analytical toolkit available to researchers and practitioners alike. Through the application of these advanced methodologies, one can navigate the complexities of the digital marketplace, leveraging data-driven insights to drive innovation and strategic decision-making.</p>
 <p>To get specific, the way that machine learning will be used is in both supervised and unsupervised learning settings depends on the data present within this dataset. For unsupervised learning methods, much can be done with the text data (aka the title of the product and the categories); one can do embeddings, bag-of-words, or other methods that reduce text into a couple of meaningful tags/individual words. One can also do dimension reduction and clustering in unsupervised contexts, as there are plently of numerical features in the data (number of reviews, number of stars, price, etc). For supervised learning, the feature used for label could be the feature of “Is Best Seller”, which would give a binary label; or, for regression and numerical/continuous labeling, the feature “Price” could be used as it is an important feature to learn about and could potentially be predicted from the other features present. For both supervised and unsupervised learning, it is recognized that some features are essentially useless or not needed; those would be the unique strings for each product row, namely “ASIN”, “Image URL”, and “URL”. These are important info for getting context for the product (and potentially for aquiring new data in the form of image data), but not necessary for the techniques performed on this site as no computer vision methods will be used.</p>
 <p>In addition to the techniques mentioned, reinforcement learning models can also be employed to optimize strategies in response to changing market dynamics. By simulating different scenarios and learning from interactions, these models can adapt and refine decision-making processes over time, enhancing business agility and resilience. Moreover, natural language processing (NLP) techniques can extract sentiment analysis from customer reviews, providing valuable insights into product perception and sentiment trends that influence purchasing decisions. The integration of these advanced methodologies into the analysis of Amazon’s retail product data signifies a holistic approach to understanding consumer behavior and market trends, empowering businesses to stay ahead in an ever-evolving digital landscape.</p>
-<section id="questions-to-answer" class="level2">
-<h2 class="anchored" data-anchor-id="questions-to-answer">Questions to Answer</h2>
+<section id="q-a" class="level2">
+<h2 class="anchored" data-anchor-id="q-a">Q &amp; A</h2>
 <ol type="1">
-<li>Is there noticable trends in prices over time, over all products?</li>
-<li>Are there price trends over time within a specific product category?</li>
-<li>Is there any meaningful similarities in the images between products with similar descriptions?</li>
-<li>Are there price/rating similarities between the products with similar images?</li>
-<li>Do ratings have any correlation with the price of products?</li>
-<li>Do ratings have any correlation with the product category?</li>
-<li>Can the price of a product be predicted based on all other factors?</li>
-<li>Can the rating of a product be predicted based on all other factors?</li>
-<li>Can the category of a product be predicted based on the description?</li>
-<li>Is the description of a product similar to the generated description based on the product image (or the generated bag of words, tags, etc)?</li>
+<li>Is there noticable trends in prices over time, over all products?
+<ul>
+<li>It was observed that, on the whole, prices <a href="https://cuboulder-ds.github.io/CSCI-5622/data.html#fig-dupehist">decreased over time</a>.</li>
+</ul></li>
+<li>Are there price trends over time within a specific product category?
+<ul>
+<li>Smart Home devices consistently had prices decrease, along with: Gift Cards, Computer Monitors, and Travel Accessories. Makeup, Electrical Equipment, and Sports &amp; Outdoors had their prices mostly increase. See <a href="https://cuboulder-ds.github.io/CSCI-5622/data.html#fig-dupecats">here</a></li>
+</ul></li>
+<li>Are there price/rating similarities between the products with similar titles/categories?
+<ul>
+<li>No noticable trends were observed.</li>
+</ul></li>
+<li>Do ratings have any correlation with the price of products?
+<ul>
+<li>No noticable trends were <a href="https://cuboulder-ds.github.io/CSCI-5622/data.html#fig-prstars">observed</a>.</li>
+</ul></li>
+<li>Do ratings have any correlation with the product category?
+<ul>
+<li>No noticable trends were observed.</li>
+</ul></li>
+<li>Do stars and the numer of reviews have a noticable correlation?
+<ul>
+<li>There are many products with zero (or close to) reviews that have a variable amount of stars; excluding those, <a href="https://cuboulder-ds.github.io/CSCI-5622/data.html#fig-starreview">as reviews increase, the stars tend to be high.</a>. Clustering methods found this relation as well.</li>
+</ul></li>
+<li>Can the “Best Seller” label of a product be predicted based on all other factors?
+<ul>
+<li>Not with this dataset; classification decision trees tended to classify everything as “Not a Best Seller” in order to achieve a <a href="https://cuboulder-ds.github.io/CSCI-5622/models/dtrees.html#tbl-metrics">false high accuracy rate</a>. This was likely due to the extreme imbalance in the label. Neural networks <a href="https://cuboulder-ds.github.io/CSCI-5622/models/nn.html#tbl-pm">performed better</a> with the imbalance but still struggled.</li>
+</ul></li>
+<li>Can the price of a product be predicted based on all other factors?
+<ul>
+<li>Regression decision trees performed <a href="https://cuboulder-ds.github.io/CSCI-5622/models/dtrees.html#fig-reg1">poorly</a> at predicting price based on all other features.</li>
+</ul></li>
+<li>Can the category of a product be predicted based on the description/title?
+<ul>
+<li>Yes, Naive Bayes methods performed exceedingly well as correctly categorizing products, especially if they has highly-correlated keywords in the title or were in a popular category.</li>
+</ul></li>
+<li>Can the price difference of a product over time be predicted based on all other factors?
+<ul>
+<li>Neural networks <a href="https://cuboulder-ds.github.io/CSCI-5622/models/nn.html#fig-pd-diff">performed adequately</a> at this, but still could not predict the amount of a price increase (only could handle a price decrease) nor handle extreme/large price differences. SVMs <a href="https://cuboulder-ds.github.io/CSCI-5622/models/svm.html#tbl-acc">performed poorly</a>, indicating a need for a more comprehensive dataset.</li>
+</ul></li>
 </ol>
 
 
